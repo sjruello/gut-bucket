@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ReactComponent as Logo } from "../../assets/bucket.svg";
+import { ReactComponent as Logo } from "../../assets/gutbucket-logo.svg";
 import { auth } from "../firebase/firebase.utils.js";
 
 import "./header.styles.scss";
