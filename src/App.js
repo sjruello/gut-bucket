@@ -37,12 +37,16 @@ class App extends React.Component {
               ...snapShot.data(),
             },
           });
+          console.log(this.state);
         });
       }
       this.setState({ currentUser: userAuth });
     });
   }
 
+  // Calling the unsubscribe function when the component is about to unmount -
+  // make sure we don't get any memory leaks in our application related to listeners
+  // still being open even if the component that cares about the listener is no longer on the page.
   componentWillUnmount() {
     this.unsubscribeFromAuth();
   }

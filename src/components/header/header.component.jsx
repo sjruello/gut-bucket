@@ -12,7 +12,7 @@ const Header = ({ currentUser }) => (
     </Link>
     <div className="options">
       <Link className="option" to="/">
-        ABOUT
+        MY TRIPS
       </Link>
       <Link className="option" to="/">
         CONTACT
