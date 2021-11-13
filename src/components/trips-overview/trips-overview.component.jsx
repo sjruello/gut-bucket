@@ -2,7 +2,7 @@ import React from "react";
 
 import Trip from "../trip/trip.component";
 
-import "./trip-directory.styles.scss";
+import "./trips-overview.styles.scss";
 
 class TripDirectory extends React.Component {
   constructor() {

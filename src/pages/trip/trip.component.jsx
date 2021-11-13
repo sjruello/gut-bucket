@@ -1,5 +1,7 @@
 import React from "react";
 
+import Map from "../../components/map/map.component";
+
 import "./trip.styles.scss";
 
 class Trip extends React.Component {
@@ -10,19 +12,13 @@ class Trip extends React.Component {
 
   render() {
     return (
-      <div className="trip-main">
-        <div className="venue-list">
-          <h2>Venue List</h2>
-          <ul>
-            <li>Place 1</li>
-            <li>Place 2</li>
-          </ul>
-        </div>
+      <div className="container">
+        <div className="map-list">Map List</div>
         <div className="map-display">
-          <h2>Google Map View goes here</h2>
+          <Map />
         </div>
-
-        <div className="trip-venues-display">
+        <div className="saved-venues">
+          List of saved venues:
           {/* display all venues selected for particular trip */}
           {/* pass in every key/value pair from sections with spread */}
           {this.state.venues.map(({ id, ...otherSectionProps }) => (

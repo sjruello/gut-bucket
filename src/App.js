@@ -3,13 +3,13 @@ import { Routes, Route } from "react-router-dom";
 
 import "./App.css";
 
-import Dashboard from "./pages/dashboard/dashboard.component";
-// import ShopPage from "./pages/shop/shop.component";
 import Header from "./components/header/header.component";
 import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component";
+import Dashboard from "./pages/dashboard/dashboard.component";
+import Trip from "./pages/trip/trip.component";
 
-// passed from firebase.utils:
-import { auth, createUserProfileDocument } from "./components/firebase/firebase.utils.js";
+// firebase imports:
+import { auth, createUserProfileDocument } from "./firebase/firebase.utils.js";
 
 class App extends React.Component {
   constructor(props) {
@@ -20,16 +20,17 @@ class App extends React.Component {
 
   unsubscribeFromAuth = null;
 
-  //life cycle methods:
-  //check if user is signed in
+  //React lifecycle method: check if user is signed in:
   componentDidMount() {
+    // unsubscribeFromAuth is reassigned to the return value of calling auth.onAuthStateChanged().
+    // this method returns another method: firebase.unsubscribe().
+    // docs here: https://firebase.google.com/docs/reference/js/firebase.auth.Auth#returns-firebase.unsubscribe
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth); // returned from firebase.utils.
 
         // snapShot object allow us to get properties on object with .data() - JSON object
         userRef.onSnapshot((snapShot) => {
-          // console.log(snapShot);
           // get new object with all user properties we want:
           this.setState({
             currentUser: {
@@ -44,9 +45,8 @@ class App extends React.Component {
     });
   }
 
-  // Calling the unsubscribe function when the component is about to unmount -
-  // make sure we don't get any memory leaks in our application related to listeners
-  // still being open even if the component that cares about the listener is no longer on the page.
+  // when unsubscribeFromAuth() is called inside the componentWillUnmount,
+  // it now has the value of firebase.unsubscribe(), which executes, closing the session.
   componentWillUnmount() {
     this.unsubscribeFromAuth();
   }
@@ -59,6 +59,7 @@ class App extends React.Component {
         <Routes>
           <Route exact path="/" element={<Dashboard />} />
           <Route path="/signin" element={<SignInAndSignUpPage />} />
+          <Route path="/trip/:id" element={<Trip />} />
         </Routes>
       </div>
     );

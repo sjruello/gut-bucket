@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/gutbucket-logo.svg";
-import { auth } from "../firebase/firebase.utils.js";
+import { auth } from "../../firebase/firebase.utils.js";
 
 import "./header.styles.scss";
 
@@ -12,14 +12,14 @@ const Header = ({ currentUser }) => (
     </Link>
     <div className="options">
       <Link className="option" to="/">
-        MY TRIPS
+        DASHBOARD
       </Link>
       <Link className="option" to="/">
-        CONTACT
+        ABOUT
       </Link>
       {currentUser ? (
         <div className="option" onClick={() => auth.signOut()}>
-          SIGN OUT
+          SIGN OUT {currentUser.displayName}
         </div>
       ) : (
         <Link className="option" to="/signin">
