@@ -3,13 +3,12 @@ import "firebase/compat/firestore";
 import "firebase/compat/auth";
 
 const config = {
-  apiKey: "AIzaSyCwv-evgKz34Quk0pleC2H6LbvYlTXNFyg",
-  authDomain: "gnrc-db.firebaseapp.com",
-  projectId: "gnrc-db",
-  storageBucket: "gnrc-db.appspot.com",
-  messagingSenderId: "349640186984",
-  appId: "1:349640186984:web:25f9bc47d649e1a4a16fdd",
-  measurementId: "G-GWMQS7JR13",
+  apiKey: "AIzaSyDDP6g-KyEJ0V7GW4uJcxo2aesFEtxVeFc",
+  authDomain: "gut-bucket.firebaseapp.com",
+  projectId: "gut-bucket",
+  storageBucket: "gut-bucket.appspot.com",
+  messagingSenderId: "206574731100",
+  appId: "1:206574731100:web:3948b640d15c9e347f0b99",
 };
 
 // take data from user object to store in our db:
@@ -17,9 +16,10 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   // if userAuth does not exist, return:
   if (!userAuth) return;
 
-  // get userID from firestore
+  // get userID from firestore queryReference object
   const userRef = firestore.doc(`users/${userAuth.uid}`);
 
+  // get snapShot using .get(), async function - use await
   const snapShot = await userRef.get();
 
   if (!snapShot.exists) {

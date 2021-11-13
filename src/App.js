@@ -23,10 +23,23 @@ class App extends React.Component {
   //life cycle methods:
   //check if user is signed in
   componentDidMount() {
-    auth.onAuthStateChanged((user) => {
-      createUserProfileDocument(user);
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth); // returned from firebase.utils.
 
-      console.log(user);
+        // snapShot object allow us to get properties on object with .data() - JSON object
+        userRef.onSnapshot((snapShot) => {
+          // console.log(snapShot);
+          // get new object with all user properties we want:
+          this.setState({
+            currentUser: {
+              id: snapShot.id,
+              ...snapShot.data(),
+            },
+          });
+        });
+      }
+      this.setState({ currentUser: userAuth });
     });
   }
 
