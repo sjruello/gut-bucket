@@ -9,7 +9,7 @@ import Dashboard from "./pages/dashboard/dashboard.component";
 import Trip from "./pages/trip/trip.component";
 
 // firebase imports:
-import { auth, createUserProfileDocument } from "./firebase/firebase.utils.js";
+import { auth, createUserProfileDocument } from "./firebase/firebase.js";
 
 class App extends React.Component {
   constructor(props) {
