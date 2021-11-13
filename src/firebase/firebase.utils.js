@@ -1,15 +1,7 @@
 import firebase from "firebase/compat/app";
+import firebaseConfig from "./firebase.config";
 import "firebase/compat/firestore";
 import "firebase/compat/auth";
-
-const config = {
-  apiKey: "AIzaSyDDP6g-KyEJ0V7GW4uJcxo2aesFEtxVeFc",
-  authDomain: "gut-bucket.firebaseapp.com",
-  projectId: "gut-bucket",
-  storageBucket: "gut-bucket.appspot.com",
-  messagingSenderId: "206574731100",
-  appId: "1:206574731100:web:3948b640d15c9e347f0b99",
-};
 
 // take data from user object to store in our db:
 export const createUserProfileDocument = async (userAuth, additionalData) => {
@@ -44,7 +36,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
-firebase.initializeApp(config);
+firebase.initializeApp(firebaseConfig);
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
