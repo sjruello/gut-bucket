@@ -1,4 +1,5 @@
 import React from "react";
+<<<<<<< HEAD
 
 import {
   GoogleMap,
@@ -6,6 +7,10 @@ import {
   Marker,
   InfoWindow,
 } from "@react-google-maps/api";
+=======
+import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps/api";
+import mapStyles from "./mapStyles";
+>>>>>>> 6002a52d98df45957176ae43d1a27f115e16d0e6
 
 import usePlacesAutocomplete, {
   getGeocode,
@@ -26,11 +31,10 @@ import "@reach/combobox/styles.css";
 
 // Display Map
 const Map = ({ location, zoomLevel }) => {
-
   const libraries = ["places"];
   const mapContainerStyle = {
-    width: '42vw',
-    height: '80vh',
+    // width: '42vw',
+    height: "600px",
   };
   const options = {
     styles: mapStyles,
@@ -55,8 +59,8 @@ const Map = ({ location, zoomLevel }) => {
     mapRef.current.setZoom(18);
   }, []);
 
-  if ( loadError ) return "Error loading Maps";
-  if ( !isLoaded ) return "Loading Maps";
+  if (loadError) return "Error loading Maps";
+  if (!isLoaded) return "Loading Maps";
 
   return (
     <div className="map">
