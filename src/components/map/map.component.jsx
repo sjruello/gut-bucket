@@ -14,11 +14,13 @@ const Map = ({ location, zoomLevel }) => {
 
   const libraries = ["places"];
   const mapContainerStyle = {
-    width: '45vw',
+    width: '42vw',
     height: '80vh',
   };
   const options = {
     styles: mapStyles,
+    disableDefaultUI: true,
+    zoomControl: true,
   };
   const center = {
     lat: -37.813629,
