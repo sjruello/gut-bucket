@@ -1,6 +1,14 @@
-.homepage {
+.main-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px 80px;
+}
+
+.trip-accordions {
+  width: 65vw;
+}
+
+.panel-header {
+  background-color: #4980d9;
 }
