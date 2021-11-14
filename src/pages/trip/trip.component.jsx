@@ -1,13 +1,6 @@
 import React from "react";
 
 import Map from "../../components/map/map.component";
-// import {
-//   Combobox,
-//   ComboboxInput,
-//   ComboboxPopover,
-//   ComboboxList,
-//   ComboboxOption,
-// } from "@reach/combobox";
 
 import "./trip.styles.scss";
 
