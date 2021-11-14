@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-
+import { useEffect } from "react";
 import "./App.css";
 
 import Header from "./components/header/header.component";
@@ -9,7 +9,9 @@ import Dashboard from "./pages/dashboard/dashboard.component";
 import Trip from "./pages/trip/trip.component";
 
 // firebase imports:
-import { auth, createUserProfileDocument } from "./firebase/firebase.js";
+import { auth, createUserProfileDocument } from "./firebase/firebase";
+// import { onSnapshot } from "firebase/firestore";
+// import db from "./firebase/firebase";
 
 class App extends React.Component {
   constructor(props) {

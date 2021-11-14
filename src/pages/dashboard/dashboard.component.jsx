@@ -1,12 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Button from "@mui/material/Button";
+// import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import MuiAccordion from "@mui/material/Accordion";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
+
+import { auth, createUserProfileDocument } from "../../firebase/firebase.js";
 
 import "./dashboard.styles.scss";
 
@@ -43,6 +45,8 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   padding: theme.spacing(2),
   borderTop: "1px solid rgba(0, 0, 0, .125)",
 }));
+
+console.log("current user: " + auth.currentUser);
 
 export default function CustomizedAccordions() {
   const [expanded, setExpanded] = React.useState("panel1");
