@@ -36,6 +36,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
+/// creates and initializes an instance of our Firebase application:
 firebase.initializeApp(firebaseConfig);
 
 export const auth = firebase.auth();

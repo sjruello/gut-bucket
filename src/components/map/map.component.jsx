@@ -7,20 +7,17 @@ import {
   InfoWindow,
 } from "@react-google-maps/api";
 
-import usePlacesAutocomplete, {
-  getGeocode,
-  getLatLng,
-} from 'use-places-autocomplete';
+import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
 
 import {
   Combobox,
   ComboboxInput,
   ComboboxPopover,
-  ComboboxList,
+  // ComboboxList,
   ComboboxOption,
-} from '@reach/combobox';
+} from "@reach/combobox";
 
-import mapStyles from './mapStyles';
+import mapStyles from "./mapStyles";
 import "./map.styles.scss";
 import "@reach/combobox/styles.css";
 
@@ -28,7 +25,6 @@ import "@reach/combobox/styles.css";
 const Map = ({ location, zoomLevel }) => {
   const libraries = ["places"];
   const mapContainerStyle = {
-    // width: '42vw',
     height: "600px",
   };
   const options = {
@@ -49,8 +45,8 @@ const Map = ({ location, zoomLevel }) => {
     mapRef.current = map;
   }, []);
 
-  const panTo = React.useCallback(({lat, lng}) => {
-    mapRef.current.panTo({lat, lng});
+  const panTo = React.useCallback(({ lat, lng }) => {
+    mapRef.current.panTo({ lat, lng });
     mapRef.current.setZoom(18);
   }, []);
 
@@ -59,15 +55,14 @@ const Map = ({ location, zoomLevel }) => {
 
   return (
     <div className="map">
-
       <Search panTo={panTo} />
 
       <GoogleMap
-        mapContainerStyle={ mapContainerStyle }
-        zoom={ 12 }
-        center={ center }
-        options={ options }
-        onLoad={ onMapLoad }
+        mapContainerStyle={mapContainerStyle}
+        zoom={12}
+        center={center}
+        options={options}
+        onLoad={onMapLoad}
       ></GoogleMap>
     </div>
   );
@@ -78,42 +73,46 @@ function Search({ panTo }) {
   const {
     ready,
     value,
-    suggestions: {status, data},
+    suggestions: { status, data },
     setValue,
     clearSuggestions,
-        } = usePlacesAutocomplete({
+  } = usePlacesAutocomplete({
     requestOpetions: {
-      location: { lat: () => -37.813629, lng: () => 144.963058, },
+      location: { lat: () => -37.813629, lng: () => 144.963058 },
       radius: 15000,
     },
   });
 
   return (
-    <div className='search'>
+    <div className="search">
       <Combobox
-        onSelect={ async (address) => {
+        onSelect={async (address) => {
           try {
-            const results = await getGeocode({address});
-            const {lat, lng} = await getLatLng(results[0]);
+            const results = await getGeocode({ address });
+            const { lat, lng } = await getLatLng(results[0]);
             panTo({ lat, lng });
-          } catch(error) {
-            console.log("error")
+          } catch (error) {
+            console.log("error");
           }
 
           // console.log(address);
-      }}
-      >
-        <ComboboxInput value={value}
-          onChange={(e) => {
-            setValue(e.target.value);
         }}
-        disabled={!ready}
-        placeholder={"Enter an address"}
-      />
+      >
+        <div className="search-form">
+          <ComboboxInput
+            value={value}
+            onChange={(e) => {
+              setValue(e.target.value);
+            }}
+            disabled={!ready}
+            placeholder={"Enter an address"}
+          />
+        </div>
         <ComboboxPopover>
-          {status === 'OK' && data.map(({id, description}) => (
-            <ComboboxOption key={id} value={description}/>
-          ))}
+          {status === "OK" &&
+            data.map(({ id, description }) => (
+              <ComboboxOption key={id} value={description} />
+            ))}
         </ComboboxPopover>
       </Combobox>
     </div>
