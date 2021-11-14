@@ -2,7 +2,6 @@
   margin: 0 auto;
   width: 85vw;
   max-width: 1000px;
-  height: 60vw;
   display: grid;
   grid-template-columns: 0.9fr 1.1fr 1fr;
   grid-template-rows: 1fr 0.5fr;
@@ -30,6 +29,6 @@
 .map-display {
   border-radius: 0px 20px 0px 0px;
   border: 1px solid grey;
-  padding: 10px;
   grid-area: map-display;
+  overflow: hidden;
 }

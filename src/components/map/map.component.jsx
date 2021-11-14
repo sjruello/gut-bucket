@@ -1,21 +1,15 @@
 import React from "react";
-import {
-  GoogleMap,
-  useLoadScript,
-  Marker,
-  InfoWindow,
-} from "@react-google-maps/api";
-import mapStyles from './mapStyles';
+import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps/api";
+import mapStyles from "./mapStyles";
 
 import "./map.styles.scss";
 
 // TODO: fix this
 const Map = ({ location, zoomLevel }) => {
-
   const libraries = ["places"];
   const mapContainerStyle = {
-    width: '42vw',
-    height: '80vh',
+    // width: '42vw',
+    height: "600px",
   };
   const options = {
     styles: mapStyles,
@@ -31,16 +25,16 @@ const Map = ({ location, zoomLevel }) => {
     libraries,
   });
 
-  if ( loadError ) return "Error loading Maps";
-  if ( !isLoaded ) return "Loading Maps";
+  if (loadError) return "Error loading Maps";
+  if (!isLoaded) return "Loading Maps";
 
   return (
     <div className="map">
       <GoogleMap
-        mapContainerStyle={ mapContainerStyle }
-        zoom={ 12 }
-        center={ center }
-        options={ options }
+        mapContainerStyle={mapContainerStyle}
+        zoom={12}
+        center={center}
+        options={options}
       ></GoogleMap>
     </div>
   );
