@@ -1,6 +1,13 @@
 import React from "react";
 
 import Map from "../../components/map/map.component";
+// import {
+//   Combobox,
+//   ComboboxInput,
+//   ComboboxPopover,
+//   ComboboxList,
+//   ComboboxOption,
+// } from "@reach/combobox";
 
 import "./trip.styles.scss";
 
@@ -13,7 +20,9 @@ class Trip extends React.Component {
   render() {
     return (
       <div className="container">
-        <div className="map-list">Map List</div>
+        <div className="map-list">
+          <p>Map List</p>
+        </div>
         <div className="map-display">
           <Map />
         </div>

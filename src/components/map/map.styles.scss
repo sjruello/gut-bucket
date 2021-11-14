@@ -1,9 +1,17 @@
 .search {
-  position: relative;
-  top: 3rem;
-  left: 80%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 400px;
+  position: absolute;
+  // top: 8rem;
+  // /* left: 38%; */
+  // transform: translateX(-115%);
+  // /* width: 100%; */
+  // max-width: 400px;
+  // // z-index: 10;
+  // display: flex;
   z-index: 10;
+}
+
+.search-form {
+  position: relative;
+  top: 15px;
+  left: 30px;
 }

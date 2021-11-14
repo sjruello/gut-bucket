@@ -7,7 +7,7 @@ import MuiAccordion from "@mui/material/Accordion";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
-
+// eslint-disable-next-line
 import { auth, createUserProfileDocument } from "../../firebase/firebase.js";
 
 import "./dashboard.styles.scss";
