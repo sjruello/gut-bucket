@@ -1,4 +1,5 @@
 import React from "react";
+// eslint-disable-next-line
 import RoomIcon from "@mui/icons-material/Room";
 // eslint-disable-next-line
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps/api";
@@ -71,6 +72,7 @@ function Search({ panTo }) {
     value,
     suggestions: { status, data },
     setValue,
+    // eslint-disable-next-line
     clearSuggestions,
   } = usePlacesAutocomplete({
     requestOpetions: {

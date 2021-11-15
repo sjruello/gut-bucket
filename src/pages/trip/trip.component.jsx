@@ -26,6 +26,7 @@ class Trip extends React.Component {
           {/* {this.state.venues.map(({ id, ...otherSectionProps }) => (
             <Trip key={id} {...otherSectionProps} />
           ))} */}
+          div.
           <TripVenueList />
         </div>
       </div>

@@ -10,6 +10,8 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
+// firebase imports:
+import { getUserTrips, getVenues } from "../../firebase/firebase";
 
 // eslint-disable-next-line
 // import { auth, createUserDocument } from "../../firebase/firebase.js";
@@ -84,8 +86,12 @@ const TripAccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: "1px solid rgba(0, 0, 0, .125)",
 }));
 
-export default function CustomizedAccordions() {
-  const [expanded, setExpanded] = React.useState("panel1");
+export default function Dashboard({ currentUser }) {
+  const [expanded, setExpanded] = React.useState("");
+  console.log("dashboard user:", currentUser.id);
+
+  // grab currentUser's trips
+  getUserTrips(currentUser.id);
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
@@ -94,6 +100,7 @@ export default function CustomizedAccordions() {
   // TODO: generate Accordion forEach trip in db.
   return (
     <div className="main-container">
+      <h2>{currentUser ? `${currentUser.displayName}'s Trips` : "Loading..."}</h2>
       <div className="trip-accordions">
         {/* something something
         {this.state.trips.map(({ id, ...otherSectionProps }) => (
@@ -101,7 +108,9 @@ export default function CustomizedAccordions() {
         ))} */}
         <TripAccordion expanded={expanded === "panel1"} onChange={handleChange("panel1")}>
           <TripAccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-            <Typography>Trip #1 - Melbourne</Typography>
+            <Typography component={"span"} variant={"body2"}>
+              Trip #1 - Melbourne
+            </Typography>
           </TripAccordionSummary>
           <TripAccordionDetails>
             <Typography>
@@ -111,30 +120,18 @@ export default function CustomizedAccordions() {
                   <Button variant="contained">Open Trip</Button>
                 </Link>
               </div>
-              <div id="venue-box">
-                {/* // forEach venue in db/trips: generate small preview card*/}
-                <div className="mini-venue-card">
-                  <span>Venue #1</span>
-                  <img src="http://lorempixel.com/400/400/nightlife/" alt="" />
-                </div>
-                <div className="mini-venue-card">
-                  <span>Venue #2</span>
-                  <img src="http://lorempixel.com/500/500/nightlife/" alt="" />
-                </div>
-                <div className="mini-venue-card">
-                  <span>Venue #3</span>
-                  <img src="http://lorempixel.com/300/300/nightlife/" alt="" />
-                </div>
-              </div>
+              <TripVenueList />
             </Typography>
           </TripAccordionDetails>
         </TripAccordion>
         <TripAccordion expanded={expanded === "panel2"} onChange={handleChange("panel2")}>
           <TripAccordionSummary aria-controls="panel2d-content" id="panel2d-header">
-            <Typography>Trip #2 - Adelaide</Typography>
+            <Typography component={"span"} variant={"body2"}>
+              Trip #2 - Adelaide
+            </Typography>
           </TripAccordionSummary>
           <TripAccordionDetails>
-            <Typography>
+            <Typography component={"span"} variant={"body2"}>
               <div className="trip-description">
                 <p>Adelaide CBD</p>
                 <Link to="/trip/1">
@@ -142,21 +139,6 @@ export default function CustomizedAccordions() {
                 </Link>
               </div>
               <TripVenueList />
-              <div id="venue-box">
-                {/* // forEach venue in db/trips: generate small preview card*/}
-                <div className="mini-venue-card">
-                  <span>Venue #1</span>
-                  <img src="http://lorempixel.com/400/400/nightlife/" alt="" />
-                </div>
-                <div className="mini-venue-card">
-                  <span>Venue #2</span>
-                  <img src="http://lorempixel.com/500/500/nightlife/" alt="" />
-                </div>
-                <div className="mini-venue-card">
-                  <span>Venue #3</span>
-                  <img src="http://lorempixel.com/300/300/nightlife/" alt="" />
-                </div>
-              </div>
             </Typography>
           </TripAccordionDetails>
         </TripAccordion>
@@ -168,7 +150,7 @@ export default function CustomizedAccordions() {
           onChange={handleChange("formpanel")}
         >
           <FormAccordionSummary aria-controls="formpaneld-content" id="formpaneld-header">
-            <Typography>
+            <Typography component={"span"} variant={"body2"}>
               <h3 display="inline-block">
                 {/* <AddCircleIcon fontSize="medium" /> */}
                 Add a new trip
@@ -176,7 +158,7 @@ export default function CustomizedAccordions() {
             </Typography>
           </FormAccordionSummary>
           <FormAccordionDetails>
-            <Typography>
+            <Typography component={"span"} variant={"body2"}>
               <div className="venues-show">
                 <p>
                   <TextField

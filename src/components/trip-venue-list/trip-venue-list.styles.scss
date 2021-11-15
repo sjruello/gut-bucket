@@ -1,7 +1,9 @@
 #venue-box {
-  display: inline-flex;
-  border: 1px solid red;
+  display: grid;
+  width: 100%;
+  border: 1px solid green;
   align-items: center;
+  width: fit-content;
 }
 
 .mini-venue-card {
