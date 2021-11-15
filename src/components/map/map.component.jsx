@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import RoomIcon from "@mui/icons-material/Room";
 // eslint-disable-next-line
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps/api";
 
-import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
+import usePlacesAutocomplete, { getGeocode, getLatLng , getDetails } from "use-places-autocomplete";
 
 import {
   Combobox,
@@ -46,25 +46,12 @@ const Map = ({ location, zoomLevel }) => {
     mapRef.current.setZoom(18);
   }, []);
 
-  const getPlaceDetails = function(response) {
-    const place_id = response[0].place_id
-    console.log(place_id);
-    const GOOGLE_PLACE_DETAILS_URL = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${ place_id }&fields=name,opening_hours,website,price_level,rating&key=${ process.env.REACT_APP_GOOGLE_MAPS_API_KEY }&libraries=places`
-    console.log(GOOGLE_PLACE_DETAILS_URL);
-    const config = {
-      method: 'get',
-      url: GOOGLE_PLACE_DETAILS_URL,
-      headers: { }
-    };
-
-  };
-
   if (loadError) return "Error loading Maps";
   if (!isLoaded) return "Loading Maps";
 
   return (
     <div className="map">
-      <Search panTo={panTo} getPlaceDetails={getPlaceDetails}/>
+      <Search panTo={panTo}/>
 
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
@@ -78,7 +65,8 @@ const Map = ({ location, zoomLevel }) => {
 };
 
 // Search box component within map
-function Search({ panTo, getPlaceDetails }) {
+function Search({ panTo }) {
+
   const {
     ready,
     value,
@@ -103,13 +91,26 @@ function Search({ panTo, getPlaceDetails }) {
             const results = await getGeocode({ address });
             const { lat, lng } = await getLatLng(results[0]);
             panTo({ lat, lng });
-            console.log(results);
-            getPlaceDetails(results);
+            // console.log('This is on select', results[0].place_id);
+
+            const placeId = results[0].place_id
+
+            const places_parameters = {
+              placeId: placeId,
+              fields: ["name", "opening_hours", "price_level", "rating", "website"]
+            };
+
+            getDetails(places_parameters)
+            .then((details) => {
+              console.log("Details: ", details)
+            })
+            .catch((error) => {
+              console.log(error);
+            })
+
           } catch (error) {
             console.log("error");
           }
-
-          // console.log(address);
         }}
       >
         <div className="search-form">
