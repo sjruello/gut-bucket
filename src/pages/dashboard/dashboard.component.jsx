@@ -10,6 +10,8 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
+// firebase imports:
+import { getUserTrips, getVenues } from "../../firebase/firebase";
 
 // eslint-disable-next-line
 // import { auth, createUserDocument } from "../../firebase/firebase.js";
@@ -86,9 +88,10 @@ const TripAccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 
 export default function Dashboard({ currentUser }) {
   const [expanded, setExpanded] = React.useState("");
-  console.log("dashboard user:", currentUser);
+  console.log("dashboard user:", currentUser.id);
 
   // grab currentUser's trips
+  getUserTrips(currentUser.id);
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);

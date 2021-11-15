@@ -2,68 +2,77 @@ import firebase from "firebase/app";
 import firebaseConfig from "./firebase.config";
 import "firebase/firestore";
 import "firebase/auth";
-import {collection, doc, get} from "firebase/firestore";
-  // getFirestore, doc, getDocFromCache, setDoc, updateDoc, addDoc, getDoc, getDocs 
-
+import { collection, doc, get } from "firebase/firestore";
+// getFirestore, doc, getDocFromCache, setDoc, updateDoc, addDoc, getDoc, getDocs
 
 // creates and initializes an instance of our Firebase application:
 const app = firebase.initializeApp(firebaseConfig);
-const db = app.firestore()
+const db = app.firestore();
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
 //GET functions
 
 const getTable = (table) => {
-  db.collection(table).get().then((querySnapshot) => {
+  db.collection(table)
+    .get()
+    .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-          console.log(doc._delegate._document.data.value.mapValue.fields);
+        console.log(doc._delegate._document.data.value.mapValue.fields);
       });
-  });
-}
+    });
+};
 
-getTable('users')
-
-const getUserTrips = (userId) => {
-  const getJohn = db.collection("users").doc(userId).collection("trips")
-  getJohn.get().then((querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-      console.log(doc._delegate._document.data.value.mapValue.fields)
-    })
-}).catch((error) => {
-    console.log("Error getting document:", error);
-});
-}
-
-getUserTrips("John")
-
-const getVenues = (userId, tripId) => {
-    const venues = db.collection("users").doc(userId).collection("trips").doc(tripId).collection("venues")
-    venues.get().then((querySnapshot) => {
+// getTable("users");
+export const getUserTrips = (userId) => {
+  const getJohn = db.collection("users").doc(userId).collection("trips");
+  getJohn
+    .get()
+    .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        console.log(doc._delegate._document.data.value.mapValue.fields)
-      })
-  }).catch((error) => {
+        console.log(doc._delegate._document.data.value.mapValue.fields);
+      });
+    })
+    .catch((error) => {
       console.log("Error getting document:", error);
-  });
-}
+    });
+};
 
-getVenues("John", "denver")
+// getUserTrips("John");
+
+export const getVenues = (userId, tripId) => {
+  const venues = db
+    .collection("users")
+    .doc(userId)
+    .collection("trips")
+    .doc(tripId)
+    .collection("venues");
+  venues
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        console.log(doc._delegate._document.data.value.mapValue.fields);
+      });
+    })
+    .catch((error) => {
+      console.log("Error getting document:", error);
+    });
+};
+
+// getVenues("John", "denver");
 //POST functions
 
 //Create a new trip
-const newTrip = (userId, location, startDate, finishDate) => {
-  const newTrip = db.collection("users").doc(userId).collection("trips")
+export const newTrip = (userId, location, startDate, finishDate) => {
+  const newTrip = db.collection("users").doc(userId).collection("trips");
   newTrip.doc().set({
     finishes: finishDate,
     starts: startDate,
-    location: location
-    })
-}
+    location: location,
+  });
+};
 
-newTrip("John", "New York", '10/10/2022', '31/10/2022')
-
-
+newTrip("John", "New York", "10/10/2022", "31/10/2022");
 
 // gives us access to GoogleAuthProvider platform from auth library
 const provider = new firebase.auth.GoogleAuthProvider();
