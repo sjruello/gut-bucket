@@ -54,12 +54,13 @@ class App extends React.Component {
         {/* Keep Header present always - on top of Routes  */}
         <Header currentUser={this.state.currentUser} />
         <Routes>
+          <Route exact path="/" element={<SignInAndSignUpPage />} />
+          <Route path="/signin" element={<SignInAndSignUpPage />} />
           <Route
-            exact
-            path="/"
+            path="/dashboard"
             element={<Dashboard currentUser={this.state.currentUser} />}
           />
-          <Route path="/signin" element={<SignInAndSignUpPage />} />
+
           <Route
             path="/trip/:id"
             element={<Trip currentUser={this.state.currentUser} />}

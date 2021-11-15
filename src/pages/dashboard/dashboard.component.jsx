@@ -105,7 +105,11 @@ export default function Dashboard({ currentUser }) {
   return (
     <div className="main-container">
       <div className="trip-accordions">
-        <h2>{currentUser ? `${currentUser.displayName}'s Trips` : "Loading..."}</h2>
+        <h2>
+          {currentUser
+            ? `${currentUser.displayName.split(" ").slice(0, -1).join(" ")}'s Trips`
+            : "Loading..."}
+        </h2>
 
         {trips.map((trip, index) => (
           <TripAccordion
