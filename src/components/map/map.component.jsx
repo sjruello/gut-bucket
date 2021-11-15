@@ -18,7 +18,7 @@ import "./map.styles.scss";
 import "@reach/combobox/styles.css";
 
 // Display Map
-const Map = ({ location, zoomLevel }) => {
+const Map = (props) => {
   const libraries = ["places"];
   const mapContainerStyle = {
     height: "600px",
@@ -43,7 +43,8 @@ const Map = ({ location, zoomLevel }) => {
 
   const panTo = React.useCallback(({ lat, lng }) => {
     mapRef.current.panTo({ lat, lng });
-    mapRef.current.setZoom(18);
+    console.log('panning to:', lat, lng)
+    mapRef.current.setZoom(16);
   }, []);
 
   if (loadError) return "Error loading Maps";
@@ -51,7 +52,7 @@ const Map = ({ location, zoomLevel }) => {
 
   return (
     <div className="map">
-      <Search panTo={panTo}/>
+      <Search saveVenues={props.saveVenues} panTo={panTo}/>
 
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
@@ -65,7 +66,7 @@ const Map = ({ location, zoomLevel }) => {
 };
 
 // Search box component within map
-function Search({ panTo }) {
+function Search( {panTo, saveVenues} ) {
 
   const {
     ready,
@@ -80,29 +81,41 @@ function Search({ panTo }) {
     },
   });
 
+  // const handleSelect = ({ address }) => {
+  //   setValue( address, false);
+  //   clearSuggestions();
+  //
+  //   getGeocode({ address })
+  //     .then((results) => getLatLng(results[0]))
+  //     .then(({ lat, lng }) => panTo({lat, lng}))
+  //     .catch((error) => {
+  //       console.log('error', error)
+  //     })
+  // }
+
   return (
     <div className="search">
       <Combobox
         onSelect={async (address) => {
           setValue(address, false);
-          clearSuggestions()
+          clearSuggestions();
 
           try {
             const results = await getGeocode({ address });
             const { lat, lng } = await getLatLng(results[0]);
-            panTo({ lat, lng });
-            // console.log('This is on select', results[0].place_id);
 
-            const placeId = results[0].place_id
+            console.log(results[0]);
 
             const places_parameters = {
-              placeId: placeId,
+              placeId: results[0].place_id,
               fields: ["name", "opening_hours", "price_level", "rating", "website"]
             };
 
             getDetails(places_parameters)
             .then((details) => {
               console.log("Details: ", details)
+              saveVenues(details);
+              panTo({ lat, lng });
             })
             .catch((error) => {
               console.log(error);
@@ -120,7 +133,7 @@ function Search({ panTo }) {
               setValue(e.target.value);
             }}
             disabled={!ready}
-            placeholder={"Enter an address"}
+            placeholder={"Where would you like to go?"}
           />
         </div>
         <ComboboxPopover>
