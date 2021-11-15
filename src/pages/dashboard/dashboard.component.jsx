@@ -91,7 +91,8 @@ export default function Dashboard({ currentUser }) {
   console.log("dashboard user:", currentUser.id);
 
   // grab currentUser's trips
-  getUserTrips(currentUser.id);
+  let trips = [];
+  trips = getUserTrips(currentUser.id);
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
@@ -106,10 +107,11 @@ export default function Dashboard({ currentUser }) {
         {this.state.trips.map(({ id, ...otherSectionProps }) => (
           <Trip key={id} {...otherSectionProps} />
         ))} */}
+        {/* ////////////////////////////////////////////////// */}
         <TripAccordion expanded={expanded === "panel1"} onChange={handleChange("panel1")}>
           <TripAccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-            <Typography component={"span"} variant={"body2"}>
-              Trip #1 - Melbourne
+            <Typography component={"span"} variant={"body"}>
+              {trips}
             </Typography>
           </TripAccordionSummary>
           <TripAccordionDetails>
@@ -124,7 +126,8 @@ export default function Dashboard({ currentUser }) {
             </Typography>
           </TripAccordionDetails>
         </TripAccordion>
-        <TripAccordion expanded={expanded === "panel2"} onChange={handleChange("panel2")}>
+        {/* /////////////////////////////////////////////////// */}
+        {/* <TripAccordion expanded={expanded === "panel2"} onChange={handleChange("panel2")}>
           <TripAccordionSummary aria-controls="panel2d-content" id="panel2d-header">
             <Typography component={"span"} variant={"body2"}>
               Trip #2 - Adelaide
@@ -142,38 +145,42 @@ export default function Dashboard({ currentUser }) {
             </Typography>
           </TripAccordionDetails>
         </TripAccordion>
-      </div>
-      {/* Add Trip Accordion: */}
-      <div className="addtrip">
-        <FormAccordion
-          expanded={expanded === "formpanel"}
-          onChange={handleChange("formpanel")}
-        >
-          <FormAccordionSummary aria-controls="formpaneld-content" id="formpaneld-header">
-            <Typography component={"span"} variant={"body2"}>
-              <h3 display="inline-block">
-                {/* <AddCircleIcon fontSize="medium" /> */}
-                Add a new trip
-              </h3>
-            </Typography>
-          </FormAccordionSummary>
-          <FormAccordionDetails>
-            <Typography component={"span"} variant={"body2"}>
-              <div className="venues-show">
-                <p>
-                  <TextField
-                    id="outlined-basic"
-                    label="Location Name"
-                    variant="outlined"
-                  />
-                </p>
-                <Link to="/trip/1">
-                  <Button variant="contained">Create New Trip</Button>
-                </Link>
-              </div>
-            </Typography>
-          </FormAccordionDetails>
-        </FormAccordion>
+      </div> */}
+        {/* Add Trip Accordion: */}
+        <div className="addtrip">
+          <FormAccordion
+            expanded={expanded === "formpanel"}
+            onChange={handleChange("formpanel")}
+          >
+            <FormAccordionSummary
+              aria-controls="formpaneld-content"
+              id="formpaneld-header"
+            >
+              <Typography component={"span"} variant={"body2"}>
+                <h3 display="inline-block">
+                  {/* <AddCircleIcon fontSize="medium" /> */}
+                  Add a new trip
+                </h3>
+              </Typography>
+            </FormAccordionSummary>
+            <FormAccordionDetails>
+              <Typography component={"span"} variant={"body2"}>
+                <div className="venues-show">
+                  <p>
+                    <TextField
+                      id="outlined-basic"
+                      label="Location Name"
+                      variant="outlined"
+                    />
+                  </p>
+                  <Link to="/trip/1">
+                    <Button variant="contained">Create New Trip</Button>
+                  </Link>
+                </div>
+              </Typography>
+            </FormAccordionDetails>
+          </FormAccordion>
+        </div>
       </div>
     </div>
   );
