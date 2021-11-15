@@ -4,6 +4,7 @@ import "firebase/firestore";
 import "firebase/auth";
 // import {getFirestore, doc, getDocFromCache, setDoc, updateDoc, addDoc, getDoc, getDocs } from "firebase/firestore";
 
+
 // creates and initializes an instance of our Firebase application:
 firebase.initializeApp(firebaseConfig);
 // const db = getFirestore();

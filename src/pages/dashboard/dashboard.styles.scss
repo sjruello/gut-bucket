@@ -1,4 +1,7 @@
 .main-container {
+  margin: 0 auto;
+  width: 85vw;
+  max-width: 900px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,4 +14,41 @@
 
 .panel-header {
   background-color: #4980d9;
+}
+
+.addtrip {
+  margin-top: 20px;
+  text-align: center;
+  width: 65vw;
+}
+
+#venue-box {
+  display: inline-flex;
+  border: 1px solid red;
+  align-items: center;
+}
+
+.mini-venue-card {
+  grid-row: 1;
+  display: inline-block;
+  text-align: center;
+  margin: 0 auto;
+  border: 1px solid #4980d9;
+  padding: 10px;
+}
+
+img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  border-radius: 3px;
+}
+
+span {
+  display: block;
+}
+
+.trip-description {
+  text-align: center;
+  margin-bottom: 20px;
 }
