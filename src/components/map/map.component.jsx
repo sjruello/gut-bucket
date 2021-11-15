@@ -16,7 +16,6 @@ import {
 import mapStyles from "./mapStyles";
 import "./map.styles.scss";
 import "@reach/combobox/styles.css";
-import axios from 'axios';
 
 // Display Map
 const Map = ({ location, zoomLevel }) => {
@@ -57,13 +56,7 @@ const Map = ({ location, zoomLevel }) => {
       url: GOOGLE_PLACE_DETAILS_URL,
       headers: { }
     };
-    axios(config)
-      .then(response => {
-        console.log(JSON.stringify(response.data));
-    })
-      .catch(error => {
-        console.log(error);
-      })
+
   };
 
   if (loadError) return "Error loading Maps";
