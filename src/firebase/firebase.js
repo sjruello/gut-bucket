@@ -1,15 +1,44 @@
-import firebase from "firebase/compat/app";
+import firebase from "firebase/app";
 import firebaseConfig from "./firebase.config";
-import "firebase/compat/firestore";
-import "firebase/compat/auth";
-// import { getFirestore } from "firebase/firestore";
-import { collection, getDocs } from "firebase/firestore";
+import "firebase/firestore";
+import "firebase/auth";
+// import {getFirestore, doc, getDocFromCache, setDoc, updateDoc, addDoc, getDoc, getDocs } from "firebase/firestore";
+
 
 // creates and initializes an instance of our Firebase application:
 firebase.initializeApp(firebaseConfig);
 // const db = getFirestore();
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
+
+// Jonny trying shit out
+// const getUser = async(id) => {
+
+// // get a specific user record
+// const docRef = doc(db, "users", id);
+// const docSnap = await getDoc(docRef);
+
+//   if (docSnap.exists()) {
+//     console.log("Document data:", docSnap.data());
+//   } else {
+//     // doc.data() will be undefined in this case
+//     console.log("No such document!");
+//   }
+
+// // get all documents from a collection
+// }
+
+// const getCollection = async(tabl) => {
+//   const querySnapshot = await getDocs(collection(db, tabl));
+//   querySnapshot.forEach((doc) => {
+//     console.log(doc.id, " => ", doc.data());
+//   })
+// }
+
+// getUser("John") 
+// getCollection("trips")
+
+// Jonny trying shit out ends
 
 // gives us access to GoogleAuthProvider platform from auth library
 const provider = new firebase.auth.GoogleAuthProvider();
