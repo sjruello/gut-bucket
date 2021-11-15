@@ -52,7 +52,7 @@ getVenues("John", "denver")
 //POST functions
 
 //Create a new trip
-const newTrip = (userId, location, startDate, finishDate) => {
+const newTrip = (userId, location, startDate = null, finishDate = null) => {
   const newTrip = db.collection("users").doc(userId).collection("trips")
   newTrip.doc().set({
     finishes: finishDate,
@@ -61,7 +61,7 @@ const newTrip = (userId, location, startDate, finishDate) => {
     })
 }
 
-newTrip("John", "New York", '10/10/2022', '31/10/2022')
+// newTrip("John", "New York", '10/10/2022', '31/10/2022')
 
 
 
