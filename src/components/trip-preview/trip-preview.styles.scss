@@ -8,9 +8,21 @@
 
 .mini-venue-card {
   grid-row: 1;
-  display: inline-block;
+  display: inline-grid;
   text-align: center;
   margin: 0 auto;
   border: 1px solid #4980d9;
+  width: 10rem;
   padding: 10px;
+  justify-items: center;
+}
+
+.thumbnail {
+  background-color: black;
+  width: 120px;
+  height: 120px;
+  display: inline-block; /* makes it fit in like an <img> */
+  background-size: cover; /* or contain */
+  background-position: center center;
+  background-repeat: no-repeat;
 }

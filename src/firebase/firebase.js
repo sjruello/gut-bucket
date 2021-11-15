@@ -23,31 +23,30 @@ const getTable = (table) => {
     });
 };
 
-// getTable("users");
 export const getUserTrips = (userId) => {
   const getTrips = db.collection("users").doc(userId).collection("trips");
   return getTrips;
 };
 
-getUserTrips("cNsxXriIQYWkp96Zs5eLi1xph9Y2");
-
 export const getVenues = (userId, tripId) => {
-  const venues = db
+  const getVenues = db
     .collection("users")
     .doc(userId)
     .collection("trips")
     .doc(tripId)
     .collection("venues");
-  venues
-    .get()
-    .then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        console.log(doc._delegate._document.data.value.mapValue.fields);
-      });
-    })
-    .catch((error) => {
-      console.log("Error getting document:", error);
-    });
+
+  return getVenues;
+  // venues
+  //   .get()
+  //   .then((querySnapshot) => {
+  //     querySnapshot.forEach((doc) => {
+  //       console.log(doc._delegate._document.data.value.mapValue.fields);
+  //     });
+  //   })
+  //   .catch((error) => {
+  //     console.log("Error getting document:", error);
+  //   });
 };
 
 // getVenues("John", "denver");

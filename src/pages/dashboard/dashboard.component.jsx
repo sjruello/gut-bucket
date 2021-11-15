@@ -93,7 +93,8 @@ export default function Dashboard({ currentUser }) {
     .then((querySnapshot) => {
       const userTrips = [];
       querySnapshot.forEach((doc) => {
-        userTrips.push([doc.data().location, doc.data().description]);
+        userTrips.push([doc.id, doc.data().location, doc.data().description]);
+        // userTrips.push([doc.data().location, doc.data().description]);
       });
       setTrips(userTrips);
     });
@@ -115,23 +116,25 @@ export default function Dashboard({ currentUser }) {
           <TripAccordion
             expanded={expanded === `panel${index}`}
             onChange={handleChange(`panel${index}`)}
+            key={trip[0]}
+            component={"span"}
           >
             <TripAccordionSummary aria-controls="panel1d-content" id="panel1d-header">
               <Typography component={"span"} variant={"body"}>
                 <div className="trip-header">
-                  <h3>{trip[0]}</h3>
+                  <h3>{trip[1]}</h3>
                 </div>
               </Typography>
             </TripAccordionSummary>
-            <TripAccordionDetails>
-              <Typography>
+            <TripAccordionDetails component={"span"}>
+              <Typography component={"span"}>
                 <div className="trip-description">
-                  <p>{trip[1]}</p>
+                  <p>{trip[2]}</p>
                   <Link to="/trip/1">
                     <Button variant="contained">Open Trip</Button>
                   </Link>
                 </div>
-                <TripPreview />
+                <TripPreview userID={currentUser.id} tripID={trip[0]} />
               </Typography>
             </TripAccordionDetails>
           </TripAccordion>
@@ -153,13 +156,12 @@ export default function Dashboard({ currentUser }) {
             <FormAccordionDetails>
               <Typography component={"span"} variant={"body"}>
                 <div className="venues-show">
-                  <p>
-                    <TextField
-                      id="outlined-basic"
-                      label="Location Name"
-                      variant="outlined"
-                    />
-                  </p>
+                  <TextField
+                    id="outlined-basic"
+                    label="Location Name"
+                    variant="outlined"
+                  />
+
                   <Link to="/trip/1">
                     <Button variant="contained">Create New Trip</Button>
                   </Link>
