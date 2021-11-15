@@ -25,20 +25,19 @@ const getTable = (table) => {
 
 // getTable("users");
 export const getUserTrips = (userId) => {
-  const getJohn = db.collection("users").doc(userId).collection("trips");
-  getJohn
+  const allTrips = []
+  const getTrips = db.collection("users").doc(userId).collection("trips");
+  getTrips
     .get()
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        console.log(doc._delegate._document.data.value.mapValue.fields);
-      });
+        let tripData = doc._delegate._document.data.value.mapValue.fields
+        console.log(tripData)
+        allTrips.push(tripData);
+      })
+      return allTrips
     })
-    .catch((error) => {
-      console.log("Error getting document:", error);
-    });
 };
-
-// getUserTrips("John");
 
 export const getVenues = (userId, tripId) => {
   const venues = db
@@ -63,16 +62,16 @@ export const getVenues = (userId, tripId) => {
 //POST functions
 
 //Create a new trip
-export const newTrip = (userId, location, startDate, finishDate) => {
-  const newTrip = db.collection("users").doc(userId).collection("trips");
+const newTrip = (userId, location, startDate = null, finishDate = null) => {
+  const newTrip = db.collection("users").doc(userId).collection("trips")
   newTrip.doc().set({
     finishes: finishDate,
     starts: startDate,
-    location: location,
-  });
-};
+    location: location
+    })
+}
 
-newTrip("John", "New York", "10/10/2022", "31/10/2022");
+// newTrip("John", "New York", '10/10/2022', '31/10/2022')
 
 // gives us access to GoogleAuthProvider platform from auth library
 const provider = new firebase.auth.GoogleAuthProvider();
