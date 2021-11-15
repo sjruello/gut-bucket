@@ -13,13 +13,14 @@ import {
   Combobox,
   ComboboxInput,
   ComboboxPopover,
-  // ComboboxList,
+  ComboboxList,
   ComboboxOption,
 } from "@reach/combobox";
 
 import mapStyles from "./mapStyles";
 import "./map.styles.scss";
 import "@reach/combobox/styles.css";
+import axios from 'axios';
 
 // Display Map
 const Map = ({ location, zoomLevel }) => {
@@ -50,12 +51,31 @@ const Map = ({ location, zoomLevel }) => {
     mapRef.current.setZoom(18);
   }, []);
 
+  const getPlaceDetails = function(response) {
+    const place_id = response[0].place_id
+    console.log(place_id);
+    const GOOGLE_PLACE_DETAILS_URL = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${ place_id }&fields=name,opening_hours,website,price_level,rating&key=${ process.env.REACT_APP_GOOGLE_MAPS_API_KEY }&libraries=places`
+    console.log(GOOGLE_PLACE_DETAILS_URL);
+    const config = {
+      method: 'get',
+      url: GOOGLE_PLACE_DETAILS_URL,
+      headers: { }
+    };
+    axios(config)
+      .then(response => {
+        console.log(JSON.stringify(response.data));
+    })
+      .catch(error => {
+        console.log(error);
+      })
+  };
+
   if (loadError) return "Error loading Maps";
   if (!isLoaded) return "Loading Maps";
 
   return (
     <div className="map">
-      <Search panTo={panTo} />
+      <Search panTo={panTo} getPlaceDetails={getPlaceDetails}/>
 
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
@@ -69,7 +89,7 @@ const Map = ({ location, zoomLevel }) => {
 };
 
 // Search box component within map
-function Search({ panTo }) {
+function Search({ panTo, getPlaceDetails }) {
   const {
     ready,
     value,
@@ -77,7 +97,7 @@ function Search({ panTo }) {
     setValue,
     clearSuggestions,
   } = usePlacesAutocomplete({
-    requestOpetions: {
+    requestOptions: {
       location: { lat: () => -37.813629, lng: () => 144.963058 },
       radius: 15000,
     },
@@ -87,10 +107,15 @@ function Search({ panTo }) {
     <div className="search">
       <Combobox
         onSelect={async (address) => {
+          setValue(address, false);
+          clearSuggestions()
+
           try {
             const results = await getGeocode({ address });
             const { lat, lng } = await getLatLng(results[0]);
             panTo({ lat, lng });
+            console.log(results);
+            getPlaceDetails(results);
           } catch (error) {
             console.log("error");
           }
@@ -109,10 +134,12 @@ function Search({ panTo }) {
           />
         </div>
         <ComboboxPopover>
+        <ComboboxList>
           {status === "OK" &&
             data.map(({ id, description }) => (
               <ComboboxOption key={id} value={description} />
             ))}
+        </ComboboxList>
         </ComboboxPopover>
       </Combobox>
     </div>
