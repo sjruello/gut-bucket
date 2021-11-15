@@ -25,20 +25,19 @@ const getTable = (table) => {
 
 // getTable("users");
 export const getUserTrips = (userId) => {
-  const getJohn = db.collection("users").doc(userId).collection("trips");
-  getJohn
+  const allTrips = []
+  const getTrips = db.collection("users").doc(userId).collection("trips");
+  getTrips
     .get()
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        console.log(doc._delegate._document.data.value.mapValue.fields);
-      });
+        let tripData = doc._delegate._document.data.value.mapValue.fields
+        console.log(tripData)
+        allTrips.push(tripData);
+      })
+      return allTrips
     })
-    .catch((error) => {
-      console.log("Error getting document:", error);
-    });
 };
-
-// getUserTrips("John");
 
 export const getVenues = (userId, tripId) => {
   const venues = db
