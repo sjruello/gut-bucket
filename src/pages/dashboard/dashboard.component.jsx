@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import TripVenueList from "../../components/trip-venue-list/trip-venue-list.component";
+import TripPreview from "../../components/trip-preview/trip-preview.component";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import MuiAccordion from "@mui/material/Accordion";
@@ -14,6 +14,40 @@ import RestaurantIcon from "@mui/icons-material/Restaurant";
 import { getUserTrips, getVenues } from "../../firebase/firebase";
 
 import "./dashboard.styles.scss";
+
+const TripAccordion = styled((props) => (
+  <MuiAccordion disableGutters elevation={0} square {...props} />
+))(({ theme }) => ({
+  border: `1px solid ${theme.palette.divider}`,
+  "&:not(:last-child)": {
+    borderBottom: 0,
+  },
+  "&:before": {
+    display: "none",
+  },
+}));
+
+const TripAccordionSummary = styled((props) => (
+  <MuiAccordionSummary
+    expandIcon={<RestaurantIcon sx={{ fontSize: "2.4rem" }} color="primary" />}
+    {...props}
+  />
+))(({ theme }) => ({
+  backgroundColor:
+    theme.palette.mode === "dark" ? "rgba(255, 255, 255, .05)" : "rgba(0, 0, 0, .03)",
+  flexDirection: "row-reverse",
+  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+    transform: "rotate(90deg)",
+  },
+  "& .MuiAccordionSummary-content": {
+    marginLeft: theme.spacing(1),
+  },
+}));
+
+const TripAccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
+  padding: theme.spacing(2),
+  borderTop: "1px solid rgba(0, 0, 0, .125)",
+}));
 
 const FormAccordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -49,40 +83,6 @@ const FormAccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: "1px solid rgba(0, 0, 0, .125)",
 }));
 
-const TripAccordion = styled((props) => (
-  <MuiAccordion disableGutters elevation={0} square {...props} />
-))(({ theme }) => ({
-  border: `1px solid ${theme.palette.divider}`,
-  "&:not(:last-child)": {
-    borderBottom: 0,
-  },
-  "&:before": {
-    display: "none",
-  },
-}));
-
-const TripAccordionSummary = styled((props) => (
-  <MuiAccordionSummary
-    expandIcon={<RestaurantIcon sx={{ fontSize: "1.5rem" }} color="primary" />}
-    {...props}
-  />
-))(({ theme }) => ({
-  backgroundColor:
-    theme.palette.mode === "dark" ? "rgba(255, 255, 255, .05)" : "rgba(0, 0, 0, .03)",
-  flexDirection: "row-reverse",
-  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-    transform: "rotate(90deg)",
-  },
-  "& .MuiAccordionSummary-content": {
-    marginLeft: theme.spacing(1),
-  },
-}));
-
-const TripAccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-  padding: theme.spacing(2),
-  borderTop: "1px solid rgba(0, 0, 0, .125)",
-}));
-
 export default function Dashboard({ currentUser }) {
   const [expanded, setExpanded] = React.useState("");
   const [trips, setTrips] = React.useState([]);
@@ -91,26 +91,80 @@ export default function Dashboard({ currentUser }) {
   getUserTrips(currentUser.id)
     .get()
     .then((querySnapshot) => {
-      const allTrips = [];
+      const userTrips = [];
       querySnapshot.forEach((doc) => {
-        allTrips.push(doc.data().location);
+        userTrips.push([doc.data().location, doc.data().description]);
       });
-      setTrips(allTrips);
+      setTrips(userTrips);
     });
-  // console.log("trips:", allTrips);
 
-  // const handleChange = (panel) => (event, newExpanded) => {
-  //   setExpanded(newExpanded ? panel : false);
-  // };
+  const handleChange = (panel) => (event, newExpanded) => {
+    setExpanded(newExpanded ? panel : false);
+  };
 
-  // TODO: generate Accordion forEach trip in db.
   return (
     <div className="main-container">
-      <h2>{currentUser ? `${currentUser.displayName}'s Trips` : "Loading..."}</h2>
-      {trips.map((trip) => (
-        <h2>{trip}</h2>
-      ))}
-      {/* {trips.join("")} */}
+      <div className="trip-accordions">
+        <h2>{currentUser ? `${currentUser.displayName}'s Trips` : "Loading..."}</h2>
+
+        {trips.map((trip, index) => (
+          <TripAccordion
+            expanded={expanded === `panel${index}`}
+            onChange={handleChange(`panel${index}`)}
+          >
+            <TripAccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+              <Typography component={"span"} variant={"body"}>
+                <div className="trip-header">
+                  <h3>{trip[0]}</h3>
+                </div>
+              </Typography>
+            </TripAccordionSummary>
+            <TripAccordionDetails>
+              <Typography>
+                <div className="trip-description">
+                  <p>{trip[1]}</p>
+                  <Link to="/trip/1">
+                    <Button variant="contained">Open Trip</Button>
+                  </Link>
+                </div>
+                <TripPreview />
+              </Typography>
+            </TripAccordionDetails>
+          </TripAccordion>
+        ))}
+
+        <div className="addtrip">
+          <FormAccordion
+            expanded={expanded === "formpanel"}
+            onChange={handleChange("formpanel")}
+          >
+            <FormAccordionSummary
+              aria-controls="formpaneld-content"
+              id="formpaneld-header"
+            >
+              <Typography component={"span"} variant={"body"}>
+                <h3 display="inline-block">Add a new trip</h3>
+              </Typography>
+            </FormAccordionSummary>
+            <FormAccordionDetails>
+              <Typography component={"span"} variant={"body"}>
+                <div className="venues-show">
+                  <p>
+                    <TextField
+                      id="outlined-basic"
+                      label="Location Name"
+                      variant="outlined"
+                    />
+                  </p>
+                  <Link to="/trip/1">
+                    <Button variant="contained">Create New Trip</Button>
+                  </Link>
+                </div>
+              </Typography>
+            </FormAccordionDetails>
+          </FormAccordion>
+        </div>
+      </div>
     </div>
   );
 }

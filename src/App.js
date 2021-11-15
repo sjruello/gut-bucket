@@ -8,9 +8,7 @@ import Dashboard from "./pages/dashboard/dashboard.component";
 import Trip from "./pages/trip/trip.component";
 
 // firebase imports:
-import { auth, createUserDocument, getUserTrips } from "./firebase/firebase";
-// import { onSnapshot } from "firebase/firestore";
-// import db from "./firebase/firebase";
+import { auth, createUserDocument } from "./firebase/firebase";
 
 class App extends React.Component {
   constructor(props) {
@@ -38,8 +36,6 @@ class App extends React.Component {
               ...snapShot.data(),
             },
           });
-          console.log("app.js state:", this.state);
-          getUserTrips(this.state.currentUser.id);
         });
       }
       this.setState({ currentUser: userAuth });

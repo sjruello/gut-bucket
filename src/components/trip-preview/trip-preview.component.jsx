@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./trip-venue-list.styles.scss";
+import "./trip-preview.styles.scss";
 
 const TripVenueList = ({ tripID, venueImg }) => (
   <div id="venue-box">

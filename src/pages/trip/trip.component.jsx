@@ -1,5 +1,5 @@
 import React from "react";
-import TripVenueList from "../../components/trip-venue-list/trip-venue-list.component";
+import TripPreview from "../../components/trip-preview/trip-preview.component";
 import Map from "../../components/map/map.component";
 
 import "./trip.styles.scss";
@@ -27,7 +27,7 @@ class Trip extends React.Component {
             <Trip key={id} {...otherSectionProps} />
           ))} */}
           div.
-          <TripVenueList />
+          <TripPreview />
         </div>
       </div>
     );
