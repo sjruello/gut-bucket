@@ -1,11 +1,7 @@
 import React from "react";
-
-import {
-  GoogleMap,
-  useLoadScript,
-  Marker,
-  InfoWindow,
-} from "@react-google-maps/api";
+import RoomIcon from "@mui/icons-material/Room";
+// eslint-disable-next-line
+import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps/api";
 
 import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
 

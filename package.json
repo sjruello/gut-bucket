@@ -14,8 +14,12 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+<<<<<<< HEAD
     "axios": "^0.24.0",
     "firebase": "^9.4.1",
+=======
+    "firebase": "8.10.0",
+>>>>>>> 9db56cdd59952f52abd3282786c4b8907b8af39d
     "google-maps-react": "^2.0.6",
     "google-places": "^0.0.2",
     "node-sass": "^6.0.1",
