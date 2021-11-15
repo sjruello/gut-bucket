@@ -2,12 +2,12 @@ import firebase from "firebase/compat/app";
 import firebaseConfig from "./firebase.config";
 import "firebase/compat/firestore";
 import "firebase/compat/auth";
-import { getFirestore } from "firebase/firestore";
+// import { getFirestore } from "firebase/firestore";
 import { collection, getDocs } from "firebase/firestore";
 
 // creates and initializes an instance of our Firebase application:
 firebase.initializeApp(firebaseConfig);
-const db = getFirestore();
+// const db = getFirestore();
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
