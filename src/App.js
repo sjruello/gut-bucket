@@ -9,8 +9,6 @@ import Trip from "./pages/trip/trip.component";
 
 // firebase imports:
 import { auth, createUserDocument } from "./firebase/firebase";
-// import { onSnapshot } from "firebase/firestore";
-// import db from "./firebase/firebase";
 
 class App extends React.Component {
   constructor(props) {
@@ -38,7 +36,6 @@ class App extends React.Component {
               ...snapShot.data(),
             },
           });
-          console.log(this.state);
         });
       }
       this.setState({ currentUser: userAuth });
@@ -57,9 +54,17 @@ class App extends React.Component {
         {/* Keep Header present always - on top of Routes  */}
         <Header currentUser={this.state.currentUser} />
         <Routes>
-          <Route exact path="/" element={<Dashboard />} />
+          <Route exact path="/" element={<SignInAndSignUpPage />} />
           <Route path="/signin" element={<SignInAndSignUpPage />} />
-          <Route path="/trip/:id" element={<Trip />} />
+          <Route
+            path="/dashboard"
+            element={<Dashboard currentUser={this.state.currentUser} />}
+          />
+
+          <Route
+            path="/trip/:id"
+            element={<Trip currentUser={this.state.currentUser} />}
+          />
         </Routes>
       </div>
     );

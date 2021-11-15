@@ -73,6 +73,7 @@ function Search( {panTo, saveVenues} ) {
     value,
     suggestions: { status, data },
     setValue,
+    // eslint-disable-next-line
     clearSuggestions,
   } = usePlacesAutocomplete({
     requestOptions: {
