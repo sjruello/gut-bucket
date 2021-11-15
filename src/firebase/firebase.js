@@ -25,19 +25,11 @@ const getTable = (table) => {
 
 // getTable("users");
 export const getUserTrips = (userId) => {
-  const allTrips = []
   const getTrips = db.collection("users").doc(userId).collection("trips");
-  getTrips
-    .get()
-    .then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        let tripData = doc._delegate._document.data.value.mapValue.fields
-        console.log(tripData)
-        allTrips.push(tripData);
-      })
-      return allTrips
-    })
+  return getTrips;
 };
+
+getUserTrips("cNsxXriIQYWkp96Zs5eLi1xph9Y2");
 
 export const getVenues = (userId, tripId) => {
   const venues = db
@@ -63,13 +55,13 @@ export const getVenues = (userId, tripId) => {
 
 //Create a new trip
 const newTrip = (userId, location, startDate = null, finishDate = null) => {
-  const newTrip = db.collection("users").doc(userId).collection("trips")
+  const newTrip = db.collection("users").doc(userId).collection("trips");
   newTrip.doc().set({
     finishes: finishDate,
     starts: startDate,
-    location: location
-    })
-}
+    location: location,
+  });
+};
 
 // newTrip("John", "New York", '10/10/2022', '31/10/2022')
 

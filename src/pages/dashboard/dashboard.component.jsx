@@ -13,9 +13,6 @@ import RestaurantIcon from "@mui/icons-material/Restaurant";
 // firebase imports:
 import { getUserTrips, getVenues } from "../../firebase/firebase";
 
-// eslint-disable-next-line
-// import { auth, createUserDocument } from "../../firebase/firebase.js";
-
 import "./dashboard.styles.scss";
 
 const FormAccordion = styled((props) => (
@@ -88,100 +85,32 @@ const TripAccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 
 export default function Dashboard({ currentUser }) {
   const [expanded, setExpanded] = React.useState("");
-  console.log("dashboard user:", currentUser.id);
+  const [trips, setTrips] = React.useState([]);
 
   // grab currentUser's trips
-  let trips = [];
-  trips = getUserTrips(currentUser.id);
+  getUserTrips(currentUser.id)
+    .get()
+    .then((querySnapshot) => {
+      const allTrips = [];
+      querySnapshot.forEach((doc) => {
+        allTrips.push(doc.data().location);
+      });
+      setTrips(allTrips);
+    });
+  // console.log("trips:", allTrips);
 
-  const handleChange = (panel) => (event, newExpanded) => {
-    setExpanded(newExpanded ? panel : false);
-  };
+  // const handleChange = (panel) => (event, newExpanded) => {
+  //   setExpanded(newExpanded ? panel : false);
+  // };
 
   // TODO: generate Accordion forEach trip in db.
   return (
     <div className="main-container">
       <h2>{currentUser ? `${currentUser.displayName}'s Trips` : "Loading..."}</h2>
-      <div className="trip-accordions">
-        {/* something something
-        {this.state.trips.map(({ id, ...otherSectionProps }) => (
-          <Trip key={id} {...otherSectionProps} />
-        ))} */}
-        {/* ////////////////////////////////////////////////// */}
-        <TripAccordion expanded={expanded === "panel1"} onChange={handleChange("panel1")}>
-          <TripAccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-            <Typography component={"span"} variant={"body"}>
-              {trips}
-            </Typography>
-          </TripAccordionSummary>
-          <TripAccordionDetails>
-            <Typography>
-              <div className="trip-description">
-                <p>A journey through the Melbourne CBD</p>
-                <Link to="/trip/1">
-                  <Button variant="contained">Open Trip</Button>
-                </Link>
-              </div>
-              <TripVenueList />
-            </Typography>
-          </TripAccordionDetails>
-        </TripAccordion>
-        {/* /////////////////////////////////////////////////// */}
-        {/* <TripAccordion expanded={expanded === "panel2"} onChange={handleChange("panel2")}>
-          <TripAccordionSummary aria-controls="panel2d-content" id="panel2d-header">
-            <Typography component={"span"} variant={"body2"}>
-              Trip #2 - Adelaide
-            </Typography>
-          </TripAccordionSummary>
-          <TripAccordionDetails>
-            <Typography component={"span"} variant={"body2"}>
-              <div className="trip-description">
-                <p>Adelaide CBD</p>
-                <Link to="/trip/1">
-                  <Button variant="contained">Open Trip</Button>
-                </Link>
-              </div>
-              <TripVenueList />
-            </Typography>
-          </TripAccordionDetails>
-        </TripAccordion>
-      </div> */}
-        {/* Add Trip Accordion: */}
-        <div className="addtrip">
-          <FormAccordion
-            expanded={expanded === "formpanel"}
-            onChange={handleChange("formpanel")}
-          >
-            <FormAccordionSummary
-              aria-controls="formpaneld-content"
-              id="formpaneld-header"
-            >
-              <Typography component={"span"} variant={"body2"}>
-                <h3 display="inline-block">
-                  {/* <AddCircleIcon fontSize="medium" /> */}
-                  Add a new trip
-                </h3>
-              </Typography>
-            </FormAccordionSummary>
-            <FormAccordionDetails>
-              <Typography component={"span"} variant={"body2"}>
-                <div className="venues-show">
-                  <p>
-                    <TextField
-                      id="outlined-basic"
-                      label="Location Name"
-                      variant="outlined"
-                    />
-                  </p>
-                  <Link to="/trip/1">
-                    <Button variant="contained">Create New Trip</Button>
-                  </Link>
-                </div>
-              </Typography>
-            </FormAccordionDetails>
-          </FormAccordion>
-        </div>
-      </div>
+      {trips.map((trip) => (
+        <h2>{trip}</h2>
+      ))}
+      {/* {trips.join("")} */}
     </div>
   );
 }
