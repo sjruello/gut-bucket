@@ -122,6 +122,8 @@ class Dashboard extends React.Component {
   };
 
   componentDidMount() {
+    getUserTrips();
+
     if (!this.state.currentUser) {
       return <p>{""}</p>;
     }
@@ -203,31 +205,28 @@ class Dashboard extends React.Component {
               <FormAccordionDetails>
                 <Typography component={"span"} variant={"body"}>
                   <div className="venues-show">
-                    {/* <TextField
+                    <TextField
                       id="outlined-basic"
                       value={this.state.location}
                       variant="outlined"
                       onChange={this.setLocation}
                     />
                     <Button
-                      onClick={() =>
-                        newTrip(this.handleSubmit)
-                      }
+                      onClick={this.handleSubmit}
                       variant="contained"
                     >
                       Create New Trip
-                    </Button> */}
-                    <form className="newTrip" onSubmit={this.handleSubmit}>
+                    </Button>
+                    {/* <form className="newTrip" onSubmit={this.handleSubmit}>
                       <label for="location">Location:</label>
                       <input
                         type="text"
                         name="location"
                         value={ this.state.location }
                         onChange={ this.setLocation }
-                        //onSubmit={ this.setLocation }
-                      />
-                      <input type="submit" value='Plan Trip'/>
-                    </form>
+                      /> */}
+                      {/* <input type="submit" value='Plan Trip'/>
+                    </form> */}
                   </div>
                 </Typography>
               </FormAccordionDetails>
