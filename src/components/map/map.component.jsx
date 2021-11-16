@@ -109,7 +109,7 @@ function Search( {panTo, saveVenues} ) {
 
             const places_parameters = {
               placeId: results[0].place_id,
-              fields: ["name", "opening_hours", "price_level", "rating", "website"]
+              fields: ["name", "opening_hours", "price_level", "rating", "website", "photo"]
             };
 
             getDetails(places_parameters)

@@ -1,6 +1,7 @@
 import React from "react";
 import TripPreview from "../../components/trip-preview/trip-preview.component";
 import Map from "../../components/map/map.component";
+import VenueBox from './venue-box.component'
 
 import "./trip.styles.scss";
 
@@ -29,8 +30,8 @@ class Trip extends React.Component {
         <div className="map-list">
           {/* {TODO: turn this into cards} */}
           <p>Map List</p>
-            {this.state.venues.map(v => {
-              return <p key={v.name}>{v.name} - {v.website}</p>
+            {this.state.venues.map((v, i) => {
+              return <VenueBox key={i} venue={this.state.venues[i]}></VenueBox>
             })}
         </div>
         <div className="map-display">
