@@ -1,10 +1,10 @@
 const firebaseConfig = {
-  apiKey: "AIzaSyDDP6g-KyEJ0V7GW4uJcxo2aesFEtxVeFc",
-  authDomain: "gut-bucket.firebaseapp.com",
-  projectId: "gut-bucket",
-  storageBucket: "gut-bucket.appspot.com",
-  messagingSenderId: "206574731100",
-  appId: "1:206574731100:web:3948b640d15c9e347f0b99",
+  apiKey: "AIzaSyDVC5EwN3gThM4wME0dzecTvuQndlwgls0",
+  authDomain: "gut-bucket-electric-boogaloo.firebaseapp.com",
+  projectId: "gut-bucket-electric-boogaloo",
+  storageBucket: "gut-bucket-electric-boogaloo.appspot.com",
+  messagingSenderId: "816999772377",
+  appId: "1:816999772377:web:b9d87e0eec54f5687b0ec8"
 };
 
 export default firebaseConfig;
