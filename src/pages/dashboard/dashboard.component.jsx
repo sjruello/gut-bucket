@@ -44,6 +44,10 @@ class Dashboard extends React.Component {
     this.setState({ location: event.target.value });
   };
 
+  handleNewTrip = (event) => {
+    newTrip(this.state.currentUser.id, event.target.value)
+  }
+
   componentDidMount() {
     getUserTrips(this.state.currentUser.id)
       .get()
@@ -194,18 +198,20 @@ class Dashboard extends React.Component {
               <FormAccordionDetails>
                 <Typography component={"span"} variant={"body"}>
                   <div className="venues-show">
-                    <TextField
+                    <form onSubmit={this.handleNewTrip}>
+                    <textarea
+                      type = "text"
                       id="outlined-basic"
-                      value={this.location}
                       variant="outlined"
-                      onInput={this.setLocation}
+                      value = {this.state.location}
+                      onChange = {this.setLocation}
                     />
                     <Button
-                      onClick={() => newTrip(this.state.currentUser.id, this.location)}
                       variant="contained"
                     >
                       Create New Trip
                     </Button>
+                    </form>
                   </div>
                 </Typography>
               </FormAccordionDetails>
