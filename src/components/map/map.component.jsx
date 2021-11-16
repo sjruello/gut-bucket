@@ -43,7 +43,6 @@ const Map = (props) => {
 
   const panTo = React.useCallback(({ lat, lng }) => {
     mapRef.current.panTo({ lat, lng });
-    console.log('panning to:', lat, lng)
     mapRef.current.setZoom(16);
   }, []);
 
@@ -81,18 +80,6 @@ function Search( {panTo, saveVenues} ) {
       radius: 15000,
     },
   });
-
-  // const handleSelect = ({ address }) => {
-  //   setValue( address, false);
-  //   clearSuggestions();
-  //
-  //   getGeocode({ address })
-  //     .then((results) => getLatLng(results[0]))
-  //     .then(({ lat, lng }) => panTo({lat, lng}))
-  //     .catch((error) => {
-  //       console.log('error', error)
-  //     })
-  // }
 
   return (
     <div className="search">

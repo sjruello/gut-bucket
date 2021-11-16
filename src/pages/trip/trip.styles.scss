@@ -25,6 +25,8 @@
   padding: 10px;
   grid-area: map-list;
   min-width: 215px;
+  max-height: 615px;
+  overflow: scroll;
 }
 
 .map-display {

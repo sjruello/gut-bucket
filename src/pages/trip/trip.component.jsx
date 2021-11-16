@@ -6,8 +6,8 @@ import VenueBox from "./venue-box.component";
 import "./trip.styles.scss";
 
 class Trip extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       venues: [],
     };
@@ -15,11 +15,10 @@ class Trip extends React.Component {
   }
   //TODO: fix this shit
   saveVenues(details) {
-    console.log("This is called from trip.component", details);
+    console.log( details.photos[0].getURL );
     const { name, rating, website } = details;
     const venue = { name: name, rating: rating, website: website };
-    console.log(this.state.venues);
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return { venues: [...prevState.venues, venue] };
     });
   }
