@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Link } from "react-router-dom";
 import TripPreview from "../../components/trip-preview/trip-preview.component";
 import Button from "@mui/material/Button";
@@ -95,7 +95,7 @@ export default function Dashboard({ currentUser }) {
   const [trips, setTrips] = React.useState([]);
   const [location, setLocation] = React.useState("Uluru")
 
-  // grab currentUser's trips
+useEffect(() => {
   getUserTrips(currentUser.id)
     .get()
     .then((querySnapshot) => {
@@ -105,6 +105,7 @@ export default function Dashboard({ currentUser }) {
       });
       setTrips(userTrips);
     });
+  }, [])
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
@@ -169,10 +170,7 @@ export default function Dashboard({ currentUser }) {
                     variant="outlined"
                     onInput={(event) => setLocation(event.target.value)}
                   />
-
-                  <Link to="/trip/1">
                     <Button onClick={() => newTrip(currentUser.id, location)}variant="contained">Create New Trip</Button>
-                  </Link>
                 </div>
               </Typography>
             </FormAccordionDetails>

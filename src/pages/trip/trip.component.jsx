@@ -25,7 +25,6 @@ class Trip extends React.Component {
   }
 
   componentDidMount() {
-    // setInterval(() => {console.log(this.props)}, 3000)
   }
 
   render() {
@@ -35,7 +34,7 @@ class Trip extends React.Component {
           {/* {TODO: turn this into cards} */}
           <p>Map List</p>
             {this.state.venues.map((v, i) => {
-              return <VenueBox key={i} venue={this.state.venues[i]}></VenueBox>
+              return <VenueBox key={i} venue={this.state.venues[i]} userId={this.props.currentUser.id}></VenueBox>
             })}
         </div>
         <div className="map-display">
