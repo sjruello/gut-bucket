@@ -13,11 +13,6 @@ export default function VenueBox(props) {
     console.log('Database stuff');
   }
 
-  // const _openWebsite = () => {
-  //   window.open(, '_blank')
-  // }
-
-
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
@@ -28,7 +23,7 @@ export default function VenueBox(props) {
           Rating: {props.venue.rating}/5
         </Typography>
         <Typography variant="body2">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque facilis, debitis quam quo sint aliquam, temporibus quaerat nam numquam unde odit mollitia suscipit id, repellat libero nostrum laboriosam magni reiciendis.
+
         </Typography>
       </CardContent>
       <CardActions>

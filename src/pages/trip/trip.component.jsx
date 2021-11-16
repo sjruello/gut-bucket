@@ -6,8 +6,8 @@ import VenueBox from './venue-box.component'
 import "./trip.styles.scss";
 
 class Trip extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       venues: []
     };
@@ -18,7 +18,6 @@ class Trip extends React.Component {
     console.log('This is called from trip.component', details);
     const { name, rating, website } = details;
     const venue = { name: name, rating: rating, website: website };
-    console.log(this.state.venues)
     this.setState(prevState => {
       return { venues: [...prevState.venues, venue] };
     })
@@ -28,10 +27,8 @@ class Trip extends React.Component {
     return (
       <div className="container">
         <div className="map-list">
-          {/* {TODO: turn this into cards} */}
-          <p>Map List</p>
             {this.state.venues.map((v, i) => {
-              return <VenueBox key={i} venue={this.state.venues[i]}></VenueBox>
+              return <VenueBox key={i} venue={this.state.venues[i]}/>
             })}
         </div>
         <div className="map-display">
