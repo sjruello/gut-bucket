@@ -13,10 +13,17 @@ import { auth, createUserDocument } from "./firebase/firebase";
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { currentUser: null };
+    this.state = { currentUser: null,
+                   currentTrip: ""  
+       };
+    this.handleTrip = this.handleTrip.bind(this);
   }
 
   unsubscribeFromAuth = null;
+
+  handleTrip = (tripId) => {
+    this.setState({currentTrip: tripId})
+  }
 
   //React lifecycle method: check if user is signed in:
   componentDidMount() {
@@ -58,11 +65,11 @@ class App extends React.Component {
           <Route path="/signin" element={<SignInAndSignUpPage />} />
           <Route
             path="/dashboard"
-            element={<Dashboard currentUser={this.state.currentUser} />}
+            element={<Dashboard currentUser={this.state.currentUser} getTrip={this.handleTrip} />}
           />
           <Route
             path="/trip/:tripID"
-            element={<Trip currentUser={this.state.currentUser} />}
+            element={<Trip currentUser={this.state.currentUser} tripId={this.state.currentTrip}/>}
           />
         </Routes>
       </div>
