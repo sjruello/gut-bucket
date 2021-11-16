@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import TripPreview from "../../components/trip-preview/trip-preview.component";
 import Button from "@mui/material/Button";
@@ -12,7 +12,6 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
 // firebase imports:
 import { getUserTrips, newTrip, getVenues } from "../../firebase/firebase";
-
 import { useLocation, NavLink, Outlet, useSearchParams } from "react-router-dom";
 
 import "./dashboard.styles.scss";
@@ -93,7 +92,11 @@ const FormAccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 export default function Dashboard({ currentUser }) {
   const [expanded, setExpanded] = React.useState("");
   const [trips, setTrips] = React.useState([]);
-  const [location, setLocation] = React.useState("Uluru")
+  const [location, setLocation] = React.useState("Uluru");
+
+  if (!currentUser) {
+    return <p>{""}</p>;
+  }
 
 useEffect(() => {
   getUserTrips(currentUser.id)
@@ -166,11 +169,16 @@ useEffect(() => {
                 <div className="venues-show">
                   <TextField
                     id="outlined-basic"
-                    value = {location}
+                    value={location}
                     variant="outlined"
                     onInput={(event) => setLocation(event.target.value)}
                   />
-                    <Button onClick={() => newTrip(currentUser.id, location)}variant="contained">Create New Trip</Button>
+                    <Button
+                      onClick={() => newTrip(currentUser.id, location)}
+                      variant="contained"
+                    >
+                      Create New Trip
+                    </Button>
                 </div>
               </Typography>
             </FormAccordionDetails>
