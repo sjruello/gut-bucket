@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import TripPreview from "../../components/trip-preview/trip-preview.component";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
@@ -12,167 +12,209 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
 // firebase imports:
 import { getUserTrips, newTrip, getVenues } from "../../firebase/firebase";
-
+import { useLocation, NavLink, Outlet, useSearchParams } from "react-router-dom";
 import "./dashboard.styles.scss";
 
-const TripAccordion = styled((props) => (
-  <MuiAccordion disableGutters elevation={0} square {...props} />
-))(({ theme }) => ({
-  border: `1px solid ${theme.palette.divider}`,
-  "&:not(:last-child)": {
-    borderBottom: 0,
-  },
-  "&:before": {
-    display: "none",
-  },
-}));
+const QueryNavLink = ({ to, ...props }) => {
+  let location = useLocation();
+  return <NavLink to={to + location.search} {...props} />;
+};
 
-const TripAccordionSummary = styled((props) => (
-  <MuiAccordionSummary
-    expandIcon={<RestaurantIcon sx={{ fontSize: "2.4rem" }} color="primary" />}
-    {...props}
-  />
-))(({ theme }) => ({
-  backgroundColor:
-    theme.palette.mode === "dark" ? "rgba(255, 255, 255, .05)" : "rgba(0, 0, 0, .03)",
-  flexDirection: "row-reverse",
-  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-    transform: "rotate(90deg)",
-  },
-  "& .MuiAccordionSummary-content": {
-    marginLeft: theme.spacing(1),
-  },
-}));
+class Dashboard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentUser: this.props.currentUser,
+      expanded: "",
+      trips: [],
+      location: "",
+      userTrips: [],
+    };
 
-const TripAccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-  padding: theme.spacing(2),
-  borderTop: "1px solid rgba(0, 0, 0, .125)",
-}));
+    this.handleChange = this.handleChange.bind(this);
+    this.setLocation = this.setLocation.bind(this);
+    // this.setTrips = this.setTrips.bind(this);
+  }
 
-const FormAccordion = styled((props) => (
-  <MuiAccordion disableGutters elevation={0} square {...props} />
-))(({ theme }) => ({
-  border: `1px solid ${theme.palette.divider}`,
-  "&:not(:last-child)": {
-    borderBottom: 0,
-  },
-  "&:before": {
-    display: "none",
-  },
-}));
-
-const FormAccordionSummary = styled((props) => (
-  <MuiAccordionSummary
-    expandIcon={<AddCircleIcon sx={{ fontSize: "2.9rem" }} color="primary" />}
-    {...props}
-  />
-))(({ theme }) => ({
-  backgroundColor:
-    theme.palette.mode === "dark" ? "rgba(255, 255, 255, .05)" : "rgba(0, 0, 0, .03)",
-  flexDirection: "row-reverse",
-  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-    transform: "rotate(90deg)",
-  },
-  "& .MuiAccordionSummary-content": {
-    marginLeft: theme.spacing(1),
-  },
-}));
-
-const FormAccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-  padding: theme.spacing(2),
-  borderTop: "1px solid rgba(0, 0, 0, .125)",
-}));
-
-export default function Dashboard({ currentUser }) {
-  const [expanded, setExpanded] = React.useState("");
-  const [trips, setTrips] = React.useState([]);
-  const [location, setLocation] = React.useState("Uluru")
-
-  // grab currentUser's trips
-  getUserTrips(currentUser.id)
-    .get()
-    .then((querySnapshot) => {
-      const userTrips = [];
-      querySnapshot.forEach((doc) => {
-        userTrips.push([doc.id, doc.data().location, doc.data().description]);
-        // userTrips.push([doc.data().location, doc.data().description]);
-      });
-      setTrips(userTrips);
-    });
-
-  const handleChange = (panel) => (event, newExpanded) => {
-    setExpanded(newExpanded ? panel : false);
+  handleChange = (panel) => (event, newExpanded) => {
+    this.setState({ expanded: newExpanded ? panel : false });
   };
 
-  return (
-    <div className="main-container">
-      <div className="trip-accordions">
-        <h2>
-          {currentUser
-            ? `${currentUser.displayName.split(" ").slice(0, -1).join(" ")}'s Trips`
-            : "Loading..."}
-        </h2>
+  setLocation = (event) => {
+    this.setState({ location: event.target.value });
+  };
 
-        {trips.map((trip, index) => (
-          <TripAccordion
-            expanded={expanded === `panel${index}`}
-            onChange={handleChange(`panel${index}`)}
-            key={trip[0]}
-            component={"span"}
-          >
-            <TripAccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-              <Typography component={"span"} variant={"body"}>
-                <div className="trip-header">
-                  <h3>{trip[1]}</h3>
-                </div>
-              </Typography>
-            </TripAccordionSummary>
-            <TripAccordionDetails component={"span"}>
-              <Typography component={"span"}>
-                <div className="trip-description">
-                  <p>{trip[2]}</p>
-                  <Link to="/trip/1">
-                    <Button variant="contained">Open Trip</Button>
-                  </Link>
-                </div>
-                <TripPreview userID={currentUser.id} tripID={trip[0]} />
-              </Typography>
-            </TripAccordionDetails>
-          </TripAccordion>
-        ))}
+  componentDidMount() {
+    getUserTrips(this.state.currentUser.id)
+      .get()
+      .then((querySnapshot) => {
+        const userTrips = [];
+        querySnapshot.forEach((doc) => {
+          userTrips.push([doc.id, doc.data().location, doc.data().description]);
+        });
+        this.setState({ userTrips: userTrips });
+      });
+  }
 
-        <div className="addtrip">
-          <FormAccordion
-            expanded={expanded === "formpanel"}
-            onChange={handleChange("formpanel")}
-          >
-            <FormAccordionSummary
-              aria-controls="formpaneld-content"
-              id="formpaneld-header"
+  // export default function Dashboard({ currentUser }) {
+  // const [expanded, setExpanded] = React.useState("");
+  // const [trips, setTrips] = React.useState([]);
+  // const [location, setLocation] = React.useState("Uluru");
+
+  //   // if (!currentUser) {
+  //   //   return <p>{""}</p>;
+  //   // }
+
+  render() {
+    if (!this.state.currentUser) {
+      return <p>{""}</p>;
+    }
+
+    const TripAccordion = styled((props) => (
+      <MuiAccordion disableGutters elevation={0} square {...props} />
+    ))(({ theme }) => ({
+      border: `1px solid ${theme.palette.divider}`,
+      "&:not(:last-child)": {
+        borderBottom: 0,
+      },
+      "&:before": {
+        display: "none",
+      },
+    }));
+
+    const TripAccordionSummary = styled((props) => (
+      <MuiAccordionSummary
+        expandIcon={<RestaurantIcon sx={{ fontSize: "2.4rem" }} color="primary" />}
+        {...props}
+      />
+    ))(({ theme }) => ({
+      backgroundColor:
+        theme.palette.mode === "dark" ? "rgba(255, 255, 255, .05)" : "rgba(0, 0, 0, .03)",
+      flexDirection: "row-reverse",
+      "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+        transform: "rotate(90deg)",
+      },
+      "& .MuiAccordionSummary-content": {
+        marginLeft: theme.spacing(1),
+      },
+    }));
+
+    const TripAccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
+      padding: theme.spacing(2),
+      borderTop: "1px solid rgba(0, 0, 0, .125)",
+    }));
+
+    const FormAccordion = styled((props) => (
+      <MuiAccordion disableGutters elevation={0} square {...props} />
+    ))(({ theme }) => ({
+      border: `1px solid ${theme.palette.divider}`,
+      "&:not(:last-child)": {
+        borderBottom: 0,
+      },
+      "&:before": {
+        display: "none",
+      },
+    }));
+
+    const FormAccordionSummary = styled((props) => (
+      <MuiAccordionSummary
+        expandIcon={<AddCircleIcon sx={{ fontSize: "2.9rem" }} color="primary" />}
+        {...props}
+      />
+    ))(({ theme }) => ({
+      backgroundColor:
+        theme.palette.mode === "dark" ? "rgba(255, 255, 255, .05)" : "rgba(0, 0, 0, .03)",
+      flexDirection: "row-reverse",
+      "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+        transform: "rotate(90deg)",
+      },
+      "& .MuiAccordionSummary-content": {
+        marginLeft: theme.spacing(1),
+      },
+    }));
+
+    const FormAccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
+      padding: theme.spacing(2),
+      borderTop: "1px solid rgba(0, 0, 0, .125)",
+    }));
+
+    return (
+      <div className="main-container">
+        <div className="trip-accordions">
+          <h2>
+            {this.state.currentUser
+              ? `${this.state.currentUser.displayName
+                  .split(" ")
+                  .slice(0, -1)
+                  .join(" ")}'s Trips`
+              : "Loading..."}
+          </h2>
+          {this.state.userTrips.map((trip, index) => (
+            <TripAccordion
+              expanded={this.state.expanded === `panel${index}`}
+              onChange={this.handleChange(`panel${index}`)}
+              key={trip[0]}
+              component={"span"}
             >
-              <Typography component={"span"} variant={"body"}>
-                <h3 display="inline-block">Add a new trip</h3>
-              </Typography>
-            </FormAccordionSummary>
-            <FormAccordionDetails>
-              <Typography component={"span"} variant={"body"}>
-                <div className="venues-show">
-                  <TextField
-                    id="outlined-basic"
-                    value = {location}
-                    variant="outlined"
-                    onInput={(event) => setLocation(event.target.value)}
-                  />
-
-                  <Link to="/trip/1">
-                    <Button onClick={() => newTrip(currentUser.id, location)}variant="contained">Create New Trip</Button>
-                  </Link>
-                </div>
-              </Typography>
-            </FormAccordionDetails>
-          </FormAccordion>
+              <TripAccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+                <Typography component={"span"} variant={"body"}>
+                  <div className="trip-header">
+                    <h3>{trip[1]}</h3>
+                  </div>
+                </Typography>
+              </TripAccordionSummary>
+              <TripAccordionDetails component={"span"}>
+                <Typography component={"span"}>
+                  <div className="trip-description">
+                    <p>{trip[2]}</p>
+                    <QueryNavLink key={trip[0]} to={`/trip/${trip[0]}`}>
+                      <h4>{trip[1]}</h4>
+                      <Button variant="contained">Open Trip</Button>
+                    </QueryNavLink>
+                  </div>
+                  <TripPreview userID={this.state.currentUser.id} tripID={trip[0]} />
+                </Typography>
+              </TripAccordionDetails>
+            </TripAccordion>
+          ))}
+          {/* /////////////////// Form Accordion //////////////////////// */}
+          <div className="addtrip">
+            <FormAccordion
+              expanded={this.state.expanded === "formpanel"}
+              onChange={this.handleChange("formpanel")}
+            >
+              <FormAccordionSummary
+                aria-controls="formpaneld-content"
+                id="formpaneld-header"
+              >
+                <Typography component={"span"} variant={"body"}>
+                  <h3 display="inline-block">Add a new trip</h3>
+                </Typography>
+              </FormAccordionSummary>
+              <FormAccordionDetails>
+                <Typography component={"span"} variant={"body"}>
+                  <div className="venues-show">
+                    <TextField
+                      id="outlined-basic"
+                      value={this.location}
+                      variant="outlined"
+                      onInput={this.setLocation}
+                    />
+                    <Button
+                      onClick={() => newTrip(this.state.currentUser.id, this.location)}
+                      variant="contained"
+                    >
+                      Create New Trip
+                    </Button>
+                  </div>
+                </Typography>
+              </FormAccordionDetails>
+            </FormAccordion>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
+
+export default Dashboard;
