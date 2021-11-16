@@ -49,11 +49,11 @@ export const getVenues = (userId, tripId) => {
 
 //POST functions
 //Create a new trip
-export const newTrip = (userId, location, startDate = null, finishDate = null) => {
+export const newTrip = (userId, location) => {
   const newTrip = db.collection("users").doc(userId).collection("trips");
   newTrip.doc().set({
-    finishes: finishDate,
-    starts: startDate,
+    // finishes: finishDate,
+    // starts: startDate,
     location: location,
   });
 };

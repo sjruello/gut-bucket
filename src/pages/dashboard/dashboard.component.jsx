@@ -27,7 +27,7 @@ class Dashboard extends React.Component {
       currentUser: this.props.currentUser,
       expanded: "",
       trips: [],
-      location: "",
+      location: "BOOP",
       userTrips: [],
     };
 
@@ -44,11 +44,24 @@ class Dashboard extends React.Component {
     this.setState({ location: event.target.value });
   };
 
+<<<<<<< HEAD
   handleNewTrip = (event) => {
     newTrip(this.state.currentUser.id, event.target.value)
   }
+=======
+  handleSubmit = (event) => {
+    event.preventDefault();
+
+    console.log(this.state.currentUser.id, this.state.location);
+    newTrip(this.state.currentUser.id, this.state.location);
+  };
+>>>>>>> 4ea1492066410d63afc2d5872f9fb9b43facbc46
 
   componentDidMount() {
+    if (!this.state.currentUser) {
+      return <p>{""}</p>;
+    }
+
     getUserTrips(this.state.currentUser.id)
       .get()
       .then((querySnapshot) => {
@@ -70,10 +83,6 @@ class Dashboard extends React.Component {
   //   // }
 
   render() {
-    if (!this.state.currentUser) {
-      return <p>{""}</p>;
-    }
-
     const TripAccordion = styled((props) => (
       <MuiAccordion disableGutters elevation={0} square {...props} />
     ))(({ theme }) => ({
@@ -151,7 +160,7 @@ class Dashboard extends React.Component {
                   .split(" ")
                   .slice(0, -1)
                   .join(" ")}'s Trips`
-              : "Loading..."}
+              : "No User Found "}
           </h2>
           {this.state.userTrips.map((trip, index) => (
             <TripAccordion
