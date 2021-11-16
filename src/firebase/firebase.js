@@ -32,12 +32,12 @@ export const getUserTrips = (userId) => {
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         let tripData = doc._delegate._document.data.value.mapValue.fields
-        console.log(tripData)
         allTrips.push(tripData);
       })
-      return allTrips
     })
+    return allTrips
 };
+
 
 export const getVenues = (userId, tripId) => {
   const venues = db

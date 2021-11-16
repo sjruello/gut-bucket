@@ -97,6 +97,11 @@ export default function Dashboard({ currentUser }) {
     setExpanded(newExpanded ? panel : false);
   };
 
+  const trips = getUserTrips("John")
+  trips.forEach((trip) => {
+    console.log(trip.location)
+  })
+
   // TODO: generate Accordion forEach trip in db.
   return (
     <div className="main-container">
