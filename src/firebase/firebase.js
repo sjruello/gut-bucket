@@ -59,9 +59,14 @@ export const newTrip = (userId, location, startDate = null, finishDate = null) =
 };
 
 export const newVenue = (userId, tripId, name) => {
-  const newVenue = db.collection("users").doc(userId).collection("trips").doc(tripId).collection("venues");
+  const newVenue = db
+    .collection("users")
+    .doc(userId)
+    .collection("trips")
+    .doc(tripId)
+    .collection("venues");
   newVenue.doc().set({
-    name: name
+    name: name,
   });
 };
 
