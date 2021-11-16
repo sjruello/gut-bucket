@@ -13,7 +13,14 @@ import RestaurantIcon from "@mui/icons-material/Restaurant";
 // firebase imports:
 import { getUserTrips, getVenues } from "../../firebase/firebase";
 
+import { useLocation, NavLink, Outlet, useSearchParams } from "react-router-dom";
+
 import "./dashboard.styles.scss";
+
+function QueryNavLink({ to, ...props }) {
+  let location = useLocation();
+  return <NavLink to={to + location.search} {...props} />;
+}
 
 const TripAccordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -94,7 +101,6 @@ export default function Dashboard({ currentUser }) {
       const userTrips = [];
       querySnapshot.forEach((doc) => {
         userTrips.push([doc.id, doc.data().location, doc.data().description]);
-        // userTrips.push([doc.data().location, doc.data().description]);
       });
       setTrips(userTrips);
     });
@@ -111,7 +117,6 @@ export default function Dashboard({ currentUser }) {
             ? `${currentUser.displayName.split(" ").slice(0, -1).join(" ")}'s Trips`
             : "Loading..."}
         </h2>
-
         {trips.map((trip, index) => (
           <TripAccordion
             expanded={expanded === `panel${index}`}
@@ -130,16 +135,17 @@ export default function Dashboard({ currentUser }) {
               <Typography component={"span"}>
                 <div className="trip-description">
                   <p>{trip[2]}</p>
-                  <Link to="/trip/1">
+                  <QueryNavLink key={trip[0]} to={`/trip/${trip[0]}`}>
+                    <h4>{trip[1]}</h4>
                     <Button variant="contained">Open Trip</Button>
-                  </Link>
+                  </QueryNavLink>
                 </div>
                 <TripPreview userID={currentUser.id} tripID={trip[0]} />
               </Typography>
             </TripAccordionDetails>
           </TripAccordion>
         ))}
-
+        {/* /////////////////// Form Accordion //////////////////////// */}
         <div className="addtrip">
           <FormAccordion
             expanded={expanded === "formpanel"}
