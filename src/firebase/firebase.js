@@ -36,7 +36,6 @@ export const getUserTrips = (userId) => {
   return getTrips;
 };
 
-
 export const getVenues = (userId, tripId) => {
   const getVenues = db
     .collection("users")
@@ -46,21 +45,9 @@ export const getVenues = (userId, tripId) => {
     .collection("venues");
 
   return getVenues;
-  // venues
-  //   .get()
-  //   .then((querySnapshot) => {
-  //     querySnapshot.forEach((doc) => {
-  //       console.log(doc._delegate._document.data.value.mapValue.fields);
-  //     });
-  //   })
-  //   .catch((error) => {
-  //     console.log("Error getting document:", error);
-  //   });
 };
 
-// getVenues("John", "denver");
 //POST functions
-
 //Create a new trip
 export const newTrip = (userId, location, startDate = null, finishDate = null) => {
   const newTrip = db.collection("users").doc(userId).collection("trips");
@@ -78,7 +65,6 @@ export const newVenue = (userId, tripId, name) => {
   });
 };
 
-// gives us access to GoogleAuthProvider platform from auth library
 const provider = new firebase.auth.GoogleAuthProvider();
 // trigger google user prompt:
 provider.setCustomParameters({ prompt: "select_account" });
@@ -92,11 +78,6 @@ export const createUserDocument = async (userAuth, additionalData) => {
 
   // get userID from firestore queryReference object
   const userRef = firestore.doc(`users/${userAuth.uid}`);
-
-  // const querySnapshot = await getDocs(collection(db, "trips"));
-  // querySnapshot.forEach((doc) => {
-  //   console.log(`${doc.id} => ${doc.data()}`);
-  // });
 
   // get snapShot using .get(), async function - use await
   const snapShot = await userRef.get();
@@ -117,9 +98,6 @@ export const createUserDocument = async (userAuth, additionalData) => {
       console.log("error creating user", error.message);
     }
   }
-  // Firestore library either return a reference or a snapshot object.
-  // of these, they can be either document or collection versions.
-  // console.log(snapShot);
   return userRef;
 };
 

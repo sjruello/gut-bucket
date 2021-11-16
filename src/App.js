@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 
@@ -60,9 +60,8 @@ class App extends React.Component {
             path="/dashboard"
             element={<Dashboard currentUser={this.state.currentUser} />}
           />
-
           <Route
-            path="/trip/:id"
+            path="/trip/:tripID"
             element={<Trip currentUser={this.state.currentUser} />}
           />
         </Routes>
