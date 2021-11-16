@@ -21,12 +21,12 @@ export const firestore = firebase.firestore();
 
 //GET functions
 
-const getTable = (table) => {
-  db.collection(table)
+const getUsers = () => {
+  db.collection("users")
     .get()
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        console.log(doc._delegate._document.data.value.mapValue.fields);
+        console.log(doc.id);
       });
     });
 };
@@ -62,7 +62,7 @@ export const getVenues = (userId, tripId) => {
 //POST functions
 
 //Create a new trip
-const newTrip = (userId, location, startDate = null, finishDate = null) => {
+export const newTrip = (userId, location, startDate = null, finishDate = null) => {
   const newTrip = db.collection("users").doc(userId).collection("trips");
   newTrip.doc().set({
     finishes: finishDate,
