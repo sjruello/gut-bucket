@@ -15,7 +15,7 @@ class Trip extends React.Component {
   }
   //TODO: fix this shit
   saveVenues(details) {
-    console.log("This is called from trip.component", details);
+    console.log( details.photos[0].getURL );
     const { name, rating, website } = details;
     const venue = { name: name, rating: rating, website: website };
     this.setState(prevState => {
