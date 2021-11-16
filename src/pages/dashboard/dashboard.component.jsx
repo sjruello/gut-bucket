@@ -27,7 +27,7 @@ class Dashboard extends React.Component {
       currentUser: this.props.currentUser,
       expanded: "",
       trips: [],
-      location: "",
+      location: "BOOP",
       userTrips: [],
     };
 
@@ -44,7 +44,18 @@ class Dashboard extends React.Component {
     this.setState({ location: event.target.value });
   };
 
+  handleSubmit = (event) => {
+    event.preventDefault();
+
+    console.log(this.state.currentUser.id, this.state.location);
+    newTrip(this.state.currentUser.id, this.state.location);
+  };
+
   componentDidMount() {
+    if (!this.state.currentUser) {
+      return <p>{""}</p>;
+    }
+
     getUserTrips(this.state.currentUser.id)
       .get()
       .then((querySnapshot) => {
@@ -66,10 +77,6 @@ class Dashboard extends React.Component {
   //   // }
 
   render() {
-    if (!this.state.currentUser) {
-      return <p>{""}</p>;
-    }
-
     const TripAccordion = styled((props) => (
       <MuiAccordion disableGutters elevation={0} square {...props} />
     ))(({ theme }) => ({
@@ -147,7 +154,7 @@ class Dashboard extends React.Component {
                   .split(" ")
                   .slice(0, -1)
                   .join(" ")}'s Trips`
-              : "Loading..."}
+              : "No User Found "}
           </h2>
           {this.state.userTrips.map((trip, index) => (
             <TripAccordion
@@ -194,18 +201,30 @@ class Dashboard extends React.Component {
               <FormAccordionDetails>
                 <Typography component={"span"} variant={"body"}>
                   <div className="venues-show">
-                    <TextField
+                    {/* <TextField
                       id="outlined-basic"
-                      value={this.location}
+                      // value={place}
                       variant="outlined"
-                      onInput={this.setLocation}
+                      onSubmit={this.setLocation}
                     />
                     <Button
-                      onClick={() => newTrip(this.state.currentUser.id, this.location)}
+                      onClick={() =>
+                        newTrip(this.state.currentUser.id, this.state.location)
+                      }
                       variant="contained"
                     >
                       Create New Trip
-                    </Button>
+                    </Button> */}
+                    <form class="newTrip" onSubmit={this.handleSubmit}>
+                      <label for="location">Location:</label>
+                      <input
+                        type="text"
+                        name="location"
+                        // onChange={(e) => this.setLocation(e.target.value)}
+                        // onSubmit={{setLocation: event.target.value }}
+                      />
+                      <input type="submit" />
+                    </form>
                   </div>
                 </Typography>
               </FormAccordionDetails>
