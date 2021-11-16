@@ -71,7 +71,12 @@ export const newTrip = (userId, location, startDate = null, finishDate = null) =
   });
 };
 
-// newTrip("John", "New York", '10/10/2022', '31/10/2022')
+export const newVenue = (userId, tripId, name) => {
+  const newVenue = db.collection("users").doc(userId).collection("trips").doc(tripId).collection("venues");
+  newVenue.doc().set({
+    name: name
+  });
+};
 
 // gives us access to GoogleAuthProvider platform from auth library
 const provider = new firebase.auth.GoogleAuthProvider();

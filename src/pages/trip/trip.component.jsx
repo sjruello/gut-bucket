@@ -24,6 +24,10 @@ class Trip extends React.Component {
     })
   }
 
+  componentDidMount() {
+    // setInterval(() => {console.log(this.props)}, 3000)
+  }
+
   render() {
     return (
       <div className="container">

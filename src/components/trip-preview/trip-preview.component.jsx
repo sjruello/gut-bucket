@@ -1,11 +1,12 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { getVenues } from "../../firebase/firebase";
 import "./trip-preview.styles.scss";
 
 const TripPreview = ({ userID, tripID }) => {
-  const [venues, setVenues] = React.useState([]);
+  const [venues, setVenues] = useState([]);
 
-  getVenues(userID, tripID)
+useEffect (() => {
+    getVenues(userID, tripID)
     .get()
     .then((querySnapshot) => {
       const tripVenues = [];
@@ -13,7 +14,9 @@ const TripPreview = ({ userID, tripID }) => {
         tripVenues.push([doc.id, doc.data().name, doc.data().address, doc.data().image]);
       });
       setVenues(tripVenues);
-    });
+    })
+}, [])
+
 
   return (
     <div id="venue-box">
