@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, component } from "react";
 import { Link } from "react-router-dom";
 import TripPreview from "../../components/trip-preview/trip-preview.component";
 import Button from "@mui/material/Button";
@@ -13,8 +13,19 @@ import RestaurantIcon from "@mui/icons-material/Restaurant";
 // firebase imports:
 import { getUserTrips, newTrip, getVenues } from "../../firebase/firebase";
 import { useLocation, NavLink, Outlet, useSearchParams } from "react-router-dom";
-
 import "./dashboard.styles.scss";
+
+class Dashboard extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentUserId: ""
+    } 
+  }
+
+componentDidMount() {
+
+}
 
 function QueryNavLink({ to, ...props }) {
   let location = useLocation();
@@ -114,6 +125,7 @@ useEffect(() => {
     setExpanded(newExpanded ? panel : false);
   };
 
+render() {
   return (
     <div className="main-container">
       <div className="trip-accordions">
@@ -187,4 +199,6 @@ useEffect(() => {
       </div>
     </div>
   );
+}
+
 }
