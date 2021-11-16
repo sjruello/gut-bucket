@@ -1,7 +1,5 @@
 .main-container {
   margin: 0 auto;
-  width: 85vw;
-  max-width: 900px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,7 +7,8 @@
 }
 
 .trip-accordions {
-  width: 65vw;
+  width: 50vw;
+  min-width: 600px;
 }
 
 .panel-header {
@@ -19,7 +18,6 @@
 .addtrip {
   margin-top: 20px;
   text-align: center;
-  width: 65vw;
 }
 
 #venue-box {

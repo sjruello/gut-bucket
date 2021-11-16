@@ -1,16 +1,15 @@
-import React from "react";
-// eslint-disable-next-line
+import React, { useState } from "react";
 import RoomIcon from "@mui/icons-material/Room";
 // eslint-disable-next-line
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps/api";
 
-import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
+import usePlacesAutocomplete, { getGeocode, getLatLng , getDetails } from "use-places-autocomplete";
 
 import {
   Combobox,
   ComboboxInput,
   ComboboxPopover,
-  // ComboboxList,
+  ComboboxList,
   ComboboxOption,
 } from "@reach/combobox";
 
@@ -19,7 +18,7 @@ import "./map.styles.scss";
 import "@reach/combobox/styles.css";
 
 // Display Map
-const Map = ({ location, zoomLevel }) => {
+const Map = (props) => {
   const libraries = ["places"];
   const mapContainerStyle = {
     height: "600px",
@@ -44,7 +43,8 @@ const Map = ({ location, zoomLevel }) => {
 
   const panTo = React.useCallback(({ lat, lng }) => {
     mapRef.current.panTo({ lat, lng });
-    mapRef.current.setZoom(18);
+    console.log('panning to:', lat, lng)
+    mapRef.current.setZoom(16);
   }, []);
 
   if (loadError) return "Error loading Maps";
@@ -52,7 +52,7 @@ const Map = ({ location, zoomLevel }) => {
 
   return (
     <div className="map">
-      <Search panTo={panTo} />
+      <Search saveVenues={props.saveVenues} panTo={panTo}/>
 
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
@@ -66,7 +66,8 @@ const Map = ({ location, zoomLevel }) => {
 };
 
 // Search box component within map
-function Search({ panTo }) {
+function Search( {panTo, saveVenues} ) {
+
   const {
     ready,
     value,
@@ -75,25 +76,55 @@ function Search({ panTo }) {
     // eslint-disable-next-line
     clearSuggestions,
   } = usePlacesAutocomplete({
-    requestOpetions: {
+    requestOptions: {
       location: { lat: () => -37.813629, lng: () => 144.963058 },
       radius: 15000,
     },
   });
 
+  // const handleSelect = ({ address }) => {
+  //   setValue( address, false);
+  //   clearSuggestions();
+  //
+  //   getGeocode({ address })
+  //     .then((results) => getLatLng(results[0]))
+  //     .then(({ lat, lng }) => panTo({lat, lng}))
+  //     .catch((error) => {
+  //       console.log('error', error)
+  //     })
+  // }
+
   return (
     <div className="search">
       <Combobox
         onSelect={async (address) => {
+          setValue(address, false);
+          clearSuggestions();
+
           try {
             const results = await getGeocode({ address });
             const { lat, lng } = await getLatLng(results[0]);
-            panTo({ lat, lng });
+
+            console.log(results[0]);
+
+            const places_parameters = {
+              placeId: results[0].place_id,
+              fields: ["name", "opening_hours", "price_level", "rating", "website"]
+            };
+
+            getDetails(places_parameters)
+            .then((details) => {
+              console.log("Details: ", details)
+              saveVenues(details);
+              panTo({ lat, lng });
+            })
+            .catch((error) => {
+              console.log(error);
+            })
+
           } catch (error) {
             console.log("error");
           }
-
-          // console.log(address);
         }}
       >
         <div className="search-form">
@@ -103,14 +134,16 @@ function Search({ panTo }) {
               setValue(e.target.value);
             }}
             disabled={!ready}
-            placeholder={"Enter an address"}
+            placeholder={"Where would you like to go?"}
           />
         </div>
         <ComboboxPopover>
+        <ComboboxList>
           {status === "OK" &&
             data.map(({ id, description }) => (
               <ComboboxOption key={id} value={description} />
             ))}
+        </ComboboxList>
         </ComboboxPopover>
       </Combobox>
     </div>
