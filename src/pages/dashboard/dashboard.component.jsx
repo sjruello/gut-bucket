@@ -20,6 +20,74 @@ const QueryNavLink = ({ to, ...props }) => {
   return <NavLink to={to + location.search} {...props} />;
 };
 
+const TripAccordion = styled((props) => (
+  <MuiAccordion disableGutters elevation={0} square {...props} />
+))(({ theme }) => ({
+  border: `1px solid ${theme.palette.divider}`,
+  "&:not(:last-child)": {
+    borderBottom: 0,
+  },
+  "&:before": {
+    display: "none",
+  },
+}));
+
+const TripAccordionSummary = styled((props) => (
+  <MuiAccordionSummary
+    expandIcon={<RestaurantIcon sx={{ fontSize: "2.4rem" }} color="primary" />}
+    {...props}
+  />
+))(({ theme }) => ({
+  backgroundColor:
+    theme.palette.mode === "dark" ? "rgba(255, 255, 255, .05)" : "rgba(0, 0, 0, .03)",
+  flexDirection: "row-reverse",
+  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+    transform: "rotate(90deg)",
+  },
+  "& .MuiAccordionSummary-content": {
+    marginLeft: theme.spacing(1),
+  },
+}));
+
+const TripAccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
+  padding: theme.spacing(2),
+  borderTop: "1px solid rgba(0, 0, 0, .125)",
+}));
+
+const FormAccordion = styled((props) => (
+  <MuiAccordion disableGutters elevation={0} square {...props} />
+))(({ theme }) => ({
+  border: `1px solid ${theme.palette.divider}`,
+  "&:not(:last-child)": {
+    borderBottom: 0,
+  },
+  "&:before": {
+    display: "none",
+  },
+}));
+
+const FormAccordionSummary = styled((props) => (
+  <MuiAccordionSummary
+    expandIcon={<AddCircleIcon sx={{ fontSize: "2.9rem" }} color="primary" />}
+    {...props}
+  />
+))(({ theme }) => ({
+  backgroundColor:
+    theme.palette.mode === "dark" ? "rgba(255, 255, 255, .05)" : "rgba(0, 0, 0, .03)",
+  flexDirection: "row-reverse",
+  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+    transform: "rotate(90deg)",
+  },
+  "& .MuiAccordionSummary-content": {
+    marginLeft: theme.spacing(1),
+  },
+}));
+
+const FormAccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
+  padding: theme.spacing(2),
+  borderTop: "1px solid rgba(0, 0, 0, .125)",
+}));
+
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
@@ -27,7 +95,7 @@ class Dashboard extends React.Component {
       currentUser: this.props.currentUser,
       expanded: "",
       trips: [],
-      location: "BOOP",
+      location: "",
       userTrips: [],
     };
 
@@ -48,7 +116,9 @@ class Dashboard extends React.Component {
     event.preventDefault();
 
     console.log(this.state.currentUser.id, this.state.location);
-    newTrip(this.state.currentUser.id, this.state.location);
+    newTrip(this.state.currentUser.id, this.state.location)
+    this.setState({location: ''})
+    getUserTrips();
   };
 
   componentDidMount() {
@@ -56,15 +126,15 @@ class Dashboard extends React.Component {
       return <p>{""}</p>;
     }
 
-    getUserTrips(this.state.currentUser.id)
-      .get()
-      .then((querySnapshot) => {
-        const userTrips = [];
-        querySnapshot.forEach((doc) => {
-          userTrips.push([doc.id, doc.data().location, doc.data().description]);
-        });
-        this.setState({ userTrips: userTrips });
+  getUserTrips(this.state.currentUser.id)
+    .get()
+    .then((querySnapshot) => {
+      const userTrips = [];
+      querySnapshot.forEach((doc) => {
+        userTrips.push([doc.id, doc.data().location, doc.data().description]);
       });
+      this.setState({ userTrips: userTrips });
+    });
   }
 
   // export default function Dashboard({ currentUser }) {
@@ -77,74 +147,6 @@ class Dashboard extends React.Component {
   //   // }
 
   render() {
-    const TripAccordion = styled((props) => (
-      <MuiAccordion disableGutters elevation={0} square {...props} />
-    ))(({ theme }) => ({
-      border: `1px solid ${theme.palette.divider}`,
-      "&:not(:last-child)": {
-        borderBottom: 0,
-      },
-      "&:before": {
-        display: "none",
-      },
-    }));
-
-    const TripAccordionSummary = styled((props) => (
-      <MuiAccordionSummary
-        expandIcon={<RestaurantIcon sx={{ fontSize: "2.4rem" }} color="primary" />}
-        {...props}
-      />
-    ))(({ theme }) => ({
-      backgroundColor:
-        theme.palette.mode === "dark" ? "rgba(255, 255, 255, .05)" : "rgba(0, 0, 0, .03)",
-      flexDirection: "row-reverse",
-      "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-        transform: "rotate(90deg)",
-      },
-      "& .MuiAccordionSummary-content": {
-        marginLeft: theme.spacing(1),
-      },
-    }));
-
-    const TripAccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-      padding: theme.spacing(2),
-      borderTop: "1px solid rgba(0, 0, 0, .125)",
-    }));
-
-    const FormAccordion = styled((props) => (
-      <MuiAccordion disableGutters elevation={0} square {...props} />
-    ))(({ theme }) => ({
-      border: `1px solid ${theme.palette.divider}`,
-      "&:not(:last-child)": {
-        borderBottom: 0,
-      },
-      "&:before": {
-        display: "none",
-      },
-    }));
-
-    const FormAccordionSummary = styled((props) => (
-      <MuiAccordionSummary
-        expandIcon={<AddCircleIcon sx={{ fontSize: "2.9rem" }} color="primary" />}
-        {...props}
-      />
-    ))(({ theme }) => ({
-      backgroundColor:
-        theme.palette.mode === "dark" ? "rgba(255, 255, 255, .05)" : "rgba(0, 0, 0, .03)",
-      flexDirection: "row-reverse",
-      "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-        transform: "rotate(90deg)",
-      },
-      "& .MuiAccordionSummary-content": {
-        marginLeft: theme.spacing(1),
-      },
-    }));
-
-    const FormAccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-      padding: theme.spacing(2),
-      borderTop: "1px solid rgba(0, 0, 0, .125)",
-    }));
-
     return (
       <div className="main-container">
         <div className="trip-accordions">
@@ -203,27 +205,28 @@ class Dashboard extends React.Component {
                   <div className="venues-show">
                     {/* <TextField
                       id="outlined-basic"
-                      // value={place}
+                      value={this.state.location}
                       variant="outlined"
-                      onSubmit={this.setLocation}
+                      onChange={this.setLocation}
                     />
                     <Button
                       onClick={() =>
-                        newTrip(this.state.currentUser.id, this.state.location)
+                        newTrip(this.handleSubmit)
                       }
                       variant="contained"
                     >
                       Create New Trip
                     </Button> */}
-                    <form class="newTrip" onSubmit={this.handleSubmit}>
+                    <form className="newTrip" onSubmit={this.handleSubmit}>
                       <label for="location">Location:</label>
                       <input
                         type="text"
                         name="location"
-                        // onChange={(e) => this.setLocation(e.target.value)}
-                        // onSubmit={{setLocation: event.target.value }}
+                        value={ this.state.location }
+                        onChange={ this.setLocation }
+                        //onSubmit={ this.setLocation }
                       />
-                      <input type="submit" />
+                      <input type="submit" value='Plan Trip'/>
                     </form>
                   </div>
                 </Typography>
