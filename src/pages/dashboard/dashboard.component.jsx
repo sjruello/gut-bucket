@@ -11,7 +11,7 @@ import Typography from "@mui/material/Typography";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
 // firebase imports:
-import { getUserTrips, getVenues } from "../../firebase/firebase";
+import { getUserTrips, newTrip, getVenues } from "../../firebase/firebase";
 
 import "./dashboard.styles.scss";
 
@@ -86,6 +86,7 @@ const FormAccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 export default function Dashboard({ currentUser }) {
   const [expanded, setExpanded] = React.useState("");
   const [trips, setTrips] = React.useState([]);
+  const [location, setLocation] = React.useState("Uluru")
 
   // grab currentUser's trips
   getUserTrips(currentUser.id)
@@ -158,12 +159,13 @@ export default function Dashboard({ currentUser }) {
                 <div className="venues-show">
                   <TextField
                     id="outlined-basic"
-                    label="Location Name"
+                    value = {location}
                     variant="outlined"
+                    onInput={(event) => setLocation(event.target.value)}
                   />
 
                   <Link to="/trip/1">
-                    <Button variant="contained">Create New Trip</Button>
+                    <Button onClick={() => newTrip(currentUser.id, location)}variant="contained">Create New Trip</Button>
                   </Link>
                 </div>
               </Typography>
