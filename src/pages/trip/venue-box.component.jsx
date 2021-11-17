@@ -1,25 +1,29 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 import { newVenue } from "../../firebase/firebase";
-// import { blah } from "../../components/trip-preview/trip-preview.component";
-
+import { TripPreview } from "../../components/trip-preview/trip-preview.component";
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import "./venue-box.styles.scss";
 
 export default function VenueBox(props) {
-
- // TODO: Make this work
-  const addToTripList = (userId,tripId, name) => {
-    console.log(userId,tripId, name)
-    newVenue(userId,tripId, name)
-  }
+  // TODO: Make this work
+  const addToTripList = (userId, tripId, name) => {
+    console.log(userId, tripId, name);
+    newVenue(userId, tripId, name);
+  };
 
   return (
-    <Card sx={{ minWidth: 275 }}>
-      <CardContent>
+    <Card display='flex' sx={{ minWidth: 275 }}>
+    <IconButton className='CloseIcon' onClick={()=>props.onClose(props.id)}>
+                          <CloseIcon />
+                          </IconButton>
+      <CardContent >
         <Typography variant="h5" component="div">
           {props.venue.name}
         </Typography>
@@ -27,7 +31,7 @@ export default function VenueBox(props) {
           Rating: {props.venue.rating}/5
         </Typography>
         <Typography variant="body2">
-
+          {props.venue.address}
         </Typography>
       </CardContent>
       <CardActions>

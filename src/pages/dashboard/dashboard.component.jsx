@@ -97,6 +97,7 @@ class Dashboard extends React.Component {
       expanded: "",
       trips: [],
       location: "",
+      description: "",
       userTrips: [],
     };
 
@@ -113,12 +114,16 @@ class Dashboard extends React.Component {
     this.setState({ location: event.target.value });
   };
 
+  setDescription = (event) => {
+    this.setState({ description: event.target.value });
+  };
+
   handleSubmit = (event) => {
     event.preventDefault();
 
-    console.log(this.state.currentUser.id, this.state.location);
-    newTrip(this.state.currentUser.id, this.state.location);
-    this.setState({ location: "" });
+    console.log(this.state.currentUser.id, this.state.location, this.state.description);
+    newTrip(this.state.currentUser.id, this.state.location, this.state.description);
+    this.setState({ location: "", description: "" });
     getUserTrips();
   };
 
@@ -183,6 +188,7 @@ class Dashboard extends React.Component {
                       <Button variant="contained">Open Trip</Button>
                     </Link>
                   </div>
+
                   <TripPreview userID={this.state.currentUser.id} tripID={trip[0]} />
                 </Typography>
               </TripAccordionDetails>
@@ -207,10 +213,20 @@ class Dashboard extends React.Component {
                   <div className="venues-show">
                     <p>
                       <TextField
+                        label="Location Name"
                         id="outlined-basic"
                         value={this.state.location}
                         variant="outlined"
                         onChange={this.setLocation}
+                      />
+                    </p>
+                    <p>
+                      <TextField
+                        label="Description"
+                        id="outlined-basic"
+                        value={this.state.description}
+                        variant="outlined"
+                        onChange={this.setDescription}
                       />
                     </p>
                     <Button onClick={this.handleSubmit} variant="contained">

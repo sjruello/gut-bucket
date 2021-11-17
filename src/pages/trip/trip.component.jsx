@@ -14,14 +14,14 @@ class Trip extends React.Component {
     };
     this.saveVenues = this.saveVenues.bind(this);
     this.lastAdded = this.lastAdded.bind(this);
+    this.onClose = this.onClose.bind(this);
   }
 
-  //TODO: fix this shit
   saveVenues(details) {
-    console.log(details.photos[0]);
-    const { name, rating, website } = details;
-    const venue = { name: name, rating: rating, website: website };
-    this.setState((prevState) => {
+    console.log( details.photos[0] );
+    const { name, rating, website, formatted_address } = details;
+    const venue = { name: name, rating: rating, website: website, address: formatted_address };
+    this.setState(prevState => {
       return { venues: [...prevState.venues, venue] };
     });
   }
@@ -32,13 +32,17 @@ class Trip extends React.Component {
 
   componentDidMount() {
     console.log("trip ID:", this.props.tripID);
+ // close the venue box
+
+  onClose(index) {
+    const venues = this.state.venues.filter((v, i) => i !== index )
+    this.setState({venues: venues})
   }
 
   render() {
     return (
       <div className="container">
         <div className="map-list">
-          {/* {TODO: turn this into cards} */}
           <p>Map List</p>
           {this.state.venues.map((v, i) => {
             return (
@@ -48,6 +52,8 @@ class Trip extends React.Component {
                 userId={this.props.currentUser.id}
                 tripId={this.props.tripID}
                 venueAdded={this.lastAdded}
+                onClose={ this.onClose }
+                id={i}
               ></VenueBox>
             );
           })}
