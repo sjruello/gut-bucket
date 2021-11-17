@@ -35,13 +35,11 @@ export const getUserTrips = (userId) => {
   return getTrips;
 };
 
-export const getUserTrip = async (userId, tripId) => {
-  console.log('Getting user trip location')
-const docRef = db.collection("users").doc(userId).collection("trips").doc(tripId);
-docRef.get().then((doc) => {
-          console.log('this is in getUserTrip')
-        return 'sadfasdf'//doc.data().location;
-})
+export const getUserTrip = (userId, tripId) => {
+  const docRef = db.collection("users").doc(userId).collection("trips").doc(tripId);
+  docRef.get().then((doc) => {
+    return doc.data().location;
+  });
 };
 
 export const getVenues = (userId, tripId) => {
