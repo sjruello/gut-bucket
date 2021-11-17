@@ -11,6 +11,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
+
 // Firebase imports:
 import { getUserTrips, newTrip, deleteTrip } from "../../firebase/firebase";
 
@@ -173,7 +174,7 @@ class Dashboard extends React.Component {
                     >
                       <h4>{trip[1]}</h4>
                       <Button variant="contained">Open Trip</Button>
-                    </Link>
+                    </Link>{" "}
                     <Button
                       variant="contained"
                       onClick={() => {
@@ -207,21 +208,22 @@ class Dashboard extends React.Component {
                 <Typography component={"span"} variant={"body"}>
                   <div className="venues-show">
                     <TextField
-                      // className="form-input"
                       label="Location Name"
                       id="outlined-basic"
                       value={this.state.location}
                       variant="outlined"
                       onChange={this.setLocation}
                     />
+                    <p></p>
                     <TextField
-                      // className="form-input"
                       label="Description"
                       id="outlined-basic"
                       value={this.state.description}
                       variant="outlined"
                       onChange={this.setDescription}
                     />
+                    <p></p>
+
                     <Button onClick={this.handleSubmit} variant="contained">
                       Create New Trip
                     </Button>

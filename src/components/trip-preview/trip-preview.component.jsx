@@ -1,21 +1,34 @@
 import React, { useState, useEffect } from "react";
-import { getVenues } from "../../firebase/firebase";
+import { getUserTrip, getVenues } from "../../firebase/firebase";
 import "./trip-preview.styles.scss";
 
-const TripPreview = ({ userID, tripID, tripVenues }) => {
-  // const [venues, setVenues] = useState([]);
+const TripPreview = ({ userID, tripID, tripVenues = null }) => {
+  const [venues, setVenues] = useState([]);
 
-  if(!tripVenues) {
-    return ""
-  }
+  useEffect(() => {
+    getVenues(userID, tripID)
+      .get()
+      .then((querySnapshot) => {
+        let tripVenues = [];
+        querySnapshot.forEach((doc) => {
+          tripVenues.push([
+            doc.id,
+            doc.data().name,
+            doc.data().address,
+            doc.data().image,
+          ]);
+        });
+        setVenues(tripVenues);
+      });
+  }, [userID, tripID, venues]);
 
   return (
     <div>
-      {tripVenues.length === 0 ? (
+      {venues.length === 0 ? (
         <h2>No Venues Added!</h2>
       ) : (
         <div id="venue-box">
-          {tripVenues.map((venue, index) => (
+          {venues.map((venue, index) => (
             <div className="mini-venue-card" key={index}>
               <span className="venue-title">{venue[1]}</span>
               <div
@@ -30,7 +43,6 @@ const TripPreview = ({ userID, tripID, tripVenues }) => {
       )}
     </div>
   );
-
-}
+};
 
 export default TripPreview;

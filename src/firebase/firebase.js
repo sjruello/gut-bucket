@@ -36,10 +36,10 @@ export const getUserTrips = (userId) => {
 };
 
 export const getUserTrip = (userId, tripId) => {
-const docRef = db.collection("users").doc(userId).collection("trips").doc(tripId);
-docRef.get().then((doc) => {
-        return doc.data().location;
-})
+  const docRef = db.collection("users").doc(userId).collection("trips").doc(tripId);
+  docRef.get().then((doc) => {
+    return doc.data().location;
+  });
 };
 
 export const getVenues = (userId, tripId) => {
