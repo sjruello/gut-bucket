@@ -44,7 +44,7 @@ docRef.get().then((doc) => {
 })
 };
 
-getUserTrip("FL2f9d7NOifPwyckOksFj6lzRMz2","zYWuZ3P5w0BvpC4x2ETf")
+//getUserTrip("FL2f9d7NOifPwyckOksFj6lzRMz2","zYWuZ3P5w0BvpC4x2ETf")
 
 export const getVenues = (userId, tripId) => {
   const getVenues = db
