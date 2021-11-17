@@ -2,13 +2,13 @@ import React from "react";
 import TripPreview from "../../components/trip-preview/trip-preview.component";
 import Map from "../../components/map/map.component";
 import VenueBox from "./venue-box.component";
-
 import "./trip.styles.scss";
 
 class Trip extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      tripID: "",
       venues: [],
     };
     this.saveVenues = this.saveVenues.bind(this);
@@ -49,8 +49,7 @@ class Trip extends React.Component {
         </div>
         <div className="saved-venues">
           <p>List of saved venues:</p>
-          {/* display all venues selected for particular trip */}
-
+          <p>Trip ID: {this.props.tripID}</p>
           <TripPreview />
         </div>
       </div>

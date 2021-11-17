@@ -13,23 +13,18 @@ import { auth, createUserDocument } from "./firebase/firebase";
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { currentUser: null,
-                   currentTrip: ""  
-       };
+    this.state = { currentUser: null, tripID: "" };
     this.handleTrip = this.handleTrip.bind(this);
   }
 
   unsubscribeFromAuth = null;
 
   handleTrip = (tripId) => {
-    this.setState({currentTrip: tripId})
-  }
+    this.setState({ tripID: tripId });
+  };
 
   //React lifecycle method: check if user is signed in:
   componentDidMount() {
-    // unsubscribeFromAuth is reassigned to the return value of calling auth.onAuthStateChanged().
-    // this method returns another method: firebase.unsubscribe().
-    // docs here: https://firebase.google.com/docs/reference/js/firebase.auth.Auth#returns-firebase.unsubscribe
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
         const userRef = await createUserDocument(userAuth); // returned from firebase.utils.
@@ -65,11 +60,19 @@ class App extends React.Component {
           <Route path="/signin" element={<SignInAndSignUpPage />} />
           <Route
             path="/dashboard"
-            element={<Dashboard currentUser={this.state.currentUser} getTrip={this.handleTrip} />}
+            element={
+              <Dashboard currentUser={this.state.currentUser} getTrip={this.handleTrip} />
+            }
           />
           <Route
             path="/trip/:tripID"
-            element={<Trip currentUser={this.state.currentUser} tripId={this.state.currentTrip}/>}
+            element={
+              <Trip
+                currentUser={this.state.currentUser}
+                getTrip={this.handleTrip}
+                tripID={this.state.tripID}
+              />
+            }
           />
         </Routes>
       </div>
