@@ -2,28 +2,31 @@ import React from "react";
 import TripPreview from "../../components/trip-preview/trip-preview.component";
 import Map from "../../components/map/map.component";
 import VenueBox from "./venue-box.component";
-
 import "./trip.styles.scss";
 
 class Trip extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      tripID: "",
       venues: [],
     };
     this.saveVenues = this.saveVenues.bind(this);
   }
+
   //TODO: fix this shit
   saveVenues(details) {
-    console.log( details.photos[0] );
+    console.log(details.photos[0]);
     const { name, rating, website } = details;
     const venue = { name: name, rating: rating, website: website };
-    this.setState(prevState => {
+    this.setState((prevState) => {
       return { venues: [...prevState.venues, venue] };
     });
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    console.log("trip ID:", this.props.tripID);
+  }
 
   render() {
     return (
@@ -46,8 +49,7 @@ class Trip extends React.Component {
         </div>
         <div className="saved-venues">
           <p>List of saved venues:</p>
-          {/* display all venues selected for particular trip */}
-
+          <p>Trip ID: {this.props.tripID}</p>
           <TripPreview />
         </div>
       </div>
