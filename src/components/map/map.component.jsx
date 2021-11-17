@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import RoomIcon from "@mui/icons-material/Room";
 // eslint-disable-next-line
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps/api";
-
 import usePlacesAutocomplete, { getGeocode, getLatLng , getDetails } from "use-places-autocomplete";
+import { getUserTrip } from "../../firebase/firebase"
 
 import {
   Combobox,
@@ -45,6 +45,8 @@ const Map = (props) => {
     mapRef.current.panTo({ lat, lng });
     mapRef.current.setZoom(16);
   }, []);
+
+
 
   if (loadError) return "Error loading Maps";
   if (!isLoaded) return "Loading Maps";

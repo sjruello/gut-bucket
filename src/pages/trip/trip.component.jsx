@@ -49,7 +49,7 @@ class Trip extends React.Component {
           })}
         </div>
         <div className="map-display">
-          <Map saveVenues={this.saveVenues} />
+          <Map saveVenues={this.saveVenues} tripID={this.state.tripID} userID={this.state.userID}/>
         </div>
         <div className="saved-venues">
           <p>List of saved venues:</p>

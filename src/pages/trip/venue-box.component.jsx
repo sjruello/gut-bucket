@@ -16,14 +16,13 @@ export default function VenueBox(props) {
   const addToTripList = (userId, tripId, name) => {
     console.log(userId, tripId, name);
     newVenue(userId, tripId, name);
-
   };
 
   return (
     <Card display='flex' sx={{ minWidth: 275 }}>
-    <IconButton className='CloseIcon' onClick={()=>props.onClose(props.id)}>
-                          <CloseIcon />
-                          </IconButton>
+      <IconButton className='CloseIcon' onClick={()=>props.onClose(props.id)}>
+        <CloseIcon />
+      </IconButton>
       <CardContent >
         <Typography variant="h5" component="div">
           {props.venue.name}
