@@ -12,6 +12,7 @@ class Trip extends React.Component {
       venues: [],
     };
     this.saveVenues = this.saveVenues.bind(this);
+    this.onClose = this.onClose.bind(this);
   }
 
   saveVenues(details) {
@@ -24,8 +25,9 @@ class Trip extends React.Component {
   }
 
  // close the venue box
-  onClose(props) {
-    this.setState({})
+  onClose(index) {
+    const venues = this.state.venues.filter((v, i) => i !== index )
+    this.setState({venues: venues})
   }
 
   render() {
@@ -40,7 +42,8 @@ class Trip extends React.Component {
                 venue={this.state.venues[i]}
                 userId={this.props.currentUser.id}
                 tripId={this.props.tripID}
-                onClose={ onClose }
+                onClose={ this.onClose }
+                id={i}
               ></VenueBox>
             );
           })}
