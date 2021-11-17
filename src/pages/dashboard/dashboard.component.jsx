@@ -1,5 +1,6 @@
 import React from "react";
 // import { Link } from "react-router-dom";
+import Trip from "../trip/trip.component";
 import TripPreview from "../../components/trip-preview/trip-preview.component";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
@@ -12,13 +13,13 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
 // firebase imports:
 import { getUserTrips, newTrip, getVenues } from "../../firebase/firebase";
-import { useLocation, NavLink, Outlet, useSearchParams } from "react-router-dom";
+import { Routes, Route, Link, useSearchParams } from "react-router-dom";
 import "./dashboard.styles.scss";
 
-const QueryNavLink = ({ to, ...props }) => {
-  let location = useLocation();
-  return <NavLink to={to + location.search} {...props} />;
-};
+// const QueryNavLink = ({ to, ...props }) => {
+//   let location = useLocation();
+//   return <NavLink to={to + location.search} {...props} />;
+// };
 
 const TripAccordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -117,8 +118,8 @@ class Dashboard extends React.Component {
     event.preventDefault();
 
     console.log(this.state.currentUser.id, this.state.location);
-    newTrip(this.state.currentUser.id, this.state.location)
-    this.setState({location: ''})
+    newTrip(this.state.currentUser.id, this.state.location);
+    this.setState({ location: "" });
     getUserTrips();
   };
 
@@ -127,31 +128,23 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount() {
+    getUserTrips();
+
+    getUserTrips(this.state.currentUser.id)
+      .get()
+      .then((querySnapshot) => {
+        const userTrips = [];
+        querySnapshot.forEach((doc) => {
+          userTrips.push([doc.id, doc.data().location, doc.data().description]);
+        });
+        this.setState({ userTrips: userTrips });
+      });
+  }
+
+  render() {
     if (!this.state.currentUser) {
       return <p>{""}</p>;
     }
-
-  getUserTrips(this.state.currentUser.id)
-    .get()
-    .then((querySnapshot) => {
-      const userTrips = [];
-      querySnapshot.forEach((doc) => {
-        userTrips.push([doc.id, doc.data().location, doc.data().description]);
-      });
-      this.setState({ userTrips: userTrips });
-    });
-  }
-
-  // export default function Dashboard({ currentUser }) {
-  // const [expanded, setExpanded] = React.useState("");
-  // const [trips, setTrips] = React.useState([]);
-  // const [location, setLocation] = React.useState("Uluru");
-
-  //   // if (!currentUser) {
-  //   //   return <p>{""}</p>;
-  //   // }
-
-  render() {
     return (
       <div className="main-container">
         <div className="trip-accordions">
@@ -181,11 +174,25 @@ class Dashboard extends React.Component {
                 <Typography component={"span"}>
                   <div className="trip-description">
                     <p>{trip[2]}</p>
-                    <QueryNavLink key={trip[0]} to={`/trip/${trip[0]}`}>
+                    <Link
+                      to={{
+                        pathname: `/trip/${trip[0]}`,
+                        state: { tripID: trip[0] },
+                      }}
+                      tripID={trip[0]}
+                      onClick={() => {
+                        this.props.getTrip(trip[0]);
+                      }}
+                    >
                       <h4>{trip[1]}</h4>
+<<<<<<< HEAD
                       <Button onClick={this.handleRedirect} 
                         variant="contained">Open Trip</Button>
                     </QueryNavLink>
+=======
+                      <Button variant="contained">Open Trip</Button>
+                    </Link>
+>>>>>>> 3971274b316dc181bed480c534f6d41acd87c8ca
                   </div>
                   <TripPreview userID={this.state.currentUser.id} tripID={trip[0]} />
                 </Typography>
@@ -209,6 +216,7 @@ class Dashboard extends React.Component {
               <FormAccordionDetails>
                 <Typography component={"span"} variant={"body"}>
                   <div className="venues-show">
+<<<<<<< HEAD
                     <textarea
                       type = "text"
                       id="outlined-basic"
@@ -219,6 +227,17 @@ class Dashboard extends React.Component {
                     <Button
                       onClick={this.handleSubmit} onClickvariant="contained"
                     >
+=======
+                    <p>
+                      <TextField
+                        id="outlined-basic"
+                        value={this.state.location}
+                        variant="outlined"
+                        onChange={this.setLocation}
+                      />
+                    </p>
+                    <Button onClick={this.handleSubmit} variant="contained">
+>>>>>>> 3971274b316dc181bed480c534f6d41acd87c8ca
                       Create New Trip
                     </Button>
                   </div>
