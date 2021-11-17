@@ -1,12 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { getVenues } from "../../firebase/firebase";
+import { getUserTrip, getVenues } from "../../firebase/firebase";
 import "./trip-preview.styles.scss";
 
-const TripPreview = ({ userID, tripID, tripVenues }) => {
+const TripPreview = ({ userID, tripID, tripVenues = null }) => {
   // const [venues, setVenues] = useState([]);
 
-  if(!tripVenues) {
-    return ""
+  // useEffect(() => {
+  //   getVenues(userID, tripID)
+  //     .get()
+  //     .then((querySnapshot) => {
+  //       let tripVenues = [];
+  //       querySnapshot.forEach((doc) => {
+  //         tripVenues.push([
+  //           doc.id,
+  //           doc.data().name,
+  //           doc.data().address,
+  //           doc.data().image,
+  //         ]);
+  //       });
+  //       setVenues(tripVenues);
+  //     });
+  // }, [userID, tripID]);
+
+  if (!tripVenues) {
+    return "";
   }
 
   return (
@@ -30,7 +47,6 @@ const TripPreview = ({ userID, tripID, tripVenues }) => {
       )}
     </div>
   );
-
-}
+};
 
 export default TripPreview;
