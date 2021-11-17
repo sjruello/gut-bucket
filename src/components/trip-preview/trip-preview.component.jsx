@@ -20,22 +20,27 @@ const TripPreview = ({ userID, tripID }) => {
         });
         setVenues(tripVenues);
       });
-  }, []);
+  }, [userID, tripID]);
 
   return (
-    <div id="venue-box">
-      {/* // forEach venue in db/trips: generate small preview card*/}
-      {venues.map((venue, index) => (
-        <div className="mini-venue-card" key={index}>
-          <span className="venue-title">{venue[1]}</span>
-          <div
-            className="thumbnail"
-            style={{
-              backgroundImage: `url("${venue[3]}")`,
-            }}
-          ></div>
+    <div>
+      {venues.length === 0 ? (
+        <h2>No Venues Added!</h2>
+      ) : (
+        <div id="venue-box">
+          {venues.map((venue, index) => (
+            <div className="mini-venue-card" key={index}>
+              <span className="venue-title">{venue[1]}</span>
+              <div
+                className="thumbnail"
+                style={{
+                  backgroundImage: `url("${venue[3]}")`,
+                }}
+              ></div>
+            </div>
+          ))}
         </div>
-      ))}
+      )}
     </div>
   );
 };
