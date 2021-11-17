@@ -19,6 +19,9 @@ import "@reach/combobox/styles.css";
 
 // Display Map
 const Map = (props) => {
+
+  const { mapCenter, setmapCenter} = useState({});
+
   const libraries = ["places"];
   const mapContainerStyle = {
     height: "600px",
@@ -46,7 +49,17 @@ const Map = (props) => {
     mapRef.current.setZoom(16);
   }, []);
 
-
+//   function getCityLatLng() {
+//     console.log('this is in getCityLatLong', props.tripID, props.userID )
+//     let location = getUserTrip( props.userID, props.tripID )
+//     return location;
+//   }
+//
+//   function testLocation() {
+//     let testLocation = getLatLng
+//   }
+//
+// getCityLatLng();
 
   if (loadError) return "Error loading Maps";
   if (!isLoaded) return "Loading Maps";

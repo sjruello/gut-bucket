@@ -2,6 +2,7 @@ import React from "react";
 import TripPreview from "../../components/trip-preview/trip-preview.component";
 import Map from "../../components/map/map.component";
 import VenueBox from "./venue-box.component";
+import { getVenues } from "../../firebase/firebase";
 import "./trip.styles.scss";
 
 class Trip extends React.Component {
@@ -10,7 +11,8 @@ class Trip extends React.Component {
     this.state = {
       tripID: "",
       venues: [],
-      lastAdded: ""
+      lastAdded: "",
+      tripVenues: []
     };
     this.saveVenues = this.saveVenues.bind(this);
     this.lastAdded = this.lastAdded.bind(this);
@@ -35,8 +37,26 @@ class Trip extends React.Component {
     this.setState({lastAdded: name})
   }
 
+  getVenues = (userId, tripId) => {
+    getVenues(userId, tripId)
+      .get()
+      .then((querySnapshot) => {
+        const tripVenues = [];
+        querySnapshot.forEach((doc) => {
+          tripVenues.push([
+            doc.id,
+            doc.data().name,
+            doc.data().address,
+            doc.data().image,
+          ]);
+        });
+        this.setState({tripVenues: tripVenues});
+      });
+  }
+
   componentDidMount() {
     this.setState({tripID: this.props.tripID});
+    this.getVenues(this.props.currentUser.id, this.props.tripID)
   }
  // close the venue box
 
@@ -59,20 +79,20 @@ class Trip extends React.Component {
                 tripId={this.props.tripID}
                 venueAdded={this.lastAdded}
                 onClose={ this.onClose }
-                setTrip= {this.setTripId}
+                getVenues={this.getVenues}
                 id={i}
               ></VenueBox>
             );
           })}
         </div>
         <div className="map-display">
-          <Map saveVenues={this.saveVenues} tripID={this.state.tripID} userID={this.state.userID}/>
+          <Map saveVenues={this.saveVenues} tripID={this.props.tripID} userID={this.props.currentUser.id}/>
         </div>
         <div className="saved-venues">
           <p>List of saved venues:</p>
           <p>Trip ID: {this.props.tripID}</p>
-          <TripPreview userID={this.props.currentUser.id} 
-          tripID={this.state.tripID} />
+          <TripPreview userID={this.props.currentUser.id}
+          tripID={this.props.tripID} tripblah={this.state.tripID} tripVenues={this.state.tripVenues} />
         </div>
       </div>
     );

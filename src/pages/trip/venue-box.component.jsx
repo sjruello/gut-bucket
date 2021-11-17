@@ -17,6 +17,7 @@ export default function VenueBox(props) {
     console.log(userId, tripId, name);
     newVenue(userId, tripId, name);
     props.onClose(props.id)
+    props.getVenues(userId, tripId)
   };
 
   return (
