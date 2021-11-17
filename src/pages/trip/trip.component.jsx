@@ -40,6 +40,7 @@ class Trip extends React.Component {
                 key={i}
                 venue={this.state.venues[i]}
                 userId={this.props.currentUser.id}
+                tripId={this.props.tripID}
               ></VenueBox>
             );
           })}
