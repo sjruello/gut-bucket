@@ -98,7 +98,6 @@ class Dashboard extends React.Component {
       trips: [],
       location: "",
       userTrips: [],
-      tripId: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -122,10 +121,6 @@ class Dashboard extends React.Component {
     this.setState({ location: "" });
     getUserTrips();
   };
-
-  handleRedirect = (e) => {
-    console.log(e)
-  }
 
   componentDidMount() {
     getUserTrips();
@@ -185,14 +180,8 @@ class Dashboard extends React.Component {
                       }}
                     >
                       <h4>{trip[1]}</h4>
-<<<<<<< HEAD
-                      <Button onClick={this.handleRedirect} 
-                        variant="contained">Open Trip</Button>
-                    </QueryNavLink>
-=======
                       <Button variant="contained">Open Trip</Button>
                     </Link>
->>>>>>> 3971274b316dc181bed480c534f6d41acd87c8ca
                   </div>
                   <TripPreview userID={this.state.currentUser.id} tripID={trip[0]} />
                 </Typography>
@@ -216,18 +205,6 @@ class Dashboard extends React.Component {
               <FormAccordionDetails>
                 <Typography component={"span"} variant={"body"}>
                   <div className="venues-show">
-<<<<<<< HEAD
-                    <textarea
-                      type = "text"
-                      id="outlined-basic"
-                      variant="outlined"
-                      value = {this.state.location}
-                      onChange = {this.setLocation}
-                    />
-                    <Button
-                      onClick={this.handleSubmit} onClickvariant="contained"
-                    >
-=======
                     <p>
                       <TextField
                         id="outlined-basic"
@@ -237,7 +214,6 @@ class Dashboard extends React.Component {
                       />
                     </p>
                     <Button onClick={this.handleSubmit} variant="contained">
->>>>>>> 3971274b316dc181bed480c534f6d41acd87c8ca
                       Create New Trip
                     </Button>
                   </div>
