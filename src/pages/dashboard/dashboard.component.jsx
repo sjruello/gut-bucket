@@ -115,31 +115,7 @@ class Dashboard extends React.Component {
     this.setState({ description: event.target.value });
   };
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-    newTrip(this.state.currentUser.id, this.state.location, this.state.description);
-    this.setState({ location: "", description: "", trips: getUserTrips() });
-    // getUserTrips();
-  };
-
-  getVenues = (userId, tripId) => {
-    getVenues(userId, tripId)
-      .get()
-      .then((querySnapshot) => {
-        const tripVenues = [];
-        querySnapshot.forEach((doc) => {
-          tripVenues.push([
-            doc.id,
-            doc.data().name,
-            doc.data().address,
-            doc.data().image,
-          ]);
-        });
-        this.setState({tripVenues: tripVenues});
-      });
-  }
-
-  componentDidMount() {
+  getUserTrips = () => {
     getUserTrips(this.state.currentUser.id)
       .get()
       .then((querySnapshot) => {
@@ -151,7 +127,18 @@ class Dashboard extends React.Component {
       });
   }
 
+  handleSubmit = (event) => {
+    event.preventDefault();
+    newTrip(this.state.currentUser.id, this.state.location, this.state.description);
+    this.setState({ location: "", description: "", trips: this.getUserTrips() });
+  };
+
+  componentDidMount() {
+    this.getUserTrips(this.state.currentUser.id)
+  }
+
   render() {
+    
     return (
       <div className="main-container">
         <div className="trip-accordions">
@@ -203,7 +190,7 @@ class Dashboard extends React.Component {
                       Delete Trip
                     </Button>
                   </div>
-                  <TripPreview userID={this.state.currentUser.id} tripID={trip[0]} tripVenues={this.tripVenues}} />
+                  <TripPreview userID={this.state.currentUser.id} tripID={trip[0]} tripVenues={this.state.tripVenues} />
                 </Typography>
               </TripAccordionDetails>
             </TripAccordion>
