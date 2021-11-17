@@ -20,7 +20,6 @@ export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
 //GET functions
-
 const getUsers = () => {
   db.collection("users")
     .get()
