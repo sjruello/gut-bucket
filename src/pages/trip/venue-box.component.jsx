@@ -6,6 +6,10 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { newVenue } from "../../firebase/firebase";
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import "./venue-box.styles.scss";
+
 
 export default function VenueBox(props) {
 
@@ -15,8 +19,11 @@ export default function VenueBox(props) {
   }
 
   return (
-    <Card sx={{ minWidth: 275 }}>
-      <CardContent>
+    <Card display='flex' sx={{ minWidth: 275 }}>
+    <IconButton className='CloseIcon' onClick={props.onClose}>
+                          <CloseIcon />
+                          </IconButton>
+      <CardContent >
         <Typography variant="h5" component="div">
           {props.venue.name}
         </Typography>
@@ -24,7 +31,7 @@ export default function VenueBox(props) {
           Rating: {props.venue.rating}/5
         </Typography>
         <Typography variant="body2">
-
+          {props.venue.address}
         </Typography>
       </CardContent>
       <CardActions>

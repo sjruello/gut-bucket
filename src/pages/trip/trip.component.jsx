@@ -13,23 +13,25 @@ class Trip extends React.Component {
     };
     this.saveVenues = this.saveVenues.bind(this);
   }
-  //TODO: fix this shit
+
   saveVenues(details) {
     console.log( details.photos[0] );
-    const { name, rating, website } = details;
-    const venue = { name: name, rating: rating, website: website };
+    const { name, rating, website, formatted_address } = details;
+    const venue = { name: name, rating: rating, website: website, address: formatted_address };
     this.setState(prevState => {
       return { venues: [...prevState.venues, venue] };
     });
   }
 
-  componentDidMount() {}
+ // close the venue box
+  onClose(props) {
+    this.setState({})
+  }
 
   render() {
     return (
       <div className="container">
         <div className="map-list">
-          {/* {TODO: turn this into cards} */}
           <p>Map List</p>
           {this.state.venues.map((v, i) => {
             return (
@@ -37,6 +39,7 @@ class Trip extends React.Component {
                 key={i}
                 venue={this.state.venues[i]}
                 userId={this.props.currentUser.id}
+                onClose={this.onClose}
               ></VenueBox>
             );
           })}

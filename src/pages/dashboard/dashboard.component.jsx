@@ -139,15 +139,6 @@ class Dashboard extends React.Component {
     });
   }
 
-  // export default function Dashboard({ currentUser }) {
-  // const [expanded, setExpanded] = React.useState("");
-  // const [trips, setTrips] = React.useState([]);
-  // const [location, setLocation] = React.useState("Uluru");
-
-  //   // if (!currentUser) {
-  //   //   return <p>{""}</p>;
-  //   // }
-
   render() {
     return (
       <div className="main-container">
@@ -217,16 +208,6 @@ class Dashboard extends React.Component {
                     >
                       Create New Trip
                     </Button>
-                    {/* <form className="newTrip" onSubmit={this.handleSubmit}>
-                      <label for="location">Location:</label>
-                      <input
-                        type="text"
-                        name="location"
-                        value={ this.state.location }
-                        onChange={ this.setLocation }
-                      /> */}
-                      {/* <input type="submit" value='Plan Trip'/>
-                    </form> */}
                   </div>
                 </Typography>
               </FormAccordionDetails>
