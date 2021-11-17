@@ -14,8 +14,9 @@ import "./venue-box.styles.scss";
 export default function VenueBox(props) {
 
  // TODO: Make this work
-  const addToTripList = () => {
-    console.log('Database stuff');
+  const addToTripList = (userId,tripId, name) => {
+    console.log(userId,tripId, name)
+    newVenue(userId,tripId, name)
   }
 
   return (
@@ -36,7 +37,7 @@ export default function VenueBox(props) {
       </CardContent>
       <CardActions>
         <Button onClick={() => window.open(props.venue.website)}>Website</Button>
-        <Button onClick={addToTripList}>Add Venue to TripList</Button>
+        <Button onClick={() => addToTripList(props.userId, props.tripId, props.venue.name)}>Add Venue to TripList</Button>
       </CardActions>
     </Card>
   );

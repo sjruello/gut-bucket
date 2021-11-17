@@ -1,20 +1,26 @@
 #venue-box {
+  padding: 2px;
+  // border: 1px solid red;
   display: grid;
-  width: 100%;
-  border: 1px solid green;
   align-items: center;
   width: fit-content;
+  align-items: end;
+  grid-gap: 5px;
 }
 
 .mini-venue-card {
+  background-color: rgba(0, 0, 0, 0.03);
+  border-radius: 3px;
   grid-row: 1;
   display: inline-grid;
   text-align: center;
   margin: 0 auto;
-  border: 1px solid #4980d9;
+  border: 1px solid rgba(185, 185, 185, 0.644);
   width: 10rem;
+  height: 12em;
   padding: 10px;
   justify-items: center;
+  align-items: end;
 }
 
 .thumbnail {
@@ -25,4 +31,11 @@
   background-size: cover; /* or contain */
   background-position: center center;
   background-repeat: no-repeat;
+}
+
+.venue-title {
+  font-size: 14px;
+  max-width: -webkit-fill-available;
+  height: -webkit-fill-available;
+  border: 1px solid green;
 }
