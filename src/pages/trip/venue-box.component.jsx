@@ -16,6 +16,7 @@ export default function VenueBox(props) {
   const addToTripList = (userId, tripId, name) => {
     console.log(userId, tripId, name);
     newVenue(userId, tripId, name);
+    props.onClose(props.id)
   };
 
   return (
@@ -35,12 +36,9 @@ export default function VenueBox(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button onClick={() => window.open(props.venue.website)}>Website</Button>
-        <Button
-          onClick={() => addToTripList(props.userId, props.tripId, props.venue.name)}
-        >
-          Add Venue to TripList
-        </Button>
+        <Button onClick={() => window.open(props.venue.website)}>
+        Website</Button>
+        <Button onClick={() => addToTripList(props.userId, props.tripId, props.venue.name)}>Add Venue to TripList</Button>
       </CardActions>
     </Card>
   );
