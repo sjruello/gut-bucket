@@ -7,6 +7,9 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { newVenue } from "../../firebase/firebase";
 import { TripPreview } from "../../components/trip-preview/trip-preview.component";
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import "./venue-box.styles.scss";
 
 export default function VenueBox(props) {
   // TODO: Make this work
@@ -16,15 +19,20 @@ export default function VenueBox(props) {
   };
 
   return (
-    <Card sx={{ minWidth: 275 }}>
-      <CardContent>
+    <Card display='flex' sx={{ minWidth: 275 }}>
+    <IconButton className='CloseIcon' onClick={()=>props.onClose(props.id)}>
+                          <CloseIcon />
+                          </IconButton>
+      <CardContent >
         <Typography variant="h5" component="div">
           {props.venue.name}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           Rating: {props.venue.rating}/5
         </Typography>
-        <Typography variant="body2"></Typography>
+        <Typography variant="body2">
+          {props.venue.address}
+        </Typography>
       </CardContent>
       <CardActions>
         <Button onClick={() => window.open(props.venue.website)}>Website</Button>
