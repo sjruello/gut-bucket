@@ -97,6 +97,7 @@ class Dashboard extends React.Component {
       trips: [],
       location: "",
       userTrips: [],
+      tripId: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -120,6 +121,10 @@ class Dashboard extends React.Component {
     this.setState({location: ''})
     getUserTrips();
   };
+
+  handleRedirect = (e) => {
+    console.log(e)
+  }
 
   componentDidMount() {
     if (!this.state.currentUser) {
@@ -178,7 +183,8 @@ class Dashboard extends React.Component {
                     <p>{trip[2]}</p>
                     <QueryNavLink key={trip[0]} to={`/trip/${trip[0]}`}>
                       <h4>{trip[1]}</h4>
-                      <Button variant="contained">Open Trip</Button>
+                      <Button onClick={this.handleRedirect} 
+                        variant="contained">Open Trip</Button>
                     </QueryNavLink>
                   </div>
                   <TripPreview userID={this.state.currentUser.id} tripID={trip[0]} />
@@ -203,17 +209,18 @@ class Dashboard extends React.Component {
               <FormAccordionDetails>
                 <Typography component={"span"} variant={"body"}>
                   <div className="venues-show">
-                    <form className="newTrip" onSubmit={this.handleSubmit}>
-                      <label for="location">Location:</label>
-                      <input
-                        type="text"
-                        name="location"
-                        value={ this.state.location }
-                        onChange={ this.setLocation }
-                        //onSubmit={ this.setLocation }
-                      />
-                      <input type="submit" value='Plan Trip'/>
-                    </form>
+                    <textarea
+                      type = "text"
+                      id="outlined-basic"
+                      variant="outlined"
+                      value = {this.state.location}
+                      onChange = {this.setLocation}
+                    />
+                    <Button
+                      onClick={this.handleSubmit} onClickvariant="contained"
+                    >
+                      Create New Trip
+                    </Button>
                   </div>
                 </Typography>
               </FormAccordionDetails>
