@@ -6,6 +6,8 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { newVenue } from "../../firebase/firebase";
+// import { blah } from "../../components/trip-preview/trip-preview.component";
+
 
 export default function VenueBox(props) {
 
@@ -29,7 +31,8 @@ export default function VenueBox(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button onClick={() => window.open(props.venue.website)}>Website</Button>
+        <Button onClick={() => window.open(props.venue.website)}>
+        Website</Button>
         <Button onClick={() => addToTripList(props.userId, props.tripId, props.venue.name)}>Add Venue to TripList</Button>
       </CardActions>
     </Card>

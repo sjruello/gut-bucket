@@ -10,8 +10,10 @@ class Trip extends React.Component {
     this.state = {
       tripID: "",
       venues: [],
+      lastAdded: ""
     };
     this.saveVenues = this.saveVenues.bind(this);
+    this.lastAdded = this.lastAdded.bind(this);
   }
 
   //TODO: fix this shit
@@ -22,6 +24,10 @@ class Trip extends React.Component {
     this.setState((prevState) => {
       return { venues: [...prevState.venues, venue] };
     });
+  }
+
+  lastAdded(name) {
+    this.setState({lastAdded: name})
   }
 
   componentDidMount() {
@@ -41,6 +47,7 @@ class Trip extends React.Component {
                 venue={this.state.venues[i]}
                 userId={this.props.currentUser.id}
                 tripId={this.props.tripID}
+                venueAdded={this.lastAdded}
               ></VenueBox>
             );
           })}
@@ -51,7 +58,8 @@ class Trip extends React.Component {
         <div className="saved-venues">
           <p>List of saved venues:</p>
           <p>Trip ID: {this.props.tripID}</p>
-          <TripPreview userID={this.props.currentUser.id} tripID={this.props.tripID} />
+          <TripPreview userID={this.props.currentUser.id} 
+          tripID={this.props.tripID} />
         </div>
       </div>
     );
