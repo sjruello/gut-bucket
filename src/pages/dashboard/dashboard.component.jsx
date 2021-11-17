@@ -1,7 +1,7 @@
 import React from "react";
-// import { Link } from "react-router-dom";
-import Trip from "../trip/trip.component";
+import { Link } from "react-router-dom";
 import TripPreview from "../../components/trip-preview/trip-preview.component";
+// MUI imports:
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import MuiAccordion from "@mui/material/Accordion";
@@ -11,15 +11,10 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
-// firebase imports:
-import { getUserTrips, newTrip, getVenues } from "../../firebase/firebase";
-import { Routes, Route, Link, useSearchParams } from "react-router-dom";
-import "./dashboard.styles.scss";
+// Firebase imports:
+import { getUserTrips, newTrip, getVenues, deleteTrip } from "../../firebase/firebase";
 
-// const QueryNavLink = ({ to, ...props }) => {
-//   let location = useLocation();
-//   return <NavLink to={to + location.search} {...props} />;
-// };
+import "./dashboard.styles.scss";
 
 const TripAccordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -103,7 +98,6 @@ class Dashboard extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.setLocation = this.setLocation.bind(this);
-    // this.setTrips = this.setTrips.bind(this);
   }
 
   handleChange = (panel) => (event, newExpanded) => {
@@ -120,16 +114,12 @@ class Dashboard extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-
-    console.log(this.state.currentUser.id, this.state.location, this.state.description);
     newTrip(this.state.currentUser.id, this.state.location, this.state.description);
-    this.setState({ location: "", description: "" });
-    getUserTrips();
+    this.setState({ location: "", description: "", trips: getUserTrips() });
+    // getUserTrips();
   };
 
   componentDidMount() {
-    getUserTrips();
-
     getUserTrips(this.state.currentUser.id)
       .get()
       .then((querySnapshot) => {
@@ -145,6 +135,7 @@ class Dashboard extends React.Component {
     if (!this.state.currentUser) {
       return <p>{""}</p>;
     }
+
     return (
       <div className="main-container">
         <div className="trip-accordions">
@@ -187,8 +178,16 @@ class Dashboard extends React.Component {
                       <h4>{trip[1]}</h4>
                       <Button variant="contained">Open Trip</Button>
                     </Link>
+                    <Button
+                      variant="contained"
+                      onClick={() => {
+                        deleteTrip(this.state.currentUser.id, trip[0]);
+                        this.setState({ trips: getUserTrips });
+                      }}
+                    >
+                      Delete Trip
+                    </Button>
                   </div>
-
                   <TripPreview userID={this.state.currentUser.id} tripID={trip[0]} />
                 </Typography>
               </TripAccordionDetails>
@@ -221,6 +220,8 @@ class Dashboard extends React.Component {
                       />
                     </p>
                     <p>
+                      {" "}
+                      {!getVenues()}
                       <TextField
                         label="Description"
                         id="outlined-basic"
