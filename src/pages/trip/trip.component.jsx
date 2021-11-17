@@ -15,6 +15,7 @@ class Trip extends React.Component {
     this.saveVenues = this.saveVenues.bind(this);
     this.lastAdded = this.lastAdded.bind(this);
     this.onClose = this.onClose.bind(this);
+    this.setTripId = this.setTripId.bind(this);
   }
 
   saveVenues(details) {
@@ -26,12 +27,17 @@ class Trip extends React.Component {
     });
   }
 
+  setTripId(tripId) {
+    this.setState({tripID: tripId})
+  }
+
   lastAdded(name) {
     this.setState({lastAdded: name})
   }
 
   componentDidMount() {
-    console.log("trip ID:", this.props.tripID);
+    this.setState({tripID: this.props.tripID});
+  }
  // close the venue box
 
   onClose(index) {
@@ -53,6 +59,7 @@ class Trip extends React.Component {
                 tripId={this.props.tripID}
                 venueAdded={this.lastAdded}
                 onClose={ this.onClose }
+                setTrip= {this.setTripId}
                 id={i}
               ></VenueBox>
             );
@@ -65,7 +72,7 @@ class Trip extends React.Component {
           <p>List of saved venues:</p>
           <p>Trip ID: {this.props.tripID}</p>
           <TripPreview userID={this.props.currentUser.id} 
-          tripID={this.props.tripID} />
+          tripID={this.state.tripID} />
         </div>
       </div>
     );
