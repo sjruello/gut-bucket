@@ -16,6 +16,7 @@ export default function VenueBox(props) {
   const addToTripList = (userId, tripId, name) => {
     console.log(userId, tripId, name);
     newVenue(userId, tripId, name);
+
   };
 
   return (
