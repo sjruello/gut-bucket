@@ -12,9 +12,10 @@ import Typography from "@mui/material/Typography";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
 // Firebase imports:
-import { getUserTrips, newTrip, getVenues, deleteTrip } from "../../firebase/firebase";
+import { getUserTrips, newTrip, deleteTrip } from "../../firebase/firebase";
 
 import "./dashboard.styles.scss";
+import "../../components/form-input/form-input.styles.scss";
 
 const TripAccordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -132,10 +133,6 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    if (!this.state.currentUser) {
-      return <p>{""}</p>;
-    }
-
     return (
       <div className="main-container">
         <div className="trip-accordions">
@@ -170,7 +167,6 @@ class Dashboard extends React.Component {
                         pathname: `/trip/${trip[0]}`,
                         state: { tripID: trip[0] },
                       }}
-                      tripID={trip[0]}
                       onClick={() => {
                         this.props.getTrip(trip[0]);
                       }}
@@ -210,26 +206,22 @@ class Dashboard extends React.Component {
               <FormAccordionDetails>
                 <Typography component={"span"} variant={"body"}>
                   <div className="venues-show">
-                    <p>
-                      <TextField
-                        label="Location Name"
-                        id="outlined-basic"
-                        value={this.state.location}
-                        variant="outlined"
-                        onChange={this.setLocation}
-                      />
-                    </p>
-                    <p>
-                      {" "}
-                      {!getVenues()}
-                      <TextField
-                        label="Description"
-                        id="outlined-basic"
-                        value={this.state.description}
-                        variant="outlined"
-                        onChange={this.setDescription}
-                      />
-                    </p>
+                    <TextField
+                      // className="form-input"
+                      label="Location Name"
+                      id="outlined-basic"
+                      value={this.state.location}
+                      variant="outlined"
+                      onChange={this.setLocation}
+                    />
+                    <TextField
+                      // className="form-input"
+                      label="Description"
+                      id="outlined-basic"
+                      value={this.state.description}
+                      variant="outlined"
+                      onChange={this.setDescription}
+                    />
                     <Button onClick={this.handleSubmit} variant="contained">
                       Create New Trip
                     </Button>
