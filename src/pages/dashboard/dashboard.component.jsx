@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
 // Firebase imports:
-import { getUserTrips, newTrip, deleteTrip } from "../../firebase/firebase";
+import { getUserTrips, newTrip, deleteTrip, getVenues } from "../../firebase/firebase";
 
 import "./dashboard.styles.scss";
 import "../../components/form-input/form-input.styles.scss";
@@ -95,6 +95,7 @@ class Dashboard extends React.Component {
       location: "",
       description: "",
       userTrips: [],
+      tripVenues: []
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -119,6 +120,23 @@ class Dashboard extends React.Component {
     this.setState({ location: "", description: "", trips: getUserTrips() });
     // getUserTrips();
   };
+
+  getVenues = (userId, tripId) => {
+    getVenues(userId, tripId)
+      .get()
+      .then((querySnapshot) => {
+        const tripVenues = [];
+        querySnapshot.forEach((doc) => {
+          tripVenues.push([
+            doc.id,
+            doc.data().name,
+            doc.data().address,
+            doc.data().image,
+          ]);
+        });
+        this.setState({tripVenues: tripVenues});
+      });
+  }
 
   componentDidMount() {
     getUserTrips(this.state.currentUser.id)
@@ -184,7 +202,7 @@ class Dashboard extends React.Component {
                       Delete Trip
                     </Button>
                   </div>
-                  <TripPreview userID={this.state.currentUser.id} tripID={trip[0]} />
+                  <TripPreview userID={this.state.currentUser.id} tripID={trip[0]} tripVenues={this.tripVenues}} />
                 </Typography>
               </TripAccordionDetails>
             </TripAccordion>

@@ -92,7 +92,7 @@ class Trip extends React.Component {
           <p>List of saved venues:</p>
           <p>Trip ID: {this.props.tripID}</p>
           <TripPreview userID={this.props.currentUser.id} 
-          tripID={this.props.tripID} tripblah={this.state.tripID} tripVenues={this.state.tripVenues} />
+          tripID={this.props.tripID} tripVenues={this.state.tripVenues} />
         </div>
       </div>
     );
