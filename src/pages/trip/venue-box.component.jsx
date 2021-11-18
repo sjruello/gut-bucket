@@ -11,7 +11,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import "./venue-box.styles.scss";
 
 export default function VenueBox(props) {
-  // TODO: Make this work
+
   const addToTripList = (userId, tripId, name) => {
     console.log(userId, tripId, name);
     newVenue(userId, tripId, name);

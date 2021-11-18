@@ -3,6 +3,7 @@ import React from "react";
 import "./trip-preview.styles.scss";
 
 const TripPreview = ({ tripVenues = null }) => {
+
   if (!tripVenues) {
     return "";
   }

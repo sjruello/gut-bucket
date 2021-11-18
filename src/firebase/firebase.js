@@ -24,6 +24,7 @@ export const getUserTrips = (userId) => {
   return getTrips;
 };
 
+// return the location of the specific trip - used in Map to get Lat/Lng for map centering.
 export const getUserTrip = (userId, tripId) => {
   const docRef = db.collection("users").doc(userId).collection("trips").doc(tripId);
   return docRef.get().then((doc) => {
