@@ -95,6 +95,7 @@ class Dashboard extends React.Component {
       location: "",
       description: "",
       userTrips: [],
+      tripVenues: [],
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -120,22 +121,34 @@ class Dashboard extends React.Component {
     // getUserTrips();
   };
 
+  getVenues = (userId, tripId) => {
+    getVenues(userId, tripId)
+      .get()
+      .then((querySnapshot) => {
+        const tripVenues = [];
+        querySnapshot.forEach((doc) => {
+          tripVenues.push([
+            doc.id,
+            doc.data().name,
+            doc.data().address,
+            doc.data().image,
+          ]);
+        });
+        this.setState({ tripVenues: tripVenues });
+      });
+  };
+
   componentDidUpdate() {
     if (!this.props.currentUser || this.state.userTrips.length) {
       return;
     }
+
     getUserTrips(this.props.currentUser.id)
       .get()
       .then((querySnapshot) => {
         const userTrips = [];
-
         querySnapshot.forEach((doc) => {
-          userTrips.push([
-            doc.id,
-            doc.data().location,
-            doc.data().description,
-            doc.data().venues,
-          ]);
+          userTrips.push([doc.id, doc.data().location, doc.data().description]);
         });
         this.setState({ userTrips: userTrips });
       });
@@ -193,9 +206,7 @@ class Dashboard extends React.Component {
                       Delete Trip
                     </Button>
                   </div>
-                  {/* <TripPreview */}
-                  {/* // tripVenues={getVenues(this.props.currentUser.id, trip[0])} */}
-                  {/* /> */}
+                  <TripPreview tripVenues={this.state.tripVenues} />
                 </Typography>
               </TripAccordionDetails>
             </TripAccordion>
@@ -233,7 +244,6 @@ class Dashboard extends React.Component {
                       onChange={this.setDescription}
                     />
                     <p></p>
-
                     <Button onClick={this.handleSubmit} variant="contained">
                       Create New Trip
                     </Button>
