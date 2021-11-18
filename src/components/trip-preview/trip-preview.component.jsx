@@ -10,7 +10,7 @@ const TripPreview = ({ tripVenues = null }) => {
   return (
     <div>
       {tripVenues.length === 0 ? (
-        <h2>{""}</h2>
+        <p>{"None added, go find something!"}</p>
       ) : (
         <div id="venue-box">
           {tripVenues.map((venue, index) => (

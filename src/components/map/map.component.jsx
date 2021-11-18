@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import RoomIcon from "@mui/icons-material/Room";
 // eslint-disable-next-line
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps/api";
-import usePlacesAutocomplete, { getGeocode, getLatLng , getDetails } from "use-places-autocomplete";
-import { getUserTrip } from "../../firebase/firebase"
+import usePlacesAutocomplete, {
+  getGeocode,
+  getLatLng,
+  getDetails,
+} from "use-places-autocomplete";
+import { getUserTrip } from "../../firebase/firebase";
 
 import {
   Combobox,
@@ -19,8 +23,7 @@ import "@reach/combobox/styles.css";
 
 // Display Map
 const Map = (props) => {
-
-  const [ center, setCenter ] = useState({ lat: -37.813629, lng: 144.963058})
+  const [center, setCenter] = useState({ lat: -37.813629, lng: 144.963058 });
 
   const libraries = ["places"];
   const mapContainerStyle = {
@@ -48,11 +51,11 @@ const Map = (props) => {
   }, []);
 
   async function getCityLatLng() {
-    const location = await getUserTrip( props.userID, props.tripID )
-    const parameter = { address: location }
-    const geocode = await getGeocode(parameter)
-    const cityLatLng = await getLatLng(geocode[0])
-    setCenter({lat: cityLatLng.lat, lng: cityLatLng.lng})
+    const location = await getUserTrip(props.userID, props.tripID);
+    const parameter = { address: location };
+    const geocode = await getGeocode(parameter);
+    const cityLatLng = await getLatLng(geocode[0]);
+    setCenter({ lat: cityLatLng.lat, lng: cityLatLng.lng });
   }
 
   if (loadError) return "Error loading Maps";
@@ -60,12 +63,12 @@ const Map = (props) => {
 
   return (
     <div className="map">
-      <Search saveVenues={ props.saveVenues } panTo={ panTo } center={center}/>
+      <Search saveVenues={props.saveVenues} panTo={panTo} center={center} />
 
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={12}
-        center={ center }
+        center={center}
         options={options}
         onLoad={onMapLoad}
       ></GoogleMap>
@@ -74,8 +77,7 @@ const Map = (props) => {
 };
 
 // Search box component within map
-function Search( {panTo, saveVenues, center} ) {
-
+function Search({ panTo, saveVenues, center }) {
   const {
     ready,
     value,
@@ -105,19 +107,26 @@ function Search( {panTo, saveVenues, center} ) {
 
             const places_parameters = {
               placeId: results[0].place_id,
-              fields: ["name", "opening_hours", "price_level", "rating", "website", "photo", "formatted_address"]
+              fields: [
+                "name",
+                "opening_hours",
+                "price_level",
+                "rating",
+                "website",
+                "photo",
+                "formatted_address",
+              ],
             };
 
             getDetails(places_parameters)
-            .then((details) => {
-              console.log("Details: ", details)
-              saveVenues(details);
-              panTo({ lat, lng });
-            })
-            .catch((error) => {
-              console.log(error);
-            })
-
+              .then((details) => {
+                console.log("Details: ", details);
+                saveVenues(details);
+                panTo({ lat, lng });
+              })
+              .catch((error) => {
+                console.log(error);
+              });
           } catch (error) {
             console.log("error");
           }
@@ -125,6 +134,7 @@ function Search( {panTo, saveVenues, center} ) {
       >
         <div className="search-form">
           <ComboboxInput
+            className="comboboxinput"
             value={value}
             onChange={(e) => {
               setValue(e.target.value);
@@ -134,12 +144,12 @@ function Search( {panTo, saveVenues, center} ) {
           />
         </div>
         <ComboboxPopover>
-        <ComboboxList>
-          {status === "OK" &&
-            data.map(({ id, description }) => (
-              <ComboboxOption key={id} value={description} />
-            ))}
-        </ComboboxList>
+          <ComboboxList>
+            {status === "OK" &&
+              data.map(({ id, description }) => (
+                <ComboboxOption key={id} value={description} />
+              ))}
+          </ComboboxList>
         </ComboboxPopover>
       </Combobox>
     </div>
