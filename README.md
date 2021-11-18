@@ -1,60 +1,83 @@
 # gutBucket
 
-> Live demo [_here_](https://www.example.com).
+> Live demo [_here_](https://gutbucket-3-rappin-boogalee.web.app/dashboard).
 
 ## General Information
 
 Planning a trip? Save a venue wishlist for your upcoming travels.
+Project 2 for General Assembly Software Engineering Immersive 48.
+Demonstration of front and back end knowledge gained in the last 8 weeks of class.
 
 ## Technologies Used
 
 - React v17
-- Firebase Authentication
-- Firestore Database
-- Google Places API
+- Google Firebase Authentication
+- Google Firestore Database
+- Google Maps/Places API
+- Deployed via Google Firebase
+- MUI (Material UI)
 
 ## Features
 
 - User authentication with name/email or Google.
 - Create and save trip locations, add relevant venues inside.
+- Search for venues using Google Places database.
 
-## Screenshots
+## Wire Frames
 
-![Example screenshot](./img/screenshot.png)
+Login Page:
+![Login Page](https://res.cloudinary.com/dydsfpahp/image/upload/v1637204776/Project-2/gutbucket-shownotes_ouk7xt.png)
 
-<!-- If you have screenshots you'd like to share, include them here. -->
+Inside Trip:
+![Inside Trip](https://res.cloudinary.com/dydsfpahp/image/upload/v1637204776/Project-2/gutbucket-insidetrip_tvoiuw.png)
 
-## Usage
+Show Venue:
+![Show Venue](https://res.cloudinary.com/dydsfpahp/image/upload/v1637204776/Project-2/gutbucket-showvenue_u4yixc.png)
 
-How does one go about using it?
-Provide various use cases and code examples here.
+Show Trip Notes:
+![Show Notes](https://res.cloudinary.com/dydsfpahp/image/upload/v1637204776/Project-2/gutbucket-shownotes_ouk7xt.png)
 
-`write-your-code-here`
+Models:
+![Models](https://res.cloudinary.com/dydsfpahp/image/upload/v1637205878/Project-2/miro_models_vnivvt.png)
 
-## Project Status: _in progress_
+Pages & Component Plan:
+![Components](https://res.cloudinary.com/dydsfpahp/image/upload/v1637205878/Project-2/Miro_components_nw7em9.png)
+
+User Flow:
+![User Flow](https://res.cloudinary.com/dydsfpahp/image/upload/v1637205878/Project-2/Miro_userflow_zuklia.png)
+
+
+## Project Status: Work in Progess
 
 ## Room for Improvement
 
-Include areas you believe need improvement / could be improved. Also add TODOs for future development.
+This project presented many challenges.
+React Router and Firebase both had recent major updates which presented challenges for working with documentation.
+If we were to restart this project, we would use React functional components almost entirely as React Router v6 uses Hooks exclusively.
 
 Room for improvement:
 
-- Improvement to be done 1
+- Routes in React need to be reconfigured
 - Improvement to be done 2
+- Architecture of components in React 
 
 To do:
 
-- Feature to be added 1
-- Feature to be added 2
+- Google Places venue query returns a photo
+- Notes function for trips and venues
+- Expansion of venue info stored in the Database
+- User profiles and achievements
+- Dates for trip
+- Ability to allocate venues into specific timeslots (e.g particular venue for lunch, dinner etc)
+- Venue reviews
+- Sharing trips between users
 
 ## Acknowledgements
 
-Give credit here.
-
-- This project was inspired by...
-- This project was based on [this tutorial](https://www.example.com).
-- Many thanks to...
+- Many thanks to Joel, Rowena and Pat.
 
 ## Contributors
 
-Created by [@flynerdpl](https://www.flynerd.pl/) - feel free to contact me!
+- Sarah Ruello
+- Jonathon Wermut
+- Alex Poulsen

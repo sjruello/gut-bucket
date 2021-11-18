@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import TripPreview from "../../components/trip-preview/trip-preview.component";
+
 // MUI imports:
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
