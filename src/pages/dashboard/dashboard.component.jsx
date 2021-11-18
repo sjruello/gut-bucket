@@ -127,6 +127,18 @@ class Dashboard extends React.Component {
       });
   };
 
+  deleteTrip = (userId, tripId) => {
+    deleteTrip(userId, tripId)
+      .delete()
+      .then(() => this.getUserTrips());
+  };
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    newTrip(this.state.currentUser.id, this.state.location, this.state.description);
+    this.setState({ location: "", description: "", trips: this.getUserTrips() });
+  };
+
   componentDidUpdate() {
     if (!this.props.currentUser || this.state.userTrips.length) {
       return;
@@ -189,8 +201,7 @@ class Dashboard extends React.Component {
                     <Button
                       variant="contained"
                       onClick={() => {
-                        deleteTrip(this.props.currentUser.id, trip[0]);
-                        this.setState({ trips: getUserTrips });
+                        this.deleteTrip(this.state.currentUser.id, trip[0]);
                       }}
                     >
                       Delete Trip
