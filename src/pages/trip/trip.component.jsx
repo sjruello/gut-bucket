@@ -63,8 +63,8 @@ class Trip extends React.Component {
     this.setState({ tripID: this.props.tripID });
     this.getVenues(this.props.currentUser.id, this.props.tripID);
   }
-  // close the venue box
 
+  // close the venue box
   onClose(index) {
     const venues = this.state.venues.filter((v, i) => i !== index);
     this.setState({ venues: venues });

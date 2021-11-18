@@ -6,9 +6,8 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { newVenue } from "../../firebase/firebase";
-import { TripPreview } from "../../components/trip-preview/trip-preview.component";
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
 import "./venue-box.styles.scss";
 
 export default function VenueBox(props) {
@@ -16,8 +15,8 @@ export default function VenueBox(props) {
   const addToTripList = (userId, tripId, name) => {
     console.log(userId, tripId, name);
     newVenue(userId, tripId, name);
-    props.onClose(props.id)
-    props.getVenues(userId, tripId)
+    props.onClose(props.id);
+    props.getVenues(userId, tripId);
   };
 
   return (
@@ -32,14 +31,15 @@ export default function VenueBox(props) {
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           Rating: {props.venue.rating}/5
         </Typography>
-        <Typography variant="body2">
-          {props.venue.address}
-        </Typography>
+        <Typography variant="body2">{props.venue.address}</Typography>
       </CardContent>
       <CardActions>
-        <Button onClick={() => window.open(props.venue.website)}>
-        Website</Button>
-        <Button onClick={() => addToTripList(props.userId, props.tripId, props.venue.name)}>Add Venue to TripList</Button>
+        <Button onClick={() => window.open(props.venue.website)}>Website</Button>
+        <Button
+          onClick={() => addToTripList(props.userId, props.tripId, props.venue.name)}
+        >
+          Add Venue to TripList
+        </Button>
       </CardActions>
     </Card>
   );
