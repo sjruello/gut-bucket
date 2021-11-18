@@ -10,6 +10,15 @@ import Trip from "./pages/trip/trip.component";
 // firebase imports:
 import { auth, createUserDocument } from "./firebase/firebase";
 
+//
+//              _   ____             _        _
+//   __ _ _   _| |_| __ ) _   _  ___| | _____| |_
+//  / _` | | | | __|  _ \| | | |/ __| |/ / _ \ __|
+// | (_| | |_| | |_| |_) | |_| | (__|   <  __/ |_
+//  \__, |\__,_|\__|____/ \__,_|\___|_|\_\___|\__|
+//  |___/
+//
+
 class App extends React.Component {
   constructor(props) {
     super(props);
