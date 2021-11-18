@@ -57,6 +57,7 @@ User Flow:
 ## Room for Improvement
 
 This project presented many challenges, as we were mostly unfamiliar with all 3 technologies implemented (React, Googles Places API, Firebase/FireStore). We had a good crack at it and learnt a lot along the way.
+We learnt alot about noSQL databases, version issues, nested data, splitting functions and async, unintentional recursion and the effects this has on your database.
 
 React Router and Firebase both had recent major updates which presented challenges for working with documentation.
 If we were to restart this project, we would use React functional components almost entirely as React Router v6 uses Hooks exclusively.
