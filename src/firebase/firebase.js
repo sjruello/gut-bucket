@@ -76,18 +76,13 @@ export const newVenue = (userId, tripId, name) => {
 };
 
 export const deleteTrip = (userId, tripId) => {
-  console.log(tripId);
-  db.collection("users")
+  const deleteVenue = db
+    .collection("users")
     .doc(userId)
     .collection("trips")
     .doc(tripId)
-    .delete()
-    .then(() => {
-      console.log("Document successfully deleted!");
-    })
-    .catch((error) => {
-      console.error("Error removing document: ", error);
-    });
+    
+    return deleteVenue
 };
 
 /////Authentication:
