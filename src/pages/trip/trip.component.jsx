@@ -63,8 +63,8 @@ class Trip extends React.Component {
     this.setState({ tripID: this.props.tripID });
     this.getVenues(this.props.currentUser.id, this.props.tripID);
   }
-  // close the venue box
 
+  // close the venue box
   onClose(index) {
     const venues = this.state.venues.filter((v, i) => i !== index);
     this.setState({ venues: venues });
@@ -91,12 +91,12 @@ class Trip extends React.Component {
           })}
         </div>
         <div className="map-display">
-          <Map saveVenues={this.saveVenues} />
+          <Map saveVenues={this.saveVenues} tripID={this.props.tripID} userID={this.props.currentUser.id}/>
         </div>
         <div className="saved-venues">
           <p>List of saved venues:</p>
           <p>Trip ID: {this.props.tripID}</p>
-          <TripPreview userID={this.props.currentUser.id} 
+          <TripPreview userID={this.props.currentUser.id}
           tripID={this.props.tripID} tripVenues={this.state.tripVenues} />
         </div>
       </div>

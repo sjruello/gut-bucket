@@ -96,7 +96,7 @@ class Dashboard extends React.Component {
       description: "",
       userTrips: [],
       tripVenues: [],
-      currentUser: this.props.currentUser
+      currentUser: this.props.currentUser,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -115,30 +115,24 @@ class Dashboard extends React.Component {
     this.setState({ description: event.target.value });
   };
 
-
   getUserTrips = () => {
     getUserTrips(this.state.currentUser.id)
       .get()
       .then((querySnapshot) => {
         const userTrips = [];
-
         querySnapshot.forEach((doc) => {
-          userTrips.push([
-            doc.id,
-            doc.data().location,
-            doc.data().description,
-            doc.data().venues,
-          ]);
+          userTrips.push([doc.id, doc.data().location, doc.data().description]);
         });
         this.setState({ userTrips: userTrips });
       });
-  }
+  };
 
   deleteTrip = (userId, tripId) => {
-    deleteTrip(userId, tripId).delete().then(() => this.getUserTrips())
-  }
+    deleteTrip(userId, tripId)
+      .delete()
+      .then(() => this.getUserTrips());
+  };
 
-  
   handleSubmit = (event) => {
     event.preventDefault();
     newTrip(this.state.currentUser.id, this.state.location, this.state.description);
@@ -149,15 +143,20 @@ class Dashboard extends React.Component {
     if (!this.props.currentUser || this.state.userTrips.length) {
       return;
     }
-    this.getUserTrips()
+    getUserTrips();
   }
 
+  handleSubmit = (event) => {
+    event.preventDefault();
+    newTrip(this.state.currentUser.id, this.state.location, this.state.description);
+    this.setState({ location: "", description: "", trips: this.getUserTrips() });
+  };
+
   componentDidMount() {
-    this.getUserTrips()
+    this.getUserTrips();
   }
 
   render() {
-    
     return (
       <div className="main-container">
         <div className="trip-accordions">
@@ -208,7 +207,7 @@ class Dashboard extends React.Component {
                       Delete Trip
                     </Button>
                   </div>
-                  <TripPreview userID={this.state.currentUser.id} tripID={trip[0]} tripVenues={this.state.tripVenues} />
+                  <TripPreview tripVenues={this.state.tripVenues} />
                 </Typography>
               </TripAccordionDetails>
             </TripAccordion>
@@ -246,7 +245,6 @@ class Dashboard extends React.Component {
                       onChange={this.setDescription}
                     />
                     <p></p>
-
                     <Button onClick={this.handleSubmit} variant="contained">
                       Create New Trip
                     </Button>

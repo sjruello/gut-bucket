@@ -11,7 +11,7 @@ const TripPreview = ({ tripVenues = null }) => {
   return (
     <div>
       {tripVenues.length === 0 ? (
-        <h2>No Venues Added!</h2>
+        <h2>{""}</h2>
       ) : (
         <div id="venue-box">
           {tripVenues.map((venue, index) => (

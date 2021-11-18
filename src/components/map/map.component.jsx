@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import RoomIcon from "@mui/icons-material/Room";
 // eslint-disable-next-line
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps/api";
-
 import usePlacesAutocomplete, { getGeocode, getLatLng , getDetails } from "use-places-autocomplete";
+import { getUserTrip } from "../../firebase/firebase"
 
 import {
   Combobox,
@@ -19,6 +19,9 @@ import "@reach/combobox/styles.css";
 
 // Display Map
 const Map = (props) => {
+
+  const [ center, setCenter ] = useState({ lat: -37.813629, lng: 144.963058})
+
   const libraries = ["places"];
   const mapContainerStyle = {
     height: "600px",
@@ -28,10 +31,7 @@ const Map = (props) => {
     disableDefaultUI: true,
     zoomControl: true,
   };
-  const center = {
-    lat: -37.813629,
-    lng: 144.963058,
-  };
+
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
@@ -39,6 +39,7 @@ const Map = (props) => {
   const mapRef = React.useRef();
   const onMapLoad = React.useCallback((map) => {
     mapRef.current = map;
+    getCityLatLng();
   }, []);
 
   const panTo = React.useCallback(({ lat, lng }) => {
@@ -46,17 +47,25 @@ const Map = (props) => {
     mapRef.current.setZoom(16);
   }, []);
 
+  async function getCityLatLng() {
+    const location = await getUserTrip( props.userID, props.tripID )
+    const parameter = { address: location }
+    const geocode = await getGeocode(parameter)
+    const cityLatLng = await getLatLng(geocode[0])
+    setCenter({lat: cityLatLng.lat, lng: cityLatLng.lng})
+  }
+
   if (loadError) return "Error loading Maps";
   if (!isLoaded) return "Loading Maps";
 
   return (
     <div className="map">
-      <Search saveVenues={props.saveVenues} panTo={panTo}/>
+      <Search saveVenues={ props.saveVenues } panTo={ panTo }/>
 
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={12}
-        center={center}
+        center={ center }
         options={options}
         onLoad={onMapLoad}
       ></GoogleMap>
