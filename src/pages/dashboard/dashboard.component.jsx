@@ -96,6 +96,7 @@ class Dashboard extends React.Component {
       description: "",
       userTrips: [],
       tripVenues: [],
+      currentUser: this.props.currentUser,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -114,36 +115,8 @@ class Dashboard extends React.Component {
     this.setState({ description: event.target.value });
   };
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-    newTrip(this.props.currentUser.id, this.state.location, this.state.description);
-    this.setState({ location: "", description: "", trips: getUserTrips() });
-    // getUserTrips();
-  };
-
-  getVenues = (userId, tripId) => {
-    getVenues(userId, tripId)
-      .get()
-      .then((querySnapshot) => {
-        const tripVenues = [];
-        querySnapshot.forEach((doc) => {
-          tripVenues.push([
-            doc.id,
-            doc.data().name,
-            doc.data().address,
-            doc.data().image,
-          ]);
-        });
-        this.setState({ tripVenues: tripVenues });
-      });
-  };
-
-  componentDidUpdate() {
-    if (!this.props.currentUser || this.state.userTrips.length) {
-      return;
-    }
-
-    getUserTrips(this.props.currentUser.id)
+  getUserTrips = () => {
+    getUserTrips(this.state.currentUser.id)
       .get()
       .then((querySnapshot) => {
         const userTrips = [];
@@ -152,6 +125,23 @@ class Dashboard extends React.Component {
         });
         this.setState({ userTrips: userTrips });
       });
+  };
+
+  componentDidUpdate() {
+    if (!this.props.currentUser || this.state.userTrips.length) {
+      return;
+    }
+    getUserTrips();
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    newTrip(this.state.currentUser.id, this.state.location, this.state.description);
+    this.setState({ location: "", description: "", trips: this.getUserTrips() });
+  };
+
+  componentDidMount() {
+    this.getUserTrips();
   }
 
   render() {
