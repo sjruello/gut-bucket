@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { getUserTrip, getVenues } from "../../firebase/firebase";
+import React from "react";
+
 import "./trip-preview.styles.scss";
 
-const TripPreview = ({ userID, tripID, tripVenues = null }) => {
+const TripPreview = ({ tripVenues = null }) => {
+  //  userID, tripID,
   // const [venues, setVenues] = useState([]);
 
   // useEffect(() => {
