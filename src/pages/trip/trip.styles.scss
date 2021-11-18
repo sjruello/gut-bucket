@@ -1,11 +1,11 @@
 .container {
   margin: 0 auto;
+  margin-bottom: 20px;
   width: 85vw;
   max-width: 1000px;
   display: grid;
   grid-template-columns: 0.9fr 1.1fr 1fr;
   grid-template-rows: 1fr 0.5fr;
-  gap: 10px 10px;
   grid-template-areas:
     "map-list map-display map-display"
     "saved-venues saved-venues saved-venues"
@@ -13,25 +13,35 @@
 }
 
 .saved-venues {
+  text-align: center;
   border-radius: 0px 0px 20px 20px;
-  border: 1px solid grey;
-  padding: 10px;
+  border-left: 1px solid rgba(179, 179, 179, 0.404);
+  border-right: 1px solid rgba(179, 179, 179, 0.404);
+  border-bottom: 1px solid rgba(179, 179, 179, 0.404);
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
   grid-area: saved-venues;
 }
 
 .map-list {
   border-radius: 20px 0px 0px;
-  border: 1px solid grey;
+  border-left: 1px solid rgba(179, 179, 179, 0.404);
+  border-top: 1px solid rgba(179, 179, 179, 0.404);
   padding: 10px;
   grid-area: map-list;
-  min-width: 215px;
   max-height: 615px;
-  overflow: scroll;
+  width: 325px;
+  overflow-y: scroll;
 }
 
 .map-display {
   border-radius: 0px 20px 0px 0px;
-  border: 1px solid grey;
+  border: 1px solid rgba(179, 179, 179, 0.404);
   grid-area: map-display;
   overflow: hidden;
+}
+
+.search-title {
+  text-align: center;
 }

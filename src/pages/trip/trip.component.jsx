@@ -3,6 +3,8 @@ import TripPreview from "../../components/trip-preview/trip-preview.component";
 import Map from "../../components/map/map.component";
 import VenueBox from "./venue-box.component";
 import { getVenues } from "../../firebase/firebase";
+import SearchIcon from "@mui/icons-material/Search";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import "./trip.styles.scss";
 
 class Trip extends React.Component {
@@ -10,6 +12,7 @@ class Trip extends React.Component {
     super(props);
     this.state = {
       tripID: "",
+      tripName: "",
       venues: [],
       lastAdded: "",
       tripVenues: [],
@@ -74,7 +77,14 @@ class Trip extends React.Component {
     return (
       <div className="container">
         <div className="map-list">
-          <p>Map List</p>
+          {this.state.venues.length === 0 ? (
+            <div className="search-title">
+              <h3>Search for a venue</h3>
+              <SearchIcon color="primary" fontSize="large" />
+            </div>
+          ) : (
+            <h3>Venue selected:</h3>
+          )}
           {this.state.venues.map((v, i) => {
             return (
               <VenueBox
@@ -91,12 +101,19 @@ class Trip extends React.Component {
           })}
         </div>
         <div className="map-display">
-          <Map saveVenues={this.saveVenues} tripID={this.props.tripID} userID={this.props.currentUser.id}/>
+          <Map
+            saveVenues={this.saveVenues}
+            tripID={this.props.tripID}
+            userID={this.props.currentUser.id}
+          />
         </div>
         <div className="saved-venues">
-          <p>List of saved venues:</p>
-          <TripPreview userID={this.props.currentUser.id}
-          tripID={this.props.tripID} tripVenues={this.state.tripVenues} />
+          <h3>Saved venues for {this.props.tripName}: </h3>
+          <TripPreview
+            userID={this.props.currentUser.id}
+            tripID={this.props.tripID}
+            tripVenues={this.state.tripVenues}
+          />
         </div>
       </div>
     );

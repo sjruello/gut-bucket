@@ -104,10 +104,6 @@ class Dashboard extends React.Component {
     this.setLocation = this.setLocation.bind(this);
   }
 
-  handleChange = (panel) => (event, newExpanded) => {
-    this.setState({ expanded: newExpanded ? panel : false });
-  };
-
   setLocation = (event) => {
     this.setState({ location: event.target.value });
   };
@@ -126,6 +122,28 @@ class Dashboard extends React.Component {
         });
         this.setState({ userTrips: userTrips });
       });
+  };
+
+  //Jonny trying to getVenues working 
+  // getVenues = (userId, tripId) => {
+  //   getVenues(userId, tripId)
+  //     .get()
+  //     .then((querySnapshot) => {
+  //       const tripVenues = [];
+  //       querySnapshot.forEach((doc) => {
+  //         tripVenues.push([
+  //           doc.id,
+  //           doc.data().name,
+  //           doc.data().address,
+  //           doc.data().image,
+  //         ]);
+  //       });
+  //       this.setState({ tripVenues: tripVenues });
+  //     });
+  // };
+
+   handleChange = (panel) => (event, newExpanded) => {
+    this.setState({ expanded: newExpanded ? panel : false });
   };
 
   deleteTrip = (userId, tripId) => {
@@ -190,10 +208,10 @@ class Dashboard extends React.Component {
                     <Link
                       to={{
                         pathname: `/trip/${trip[0]}`,
-                        state: { tripID: trip[0] },
+                        state: { tripID: trip[0], tripName: trip[1] },
                       }}
                       onClick={() => {
-                        this.props.getTrip(trip[0]);
+                        this.props.getTrip(trip[0], trip[1]);
                       }}
                     >
                       <h4>{trip[1]}</h4>
@@ -208,7 +226,7 @@ class Dashboard extends React.Component {
                       Delete Trip
                     </Button>
                   </div>
-                  <TripPreview tripVenues={this.state.tripVenues} />
+                  {/* <TripPreview tripVenues={this.state.tripVenues} /> */}
                 </Typography>
               </TripAccordionDetails>
             </TripAccordion>

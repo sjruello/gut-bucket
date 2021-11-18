@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import RoomIcon from "@mui/icons-material/Room";
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps/api";
-import usePlacesAutocomplete, { getGeocode, getLatLng , getDetails } from "use-places-autocomplete";
-import { getUserTrip } from "../../firebase/firebase"
+import usePlacesAutocomplete, {
+  getGeocode,
+  getLatLng,
+  getDetails,
+} from "use-places-autocomplete";
+import { getUserTrip } from "../../firebase/firebase";
+
 import {
   Combobox,
   ComboboxInput,
@@ -48,11 +53,11 @@ const Map = (props) => {
   }, []);
 
   async function getCityLatLng() {
-    const location = await getUserTrip( props.userID, props.tripID )
-    const parameter = { address: location }
-    const geocode = await getGeocode(parameter)
-    const cityLatLng = await getLatLng(geocode[0])
-    setCenter({lat: cityLatLng.lat, lng: cityLatLng.lng})
+    const location = await getUserTrip(props.userID, props.tripID);
+    const parameter = { address: location };
+    const geocode = await getGeocode(parameter);
+    const cityLatLng = await getLatLng(geocode[0]);
+    setCenter({ lat: cityLatLng.lat, lng: cityLatLng.lng });
   }
 
   if (loadError) return "Error loading Maps";
@@ -102,19 +107,26 @@ function Search( { panTo, saveVenues, center } ) {
 
             const places_parameters = {
               placeId: results[0].place_id,
-              fields: ["name", "opening_hours", "price_level", "rating", "website", "photo", "formatted_address"]
+              fields: [
+                "name",
+                "opening_hours",
+                "price_level",
+                "rating",
+                "website",
+                "photo",
+                "formatted_address",
+              ],
             };
 
             getDetails(places_parameters)
-            .then((details) => {
-              console.log("Details: ", details)
-              saveVenues(details);
-              panTo({ lat, lng });
-            })
-            .catch((error) => {
-              console.log(error);
-            })
-
+              .then((details) => {
+                console.log("Details: ", details);
+                saveVenues(details);
+                panTo({ lat, lng });
+              })
+              .catch((error) => {
+                console.log(error);
+              });
           } catch (error) {
             console.log("error");
           }
@@ -122,6 +134,7 @@ function Search( { panTo, saveVenues, center } ) {
       >
         <div className="search-form">
           <ComboboxInput
+            className="comboboxinput"
             value={value}
             onChange={(e) => {
               setValue(e.target.value);
