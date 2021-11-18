@@ -3,25 +3,6 @@ import React from "react";
 import "./trip-preview.styles.scss";
 
 const TripPreview = ({ tripVenues = null }) => {
-  //  userID, tripID,
-  // const [venues, setVenues] = useState([]);
-
-  // useEffect(() => {
-  //   getVenues(userID, tripID)
-  //     .get()
-  //     .then((querySnapshot) => {
-  //       let tripVenues = [];
-  //       querySnapshot.forEach((doc) => {
-  //         tripVenues.push([
-  //           doc.id,
-  //           doc.data().name,
-  //           doc.data().address,
-  //           doc.data().image,
-  //         ]);
-  //       });
-  //       setVenues(tripVenues);
-  //     });
-  // }, [userID, tripID]);
 
   if (!tripVenues) {
     return "";
