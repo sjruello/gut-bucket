@@ -60,7 +60,7 @@ const Map = (props) => {
 
   return (
     <div className="map">
-      <Search saveVenues={ props.saveVenues } panTo={ panTo }/>
+      <Search saveVenues={ props.saveVenues } panTo={ panTo } center={center}/>
 
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
@@ -74,7 +74,7 @@ const Map = (props) => {
 };
 
 // Search box component within map
-function Search( {panTo, saveVenues} ) {
+function Search( {panTo, saveVenues, center} ) {
 
   const {
     ready,
@@ -85,7 +85,7 @@ function Search( {panTo, saveVenues} ) {
     clearSuggestions,
   } = usePlacesAutocomplete({
     requestOptions: {
-      location: { lat: () => -37.813629, lng: () => 144.963058 },
+      location: { lat: () => center.lat, lng: () => center.lng },
       radius: 15000,
     },
   });
