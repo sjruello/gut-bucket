@@ -90,13 +90,13 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: this.props.currentUser,
       expanded: "",
       trips: [],
       location: "",
       description: "",
       userTrips: [],
-      tripVenues: []
+      tripVenues: [],
+      currentUser: this.props.currentUser
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -115,26 +115,41 @@ class Dashboard extends React.Component {
     this.setState({ description: event.target.value });
   };
 
+
   getUserTrips = () => {
     getUserTrips(this.state.currentUser.id)
       .get()
       .then((querySnapshot) => {
         const userTrips = [];
+
         querySnapshot.forEach((doc) => {
-          userTrips.push([doc.id, doc.data().location, doc.data().description]);
+          userTrips.push([
+            doc.id,
+            doc.data().location,
+            doc.data().description,
+            doc.data().venues,
+          ]);
         });
         this.setState({ userTrips: userTrips });
       });
   }
 
+  
   handleSubmit = (event) => {
     event.preventDefault();
     newTrip(this.state.currentUser.id, this.state.location, this.state.description);
     this.setState({ location: "", description: "", trips: this.getUserTrips() });
   };
 
+  componentDidUpdate() {
+    if (!this.props.currentUser || this.state.userTrips.length) {
+      return;
+    }
+    this.getUserTrips()
+  }
+
   componentDidMount() {
-    this.getUserTrips(this.state.currentUser.id)
+    this.getUserTrips()
   }
 
   render() {
@@ -143,8 +158,8 @@ class Dashboard extends React.Component {
       <div className="main-container">
         <div className="trip-accordions">
           <h2>
-            {this.state.currentUser
-              ? `${this.state.currentUser.displayName
+            {this.props.currentUser
+              ? `${this.props.currentUser.displayName
                   .split(" ")
                   .slice(0, -1)
                   .join(" ")}'s Trips`
@@ -183,7 +198,7 @@ class Dashboard extends React.Component {
                     <Button
                       variant="contained"
                       onClick={() => {
-                        deleteTrip(this.state.currentUser.id, trip[0]);
+                        deleteTrip(this.props.currentUser.id, trip[0]);
                         this.setState({ trips: getUserTrips });
                       }}
                     >
