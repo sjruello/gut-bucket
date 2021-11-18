@@ -95,7 +95,6 @@ class Trip extends React.Component {
         </div>
         <div className="saved-venues">
           <p>List of saved venues:</p>
-          <p>Trip ID: {this.props.tripID}</p>
           <TripPreview userID={this.props.currentUser.id}
           tripID={this.props.tripID} tripVenues={this.state.tripVenues} />
         </div>
