@@ -20,12 +20,12 @@ export default function VenueBox(props) {
   };
 
   return (
-    <Card display='flex' sx={{ minWidth: 275 }}>
-      <IconButton className='CloseIcon' onClick={()=>props.onClose(props.id)}>
+    <Card display="flex" sx={{ minWidth: 275 }}>
+      <IconButton className="CloseIcon" onClick={() => props.onClose(props.id)}>
         <CloseIcon />
       </IconButton>
-      <CardContent >
-        <Typography variant="h5" component="div">
+      <CardContent>
+        <Typography variant="h5" component="div" color="primary">
           {props.venue.name}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">

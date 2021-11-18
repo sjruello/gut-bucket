@@ -207,10 +207,10 @@ class Dashboard extends React.Component {
                     <Link
                       to={{
                         pathname: `/trip/${trip[0]}`,
-                        state: { tripID: trip[0] },
+                        state: { tripID: trip[0], tripName: trip[1] },
                       }}
                       onClick={() => {
-                        this.props.getTrip(trip[0]);
+                        this.props.getTrip(trip[0], trip[1]);
                       }}
                     >
                       <h4>{trip[1]}</h4>
@@ -225,7 +225,7 @@ class Dashboard extends React.Component {
                       Delete Trip
                     </Button>
                   </div>
-                  <TripPreview tripVenues={this.state.tripVenues} />
+                  {/* <TripPreview tripVenues={this.state.tripVenues} /> */}
                 </Typography>
               </TripAccordionDetails>
             </TripAccordion>
