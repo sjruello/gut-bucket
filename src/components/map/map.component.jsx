@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import RoomIcon from "@mui/icons-material/Room";
-// eslint-disable-next-line
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps/api";
 import usePlacesAutocomplete, { getGeocode, getLatLng , getDetails } from "use-places-autocomplete";
 import { getUserTrip } from "../../firebase/firebase"
-
 import {
   Combobox,
   ComboboxInput,
@@ -12,20 +10,20 @@ import {
   ComboboxList,
   ComboboxOption,
 } from "@reach/combobox";
-
 import mapStyles from "./mapStyles";
 import "./map.styles.scss";
 import "@reach/combobox/styles.css";
 
 // Display Map
 const Map = (props) => {
-
   const [ center, setCenter ] = useState({ lat: -37.813629, lng: 144.963058})
 
   const libraries = ["places"];
+
   const mapContainerStyle = {
     height: "600px",
   };
+
   const options = {
     styles: mapStyles,
     disableDefaultUI: true,
@@ -36,7 +34,9 @@ const Map = (props) => {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
+
   const mapRef = React.useRef();
+
   const onMapLoad = React.useCallback((map) => {
     mapRef.current = map;
     getCityLatLng();
@@ -60,28 +60,26 @@ const Map = (props) => {
 
   return (
     <div className="map">
-      <Search saveVenues={ props.saveVenues } panTo={ panTo } center={center}/>
-
+      <Search saveVenues={ props.saveVenues } panTo={ panTo } center={ center } />
       <GoogleMap
-        mapContainerStyle={mapContainerStyle}
-        zoom={12}
+        mapContainerStyle={ mapContainerStyle }
+        zoom={ 12 }
         center={ center }
-        options={options}
-        onLoad={onMapLoad}
+        options={ options }
+        onLoad={ onMapLoad }
       ></GoogleMap>
     </div>
   );
 };
 
 // Search box component within map
-function Search( {panTo, saveVenues, center} ) {
+function Search( { panTo, saveVenues, center } ) {
 
   const {
     ready,
     value,
     suggestions: { status, data },
     setValue,
-    // eslint-disable-next-line
     clearSuggestions,
   } = usePlacesAutocomplete({
     requestOptions: {
@@ -99,9 +97,8 @@ function Search( {panTo, saveVenues, center} ) {
 
           try {
             const results = await getGeocode({ address });
-            const { lat, lng } = await getLatLng(results[0]);
 
-            console.log(results[0]);
+            const { lat, lng } = await getLatLng(results[0]);
 
             const places_parameters = {
               placeId: results[0].place_id,
@@ -134,12 +131,12 @@ function Search( {panTo, saveVenues, center} ) {
           />
         </div>
         <ComboboxPopover>
-        <ComboboxList>
-          {status === "OK" &&
-            data.map(({ id, description }) => (
-              <ComboboxOption key={id} value={description} />
-            ))}
-        </ComboboxList>
+          <ComboboxList>
+            {status === "OK" &&
+              data.map(({ id, description }) => (
+                <ComboboxOption key={id} value={description} />
+              ))}
+          </ComboboxList>
         </ComboboxPopover>
       </Combobox>
     </div>

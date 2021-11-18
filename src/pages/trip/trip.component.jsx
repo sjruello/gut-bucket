@@ -20,8 +20,8 @@ class Trip extends React.Component {
     this.setTripId = this.setTripId.bind(this);
   }
 
+// Saves venues object returned from Google Places on select to State.
   saveVenues(details) {
-    console.log(details.photos[0]);
     const { name, rating, website, formatted_address } = details;
     const venue = {
       name: name,

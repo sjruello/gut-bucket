@@ -11,7 +11,9 @@ Planning a trip? Save a venue wishlist for your upcoming travels.
 - React v17
 - Firebase Authentication
 - Firestore Database
-- Google Places API
+- Google Maps/Places API
+- Deployed via Firebase
+- Material UI
 
 ## Features
 
@@ -57,4 +59,6 @@ Give credit here.
 
 ## Contributors
 
-Created by [@flynerdpl](https://www.flynerd.pl/) - feel free to contact me!
+Sarah Ruello
+Jonathon Wermut
+Alex Poulsen
