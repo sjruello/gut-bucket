@@ -5,16 +5,19 @@
 ## General Information
 
 Planning a trip? Save a venue wishlist for your upcoming travels.
+
 Project 2 for General Assembly Software Engineering Immersive 48.
-Demonstration of front and back end knowledge gained in the last 8 weeks of class.
+
+This was a group project demonstrating the full-stack knowledge gained in the last 8 weeks of class.
 
 ## Technologies Used
 
 - React v17
+- React Router v6
 - Google Firebase Authentication
 - Google Firestore Database
 - Google Maps/Places API
-- Deployed via Google Firebase
+- Deployed via Google Firebase Hosting
 - MUI (Material UI)
 
 ## Features
@@ -49,21 +52,22 @@ Pages & Component Plan:
 User Flow:
 ![User Flow](https://res.cloudinary.com/dydsfpahp/image/upload/v1637205878/Project-2/Miro_userflow_zuklia.png)
 
-
-## Project Status: Work in Progess
+## Project Status: _Work in Progress_
 
 ## Room for Improvement
 
-This project presented many challenges.
+This project presented many challenges, as we were mostly unfamiliar with all 3 technologies implemented (React, Googles Places API, Firebase/FireStore). We had a good crack at it and learnt a lot along the way.
+
 React Router and Firebase both had recent major updates which presented challenges for working with documentation.
 If we were to restart this project, we would use React functional components almost entirely as React Router v6 uses Hooks exclusively.
 
-Room for improvement:
+## Room for improvement:
 
-- Routes in React need to be reconfigured
+- React Router components need to be reconfigured, currently does not redirect on signin.
+- Implement Firebase v9
 - Architecture of components in React
 
-To do:
+## To do:
 
 - Google Places venue query returns a photo
 - Notes function for trips and venues
@@ -80,6 +84,6 @@ To do:
 
 ## Contributors
 
-- Sarah Ruello
-- Jonathon Wermut
-- Alex Poulsen
+- [Alex Poulsen](https://github.com/agpoulsen)
+- [Sarah Ruello](https://github.com/sarahjune85)
+- [Jonathon Wermut](https://github.com/jzwermut)

@@ -19,17 +19,6 @@ const db = app.firestore();
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
-//GET functions
-const getUsers = () => {
-  db.collection("users")
-    .get()
-    .then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        console.log(doc.id);
-      });
-    });
-};
-
 export const getUserTrips = (userId) => {
   const getTrips = db.collection("users").doc(userId).collection("trips");
   return getTrips;
@@ -77,13 +66,9 @@ export const newVenue = (userId, tripId, name) => {
 };
 
 export const deleteTrip = (userId, tripId) => {
-  const deleteVenue = db
-    .collection("users")
-    .doc(userId)
-    .collection("trips")
-    .doc(tripId)
+  const deleteVenue = db.collection("users").doc(userId).collection("trips").doc(tripId);
 
-    return deleteVenue
+  return deleteVenue;
 };
 
 /////Authentication:
