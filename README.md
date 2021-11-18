@@ -1,6 +1,6 @@
 # gutBucket
 
-> Live demo [_here_](https://gutbucket-3-rappin-boogalee.web.app/dashboard).
+> Live demo [_here_](https://gutbucket-3-rappin-boogalee.web.app/).
 
 ## General Information
 
@@ -19,14 +19,14 @@ Demonstration of front and back end knowledge gained in the last 8 weeks of clas
 
 ## Features
 
-- User authentication with name/email or Google.
+- User authentication with name/email or Google Authentication.
 - Create and save trip locations, add relevant venues inside.
 - Search for venues using Google Places database.
 
 ## Wire Frames
 
 Login Page:
-![Login Page](https://res.cloudinary.com/dydsfpahp/image/upload/v1637204776/Project-2/gutbucket-shownotes_ouk7xt.png)
+![Login Page](https://res.cloudinary.com/dydsfpahp/image/upload/v1637204775/Project-2/gutbucket-root_uxchi6.png)
 
 Inside Trip:
 ![Inside Trip](https://res.cloudinary.com/dydsfpahp/image/upload/v1637204776/Project-2/gutbucket-insidetrip_tvoiuw.png)
@@ -36,6 +36,9 @@ Show Venue:
 
 Show Trip Notes:
 ![Show Notes](https://res.cloudinary.com/dydsfpahp/image/upload/v1637204776/Project-2/gutbucket-shownotes_ouk7xt.png)
+
+Add/Edit Trip:
+![Add Edit Trip](https://res.cloudinary.com/dydsfpahp/image/upload/v1637204775/Project-2/gutbucket-addedittrip_atjf7t.png)
 
 Models:
 ![Models](https://res.cloudinary.com/dydsfpahp/image/upload/v1637205878/Project-2/miro_models_vnivvt.png)
@@ -58,8 +61,7 @@ If we were to restart this project, we would use React functional components alm
 Room for improvement:
 
 - Routes in React need to be reconfigured
-- Improvement to be done 2
-- Architecture of components in React 
+- Architecture of components in React
 
 To do:
 
