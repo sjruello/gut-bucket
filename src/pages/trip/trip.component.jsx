@@ -56,6 +56,7 @@ class Trip extends React.Component {
             doc.data().name,
             doc.data().address,
             doc.data().image,
+            doc.data().website,
           ]);
         });
         this.setState({ tripVenues: tripVenues });
@@ -113,6 +114,7 @@ class Trip extends React.Component {
             userID={this.props.currentUser.id}
             tripID={this.props.tripID}
             tripVenues={this.state.tripVenues}
+            getVenues={this.getVenues}
           />
         </div>
       </div>
