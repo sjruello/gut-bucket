@@ -124,7 +124,7 @@ class Dashboard extends React.Component {
       });
   };
 
-  //Jonny trying to getVenues working 
+  //Jonny trying to getVenues working
   // getVenues = (userId, tripId) => {
   //   getVenues(userId, tripId)
   //     .get()
@@ -142,7 +142,7 @@ class Dashboard extends React.Component {
   //     });
   // };
 
-   handleChange = (panel) => (event, newExpanded) => {
+  handleChange = (panel) => (event, newExpanded) => {
     this.setState({ expanded: newExpanded ? panel : false });
   };
 
@@ -172,6 +172,7 @@ class Dashboard extends React.Component {
   };
 
   componentDidMount() {
+    console.log(this.props.currentUser);
     this.getUserTrips();
   }
 
