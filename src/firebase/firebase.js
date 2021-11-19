@@ -43,8 +43,6 @@ export const getVenues = (userId, tripId) => {
   return getVenues;
 };
 
-//POST functions
-//Create a new trip
 export const newTrip = (userId, location, description) => {
   const newTrip = db.collection("users").doc(userId).collection("trips");
   newTrip.doc().set({
@@ -53,7 +51,7 @@ export const newTrip = (userId, location, description) => {
   });
 };
 
-export const newVenue = (userId, tripId, name) => {
+export const newVenue = (userId, tripId, name, website) => {
   const newVenue = db
     .collection("users")
     .doc(userId)
@@ -62,12 +60,18 @@ export const newVenue = (userId, tripId, name) => {
     .collection("venues");
   newVenue.doc().set({
     name: name,
+    website: website,
   });
 };
 
 export const deleteTrip = (userId, tripId) => {
   const deleteVenue = db.collection("users").doc(userId).collection("trips").doc(tripId);
 
+  return deleteVenue;
+};
+
+export const deleteVenue = (userId, tripId, venueId) => {
+  const deleteVenue = db.collection("users").doc(userId).collection("trips").doc(tripId).collection("venues").doc(venueId)
   return deleteVenue;
 };
 
