@@ -20,7 +20,7 @@ const TripPreview = ({tripVenues = null, userID, tripID, getVenues}) => {
         <div id="venue-box">
           {tripVenues.map((venue, index) => (
             <div className="mini-venue-card" key={index}>
-              <a href={venue[4]}><span className="venue-title">{venue[1]}</span></a>
+              <a href={venue[4]} target="_blank"><span className="venue-title">{venue[1]}</span></a>
               <div
                 className="thumbnail"
                 style={{
