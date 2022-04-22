@@ -88,4 +88,4 @@ If we were to restart this project, we would use React functional components alm
 
 - [Alex Poulsen](https://github.com/agpoulsen)
 - [Sarah Ruello](https://github.com/sarahjune85)
-- [Jonathon Wermut](https://github.com/jzwermut)
+- [Jonathan Wermut](https://github.com/jzwermut)
